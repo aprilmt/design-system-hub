@@ -58,7 +58,7 @@ export function App() {
         </main>
 
         <footer className="border-t border-border-default py-6 text-center text-xs text-content-muted">
-          Design System Hub &middot; Semantic Tokens &middot; WCAG 2.2 AA
+          April Ma. All Rights Reserved
         </footer>
       </div>
     </ToastProvider>
