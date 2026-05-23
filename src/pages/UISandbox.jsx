@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from 'react'
+import { useState, useEffect, useRef, Suspense, lazy, useCallback } from 'react'
 import {
   Keyboard,
   MousePointerClick,
@@ -88,10 +88,46 @@ const sidebarLinks = [
 
 /* ─── page ─── */
 
+function useActiveSection(ids) {
+  const [activeId, setActiveId] = useState(ids[0])
+
+  useEffect(() => {
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+
+    if (elements.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id)
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    )
+
+    elements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [ids])
+
+  return activeId
+}
+
 export function UISandbox() {
   const [selectValue, setSelectValue] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const { toast } = useToast()
+
+  const sectionIds = sidebarLinks.map((l) => l.id)
+  const activeSection = useActiveSection(sectionIds)
+
+  const scrollTo = useCallback((id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10">
@@ -113,13 +149,17 @@ export function UISandbox() {
             aria-label="Sandbox sections"
           >
             {sidebarLinks.map((l) => (
-              <a
+              <button
                 key={l.id}
-                href={`#${l.id}`}
-                className="block rounded-token px-3 py-1.5 text-sm text-content-secondary hover:text-content-primary hover:bg-surface-secondary transition-colors"
+                onClick={() => scrollTo(l.id)}
+                className={`block w-full text-left rounded-token px-3 py-1.5 text-sm transition-colors ${
+                  activeSection === l.id
+                    ? 'bg-brand-secondary text-brand-primary font-medium'
+                    : 'text-content-secondary hover:text-content-primary hover:bg-surface-secondary'
+                }`}
               >
                 {l.label}
-              </a>
+              </button>
             ))}
           </nav>
         </aside>
