@@ -4,9 +4,10 @@ A semantic, tokenized component library and interactive sandbox that bridges Fig
 
 **[Live Demo](https://aprilmt.github.io/design-system-hub/)**
 
-## What This Is
+## 🚀 The Core Philosophy
+Traditional design-to-development handoffs are plagued by two major friction points: UI Drift (where developers interpret spacing, colors, and layout rules inconsistently) and Inconsistent Accessibility (where focus states, keyboard navigation, and screen reader labels are overlooked or implemented as late-stage bug fixes).
 
-Many teams face a recurring pain point: the design system looks perfect in Figma, but developers implement components independently, leading to UI drift and missing accessibility states. This project solves that by providing a fully tokenized component sandbox where every color, radius, and shadow maps 1-to-1 to Figma variables.
+This sandbox addresses these problems by introducing a Single Source of Truth bridging Figma design files and production code through a highly structured, three-layer architectural system: Utility ➔ Component ➔ Pattern.
 
 ## Features
 
