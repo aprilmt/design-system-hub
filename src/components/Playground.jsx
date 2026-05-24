@@ -396,11 +396,22 @@ export default function App() {
     description:
       'CSS-variable theme switching via Tailwind dark: utilities — no flash on load, instant toggle.',
     dependencies: { 'lucide-react': 'latest' },
+    customHTML: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+</head>
+<body><div id="root"></div></body>
+</html>`,
     code: `import { useState } from 'react';
 import { Sun, Moon, Palette } from 'lucide-react';
 
 export default function App() {
   const [dark, setDark] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   return (
     <div className={dark ? 'dark' : ''}>
       <div className="min-h-screen p-8 bg-white dark:bg-slate-900 transition-colors duration-200">
@@ -422,8 +433,19 @@ export default function App() {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Adapts via surface + content tokens</p>
             </div>
 
-            <input className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              placeholder="Input follows the active theme" />
+            <div className="space-y-1">
+              <input
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                placeholder="Input follows the active theme"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              {inputValue && (
+                <p className="text-xs text-indigo-500 dark:text-indigo-400">
+                  Token preview: "{inputValue}" rendered in {dark ? 'dark' : 'light'} mode
+                </p>
+              )}
+            </div>
 
             <div className="flex gap-3">
               <button className="flex-1 h-10 bg-indigo-500 dark:bg-indigo-400 text-white dark:text-slate-900 rounded-lg text-sm font-medium hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">Primary</button>
@@ -506,12 +528,15 @@ export function Playground() {
           key={`${activePreset}-${isDark}`}
           template="react"
           theme={isDark ? darkTheme : lightTheme}
-          files={{ '/App.js': preset.code }}
+          files={{
+            '/App.js': preset.code,
+            ...(preset.customHTML ? { '/public/index.html': preset.customHTML } : {}),
+          }}
           customSetup={{
             dependencies: preset.dependencies || {},
           }}
           options={{
-            externalResources: ['https://cdn.tailwindcss.com'],
+            ...(!preset.customHTML && { externalResources: ['https://cdn.tailwindcss.com'] }),
           }}
         >
           <SandpackLayout>
