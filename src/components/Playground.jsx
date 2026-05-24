@@ -396,73 +396,78 @@ export default function App() {
     description:
       'CSS-variable theme switching via Tailwind dark: utilities — no flash on load, instant toggle.',
     dependencies: { 'lucide-react': 'latest' },
-    customHTML: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' }</script>
-</head>
-<body><div id="root"></div></body>
-</html>`,
-    code: `import { useState } from 'react';
+    code: `import { useState, useEffect } from 'react';
 import { Sun, Moon, Palette } from 'lucide-react';
 
 export default function App() {
   const [dark, setDark] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    // Configure Tailwind Play CDN for class-based dark mode
+    if (window.tailwind) {
+      window.tailwind.config = { darkMode: 'class' };
+    }
+  }, []);
+
+  useEffect(() => {
+    // Apply dark class to the html element so Tailwind's dark: utilities activate
+    if (dark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [dark]);
+
   return (
-    <div className={dark ? 'dark' : ''}>
-      <div className="min-h-screen p-8 bg-white dark:bg-slate-900 transition-colors duration-200">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Palette size={20} className="text-indigo-500 dark:text-indigo-400" /> Theme Tokens
-            </h2>
-            <button onClick={() => setDark(!dark)}
-              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              aria-label="Toggle theme">
-              {dark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+    <div className="min-h-screen p-8 bg-white dark:bg-slate-900 transition-colors duration-200">
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Palette size={20} className="text-indigo-500 dark:text-indigo-400" /> Theme Tokens
+          </h2>
+          <button onClick={() => setDark(!dark)}
+            className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            aria-label="Toggle theme">
+            {dark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          <div className="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 transition-colors">
+            <p className="text-sm font-medium text-slate-900 dark:text-white">Surface Card</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Adapts via surface + content tokens</p>
           </div>
 
-          <div className="space-y-4">
-            <div className="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 transition-colors">
-              <p className="text-sm font-medium text-slate-900 dark:text-white">Surface Card</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Adapts via surface + content tokens</p>
-            </div>
-
-            <div className="space-y-1">
-              <input
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                placeholder="Input follows the active theme"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              {inputValue && (
-                <p className="text-xs text-indigo-500 dark:text-indigo-400">
-                  Token preview: "{inputValue}" rendered in {dark ? 'dark' : 'light'} mode
-                </p>
-              )}
-            </div>
-
-            <div className="flex gap-3">
-              <button className="flex-1 h-10 bg-indigo-500 dark:bg-indigo-400 text-white dark:text-slate-900 rounded-lg text-sm font-medium hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">Primary</button>
-              <button className="flex-1 h-10 border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">Secondary</button>
-            </div>
-
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider pt-2">Token Palette</p>
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                'bg-indigo-500','bg-green-500','bg-red-500','bg-amber-500',
-                'bg-slate-900 dark:bg-white','bg-slate-600 dark:bg-slate-300','bg-slate-300 dark:bg-slate-600','bg-slate-100 dark:bg-slate-800',
-              ].map((c, i) => (
-                <div key={i} className={\`h-10 rounded-lg transition-colors duration-200 \${c}\`} />
-              ))}
-            </div>
-            <p className="text-xs text-center text-slate-400 dark:text-slate-500">CSS variables swap via dark: utility</p>
+          <div className="space-y-1">
+            <input
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="Input follows the active theme"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            {inputValue && (
+              <p className="text-xs text-indigo-500 dark:text-indigo-400">
+                Token preview: "{inputValue}" rendered in {dark ? 'dark' : 'light'} mode
+              </p>
+            )}
           </div>
+
+          <div className="flex gap-3">
+            <button className="flex-1 h-10 bg-indigo-500 dark:bg-indigo-400 text-white dark:text-slate-900 rounded-lg text-sm font-medium hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">Primary</button>
+            <button className="flex-1 h-10 border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">Secondary</button>
+          </div>
+
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider pt-2">Token Palette</p>
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              'bg-indigo-500','bg-green-500','bg-red-500','bg-amber-500',
+              'bg-slate-900 dark:bg-white','bg-slate-600 dark:bg-slate-300','bg-slate-300 dark:bg-slate-600','bg-slate-100 dark:bg-slate-800',
+            ].map((c, i) => (
+              <div key={i} className={\`h-10 rounded-lg transition-colors duration-200 \${c}\`} />
+            ))}
+          </div>
+          <p className="text-xs text-center text-slate-400 dark:text-slate-500">CSS variables swap via dark: utility</p>
         </div>
       </div>
     </div>
@@ -528,15 +533,12 @@ export function Playground() {
           key={`${activePreset}-${isDark}`}
           template="react"
           theme={isDark ? darkTheme : lightTheme}
-          files={{
-            '/App.js': preset.code,
-            ...(preset.customHTML ? { '/public/index.html': preset.customHTML } : {}),
-          }}
+          files={{ '/App.js': preset.code }}
           customSetup={{
             dependencies: preset.dependencies || {},
           }}
           options={{
-            ...(!preset.customHTML && { externalResources: ['https://cdn.tailwindcss.com'] }),
+            externalResources: ['https://cdn.tailwindcss.com'],
           }}
         >
           <SandpackLayout>
