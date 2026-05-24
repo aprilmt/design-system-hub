@@ -529,7 +529,15 @@ export function UISandbox() {
 
             {/* ARIA & Screen Reader */}
             <div>
-              <Label>ARIA & Screen Reader Bindings</Label>
+              <span className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-content-muted">
+                ARIA & Screen Reader Bindings
+                <span className="group relative">
+                  <Info size={13} className="cursor-help text-content-muted transition-colors group-hover:text-brand-primary" />
+                  <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-900 px-3 py-1.5 text-[11px] normal-case tracking-normal text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-slate-100 dark:text-slate-900">
+                    ARIA attributes and roles that enable assistive technologies to announce component states, labels, and live updates.
+                  </span>
+                </span>
+              </span>
               <div className="space-y-3">
                 {[
                   {
