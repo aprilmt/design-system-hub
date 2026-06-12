@@ -2,7 +2,7 @@
 
 A semantic, tokenized component library and interactive sandbox that bridges Figma and code — built with React, Tailwind CSS, and Radix UI primitives.
 
-👉 I built this site to familiarize myself with the latest front-end frameworks as a UX designer—not just to experiment, but as a step toward becoming a builder who leverages AI tools(could also be benefitial for everyone else like me).
+👉 I built this site to familiarize myself with the latest front-end frameworks as a Product Designer—not just to experiment, but as a step toward becoming a builder who leverages AI tools(could also be benefitial for everyone else like me).
 
 **[Live Demo](https://aprilmt.github.io/design-system-hub/)**
 
