@@ -1,78 +1,76 @@
 import { Link } from 'react-router-dom'
-import {
-  Palette,
-  Component,
-  Accessibility,
-  Moon,
-  ArrowRight,
-} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '../components/ui/Button'
+import { DesignHubHero } from '../stageshow/DesignHubHero'
 
-const features = [
+const pillars = [
   {
-    icon: Palette,
-    title: 'Design Tokens',
-    desc: 'Semantic color, spacing, and radius tokens mapped 1-to-1 to Figma variables. One source of truth for both designers and developers.',
+    title: 'Semantic tokens',
+    desc: 'Brand, surface, and feedback variables mapped 1-to-1 to Figma — one source of truth.',
   },
   {
-    icon: Component,
-    title: '5 Core Components',
-    desc: 'Button, Input, Select, Dialog, and Toast — built on Radix primitives with full keyboard and screen-reader support.',
+    title: 'Accessible primitives',
+    desc: 'Button, Input, Select, Dialog, and Toast with focus rings, Esc, and ARIA wired in.',
   },
   {
-    icon: Accessibility,
-    title: 'WCAG 2.2 AA',
-    desc: 'Focus rings, Tab key sequencing, Esc to close, and ARIA bindings verified against accessibility guidelines.',
-  },
-  {
-    icon: Moon,
-    title: 'Dark Mode',
-    desc: 'Elegant theme switching powered by CSS custom properties and Tailwind\'s dark: utility — no flash on load.',
+    title: 'Live sandbox',
+    desc: 'Edit components in Sandpack and see states update without leaving the browser.',
   },
 ]
 
 export function Home() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-20">
-      <section className="text-center mb-20">
-        <p className="mb-3 text-sm font-medium tracking-wide text-brand-primary uppercase">
-          Semantic Component Library
-        </p>
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-950 dark:text-slate-50 mb-5 leading-tight">
-          Bridge the gap between
-          <br />
-          design and development
-        </h1>
-        <p className="mx-auto max-w-2xl text-lg text-content-secondary mb-8">
-          A lightweight React &amp; Tailwind CSS component library that brings
-          Figma's variable logic into browser-native, keyboard-navigable
-          UI&nbsp;states.
-        </p>
-        <Link to="/ui">
-          <Button size="lg">
-            Open Sandbox
-            <ArrowRight size={18} />
-          </Button>
-        </Link>
+    <div className="relative overflow-hidden">
+      {/* Atmosphere */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[720px] bg-[radial-gradient(ellipse_80%_60%_at_70%_-10%,color-mix(in_srgb,var(--color-brand-primary)_18%,transparent),transparent_70%),radial-gradient(ellipse_50%_40%_at_10%_20%,color-mix(in_srgb,var(--color-brand-secondary)_80%,transparent),transparent_65%)]"
+      />
+
+      <section className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pb-8 pt-14 xl:grid-cols-[minmax(280px,0.78fr)_minmax(520px,1.22fr)] xl:gap-6 xl:pb-6 xl:pt-16">
+        <div className="relative z-10 max-w-xl">
+          <p className="font-display text-[2.75rem] font-normal leading-[1.05] tracking-normal text-slate-950 dark:text-slate-50 sm:text-5xl lg:text-[3.35rem]">
+            DesignHub
+          </p>
+          <h1 className="mt-5 text-xl font-medium leading-snug text-content-primary sm:text-2xl">
+            Tokens that become real components.
+          </h1>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-content-secondary">
+            A React &amp; Tailwind library that carries Figma variable logic into
+            keyboard-ready UI states.
+          </p>
+          <div className="mt-8">
+            <Link to="/ui">
+              <Button size="lg">
+                Open Sandbox
+                <ArrowRight size={18} />
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="relative min-h-[280px] w-full xl:min-h-[360px] xl:-mr-6 xl:translate-x-2">
+          <DesignHubHero />
+        </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {features.map(({ icon: Icon, title, desc }) => (
-          <div
-            key={title}
-            className="rounded-[2.5rem] border border-border-default bg-surface-elevated p-8 shadow-token-sm transition-shadow hover:shadow-token"
-          >
-            <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-token-lg bg-brand-secondary">
-              <Icon size={22} className="text-brand-primary" />
+      <section className="relative mx-auto max-w-6xl border-t border-border-default px-6 py-16">
+        <p className="mb-10 max-w-lg text-sm text-content-muted">
+          Built so designers and developers share the same names for color,
+          space, and interaction.
+        </p>
+        <div className="grid gap-10 sm:grid-cols-3">
+          {pillars.map(({ title, desc }) => (
+            <div key={title}>
+              <h2 className="mb-2 text-base font-bold text-slate-950 dark:text-slate-50">
+                {title}
+              </h2>
+              <p className="text-sm leading-relaxed text-content-secondary">
+                {desc}
+              </p>
             </div>
-            <h2 className="mb-2 text-lg font-bold text-slate-950 dark:text-slate-50">
-              {title}
-            </h2>
-            <p className="text-sm leading-relaxed text-content-secondary">
-              {desc}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
     </div>
   )

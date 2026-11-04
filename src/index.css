@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Display face: macOS Gill Sans via local(). To match a purchased web kit,
+   drop files into public/fonts/ (see that folder’s README) and add url()
+   sources ahead of local() here. */
+@font-face {
+  font-family: "Gill Sans Display";
+  src: local("Gill Sans"), local("GillSans");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gill Sans Display";
+  src: local("Gill Sans SemiBold"), local("GillSans-SemiBold");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gill Sans Display";
+  src: local("Gill Sans Bold"), local("GillSans-Bold");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gill Sans Display";
+  src: local("Gill Sans Bold"), local("GillSans-Bold");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     /* ── Brand ── */

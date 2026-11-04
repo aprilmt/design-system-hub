@@ -26,13 +26,15 @@ function Section({ id, title, description, children }) {
   return (
     <section
       id={id}
-      className="rounded-[2.5rem] border border-border-default bg-surface-elevated p-8 shadow-token-sm scroll-mt-20"
+      className="scroll-mt-20 border-b border-border-default py-10 last:border-b-0"
     >
-      <h2 className="text-xl font-bold text-slate-950 dark:text-slate-50 mb-1">
+      <h2 className="mb-1 font-display text-2xl font-normal tracking-normal text-slate-950 dark:text-slate-50">
         {title}
       </h2>
       {description && (
-        <p className="text-sm text-content-secondary mb-6">{description}</p>
+        <p className="mb-7 max-w-2xl text-sm leading-relaxed text-content-secondary">
+          {description}
+        </p>
       )}
       {children}
     </section>
@@ -130,32 +132,32 @@ export function UISandbox() {
   }, [])
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10">
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold text-slate-950 dark:text-slate-50 mb-2">
-          Component Sandbox
+    <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="mb-12 max-w-2xl">
+        <h1 className="mb-3 font-display text-3xl font-normal tracking-normal text-slate-950 dark:text-slate-50 sm:text-4xl">
+          Sandbox
         </h1>
-        <p className="text-content-secondary">
-          Interactive showcase of every component, token, and accessibility
-          pattern in the design system.
+        <p className="text-content-secondary leading-relaxed">
+          Every component, token, and accessibility pattern — interactive and
+          ready to inspect.
         </p>
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex gap-12">
         {/* sidebar */}
-        <aside className="hidden lg:block w-44 shrink-0">
+        <aside className="hidden lg:block w-40 shrink-0">
           <nav
-            className="sticky top-20 space-y-1"
+            className="sticky top-20 space-y-0.5"
             aria-label="Sandbox sections"
           >
             {sidebarLinks.map((l) => (
               <button
                 key={l.id}
                 onClick={() => scrollTo(l.id)}
-                className={`block w-full text-left rounded-token px-3 py-1.5 text-sm transition-colors ${
+                className={`block w-full text-left px-2 py-1.5 text-sm transition-colors ${
                   activeSection === l.id
-                    ? 'bg-brand-secondary text-brand-primary font-medium'
-                    : 'text-content-secondary hover:text-content-primary hover:bg-surface-secondary'
+                    ? 'font-medium text-content-primary'
+                    : 'text-content-muted hover:text-content-primary'
                 }`}
               >
                 {l.label}
@@ -165,7 +167,7 @@ export function UISandbox() {
         </aside>
 
         {/* main content */}
-        <div className="flex-1 min-w-0 space-y-8">
+        <div className="flex-1 min-w-0">
 
           {/* ── Live Playground ── */}
           <Section

@@ -1,0 +1,45 @@
+/* DesignHub look: product tokens mapped onto Stageshow kit vars. */
+.look-designhub .ss-stage {
+  --ss-accent: var(--color-brand-primary);
+  --ss-accent-2: var(--color-brand-primary-hover);
+  --ss-accent-soft: var(--color-brand-secondary);
+  --ss-accent-text: var(--color-content-on-brand);
+
+  --ss-canvas: var(--color-surface-secondary);
+  --ss-surface: var(--color-surface-elevated);
+  --ss-chrome: var(--color-surface-primary);
+  --ss-well: transparent;
+  --ss-raised: var(--color-surface-elevated);
+
+  --ss-line: color-mix(in srgb, var(--color-border-default) 90%, transparent);
+  --ss-line-faint: color-mix(in srgb, var(--color-border-default) 55%, transparent);
+
+  --ss-text-strong: var(--color-content-primary);
+  --ss-text: var(--color-content-secondary);
+  --ss-text-faint: var(--color-content-muted);
+
+  --ss-icon: var(--color-content-secondary);
+  --ss-icon-faint: var(--color-content-muted);
+
+  --ss-success: var(--color-feedback-success);
+  --ss-danger: var(--color-feedback-error);
+  --ss-warning: var(--color-feedback-warning);
+
+  --ss-font: "DM Sans", system-ui, sans-serif;
+  --ss-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ss-radius-sm: var(--radius-token-sm);
+  --ss-radius-md: var(--radius-token);
+  --ss-radius-lg: var(--radius-token-lg);
+  --ss-radius-window: 12px;
+  --ss-radius-pill: var(--radius-token-full);
+
+  --ss-control: 34px;
+  --ss-row: 28px;
+}
+
+.dark .look-designhub .ss-stage {
+  --ss-canvas: var(--color-surface-secondary);
+  --ss-surface: var(--color-surface-elevated);
+  --ss-chrome: var(--color-surface-primary);
+}
