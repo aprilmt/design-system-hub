@@ -5,6 +5,8 @@ A semantic, tokenized component library and interactive sandbox that bridges Fig
 👉 I built this site to familiarize myself with the latest front-end frameworks as a Product Designer—not just to experiment, but as a step toward becoming a builder who leverages AI tools(could also be benefitial for everyone else like me).
 
 **[Live Demo](https://aprilmt.github.io/design-system-hub/)**
+<img width="946" height="593" alt="Screenshot 2026-11-04 at 21 04 07" src="https://github.com/user-attachments/assets/73f4afc7-dab3-4434-a3c3-8b865e1b69f1" />
+
 
 ## 🚀 The Core Philosophy
 Traditional design-to-development handoffs are plagued by two major friction points: UI Drift (where developers interpret spacing, colors, and layout rules inconsistently) and Inconsistent Accessibility (where focus states, keyboard navigation, and screen reader labels are overlooked or implemented as late-stage bug fixes).
