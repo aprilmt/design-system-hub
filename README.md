@@ -12,7 +12,7 @@ A semantic, tokenized component library and interactive sandbox that bridges Fig
 ## 🚀 The Core Philosophy
 Traditional design-to-development handoffs are plagued by two major friction points: UI Drift (where developers interpret spacing, colors, and layout rules inconsistently) and Inconsistent Accessibility (where focus states, keyboard navigation, and screen reader labels are overlooked or implemented as late-stage bug fixes).
 
-This sandbox addresses these problems by introducing a Single Source of Truth bridging Figma design files and production code through a highly structured, three-layer architectural system: Utility ➔ Component ➔ Pattern.
+This sandbox addresses these problems by introducing a Single Source of Truth bridging Figma design files and production code through a highly structured, three-layer architectural system: Utility → Component → Pattern.
 
 ## Features
 
@@ -40,12 +40,25 @@ Light and dark themes swap automatically via `:root` / `.dark` CSS variable scop
 
 ### Live Playground (Sandpack)
 
-An embedded [Sandpack](https://sandpack.codesandbox.io/) editor on the `/ui` sandbox page with:
+An embedded [Sandpack](https://sandpack.codesandbox.io/) editor on the `/#/ui` sandbox page with:
 
 - **Preview on the left, code editor on the right** — edit JSX and see real-time rendering
 - **Iframe isolation** — user code runs in a sandboxed iframe; errors can't crash the host page
 - **5 preset demos** — Button + Icons, Form Validation, Modal Dialog, Toast System, Dark Mode
 - **Theme-synced editor** — Sandpack theme switches with the site's light/dark mode
+
+### System Matrix
+
+A typed comparison surface at `/#/matrix` (`SystemMatrixCompare`) for walking design-system history and picking systems side by side:
+
+- **Interactive timeline (2014–2026)** — Flat Design → Material 2 / Fluent → Material 3 → Headless & Tailwind/shadcn → Meta Astryx (illustrative). Selecting a year updates the era copy and highlights representative systems.
+- **Comparison table** — select up to 3 systems; compare Design Philosophy, Tailwind Compatibility, AI/Agent-Ready (MCP/Cursor), Accessibility, and License.
+- **Persistent picks** — selections stay when you change years; remove from the table or toggle cards in the era list.
+- Dark-mode friendly layout with Lucide icons and smooth transitions.
+
+### Stageshow home hero
+
+The landing page includes a looping Stageshow demo (`DesignHubHero`) that walks a Tokens → components story: pick `brand-primary`, link a Button, open a Dialog, confirm with a Toast. Product tokens map onto the Stageshow kit look so the faux UI matches DesignHub.
 
 ### Accessibility (WCAG 2.2 AA)
 
@@ -64,9 +77,11 @@ One-click theme toggle with `localStorage` persistence and no flash on page load
 - **React 19** + **React Router 7** (HashRouter for static hosting)
 - **Vite 6** — build tooling
 - **Tailwind CSS 3** — utility-first styling with `darkMode: 'class'`
+- **TypeScript** — used for Stageshow kit and `SystemMatrixCompare`
 - **Radix UI** — accessible primitives for Select, Dialog, Toast
 - **Sandpack** — in-browser code editor with runtime transpilation
 - **Lucide React** — icons
+- **Stageshow kit** — faux product UI for the home hero
 
 ## Getting Started
 
@@ -77,7 +92,13 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) — the home page loads at `/` and the component sandbox at `/#/ui`.
+Open [http://localhost:5173/design-system-hub/](http://localhost:5173/design-system-hub/) —
+
+| Route | Page |
+|-------|------|
+| `/` | Home — brand intro, Stageshow hero, CTAs |
+| `/#/ui` | Sandbox — tokens, components, a11y, Sandpack |
+| `/#/matrix` | System Matrix — timeline + comparison |
 
 ## Project Structure
 
@@ -85,21 +106,27 @@ Open [http://localhost:5173](http://localhost:5173) — the home page loads at `
 src/
 ├── components/
 │   ├── ui/
-│   │   ├── Button.jsx        # 5 variants, 3 sizes, loading/disabled
-│   │   ├── Input.jsx         # Label, hint, error, aria bindings
-│   │   ├── Select.jsx        # Radix primitive, keyboard nav
-│   │   ├── Dialog.jsx        # Focus trap, Esc close, return focus
-│   │   └── Toast.jsx         # 4 variants, auto-dismiss, swipe
-│   ├── Playground.jsx        # Sandpack live editor with 5 presets
-│   └── ThemeToggle.jsx       # Sun/Moon toggle, localStorage
+│   │   ├── Button.jsx
+│   │   ├── Input.jsx
+│   │   ├── Select.jsx
+│   │   ├── Dialog.jsx
+│   │   └── Toast.jsx
+│   ├── Playground.jsx           # Sandpack live editor with 5 presets
+│   ├── SystemMatrixCompare.tsx  # Timeline + compare matrix
+│   └── ThemeToggle.jsx
 ├── pages/
-│   ├── Home.jsx              # Landing page
-│   └── UISandbox.jsx         # /ui — component sandbox + a11y showcase
+│   ├── Home.jsx                 # Landing + Stageshow hero
+│   ├── UISandbox.jsx            # /ui sandbox
+│   └── Matrix.jsx               # /matrix page shell
+├── stageshow/
+│   ├── DesignHubHero.tsx        # Tokens → components looping demo
+│   ├── designhub-look.css       # Token map onto kit --ss-* vars
+│   └── kit/                     # Stageshow React kit
 ├── lib/
-│   └── utils.js              # cn() utility (clsx + tailwind-merge)
-├── index.css                 # Design tokens (CSS custom properties)
-├── App.jsx                   # Layout shell, routing, ToastProvider
-└── main.jsx                  # Entry point
+│   └── utils.js
+├── index.css
+├── App.jsx
+└── main.jsx
 ```
 
 ## Scripts

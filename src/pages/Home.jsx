@@ -36,14 +36,19 @@ export function Home() {
             Tokens that become real components.
           </h1>
           <p className="mt-4 max-w-md text-base leading-relaxed text-content-secondary">
-            A React &amp; Tailwind library that carries Figma variable logic into
-            keyboard-ready UI states.
+            Try components live in the Sandbox, then use the Matrix to walk a 2014–2026
+            paradigm timeline and compare systems on Tailwind fit, agent readiness, and a11y.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link to="/ui">
               <Button size="lg">
                 Open Sandbox
                 <ArrowRight size={18} />
+              </Button>
+            </Link>
+            <Link to="/matrix">
+              <Button size="lg" variant="outline">
+                Matrix
               </Button>
             </Link>
           </div>

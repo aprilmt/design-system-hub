@@ -3,6 +3,7 @@ import { ToastProvider } from './components/ui/Toast'
 import { ThemeToggle } from './components/ThemeToggle'
 import { Home } from './pages/Home'
 import { UISandbox } from './pages/UISandbox'
+import { Matrix } from './pages/Matrix'
 
 function NavLink({ to, children }) {
   const { pathname } = useLocation()
@@ -41,6 +42,7 @@ export function App() {
             <div className="flex items-center gap-7">
               <NavLink to="/">Home</NavLink>
               <NavLink to="/ui">Sandbox</NavLink>
+              <NavLink to="/matrix">Matrix</NavLink>
               <ThemeToggle />
             </div>
           </nav>
@@ -50,6 +52,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/ui" element={<UISandbox />} />
+            <Route path="/matrix" element={<Matrix />} />
           </Routes>
         </main>
 
