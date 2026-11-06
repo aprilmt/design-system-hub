@@ -11,9 +11,10 @@
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark')
     }
+    document.documentElement.lang = localStorage.locale === 'zh' ? 'zh-CN' : 'en'
   </script>
-  <script type="module" crossorigin src="/design-system-hub/assets/index-CtvzcHQX.js"></script>
-  <link rel="stylesheet" crossorigin href="/design-system-hub/assets/index-BGvVM_Kt.css">
+  <script type="module" crossorigin src="/design-system-hub/assets/index-BxgUFXho.js"></script>
+  <link rel="stylesheet" crossorigin href="/design-system-hub/assets/index-D6_SZjsq.css">
 </head>
 <body>
   <div id="root"></div>
