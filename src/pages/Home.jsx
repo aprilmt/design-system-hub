@@ -2,26 +2,14 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { DesignHubHero } from '../stageshow/DesignHubHero'
-
-const pillars = [
-  {
-    title: 'Semantic tokens',
-    desc: 'Brand, surface, and feedback variables mapped 1-to-1 to Figma — one source of truth.',
-  },
-  {
-    title: 'Accessible primitives',
-    desc: 'Button, Input, Select, Dialog, and Toast with focus rings, Esc, and ARIA wired in.',
-  },
-  {
-    title: 'Live sandbox',
-    desc: 'Edit components in Sandpack and see states update without leaving the browser.',
-  },
-]
+import { useLocale } from '../i18n/LocaleContext'
 
 export function Home() {
+  const { t, dict } = useLocale()
+  const pillars = dict.home.pillars
+
   return (
     <div className="relative overflow-hidden">
-      {/* Atmosphere */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[720px] bg-[radial-gradient(ellipse_80%_60%_at_70%_-10%,color-mix(in_srgb,var(--color-brand-primary)_18%,transparent),transparent_70%),radial-gradient(ellipse_50%_40%_at_10%_20%,color-mix(in_srgb,var(--color-brand-secondary)_80%,transparent),transparent_65%)]"
@@ -33,22 +21,21 @@ export function Home() {
             DesignHub
           </p>
           <h1 className="mt-5 text-xl font-medium leading-snug text-content-primary sm:text-2xl">
-            Tokens that become real components.
+            {t('home.headline')}
           </h1>
           <p className="mt-4 max-w-md text-base leading-relaxed text-content-secondary">
-            Try components live in the Sandbox, then use the Matrix to walk a 2014–2026
-            paradigm timeline and compare systems on Tailwind fit, agent readiness, and a11y.
+            {t('home.intro')}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link to="/ui">
               <Button size="lg">
-                Open Sandbox
+                {t('home.openSandbox')}
                 <ArrowRight size={18} />
               </Button>
             </Link>
             <Link to="/matrix">
               <Button size="lg" variant="outline">
-                Matrix
+                {t('home.matrix')}
               </Button>
             </Link>
           </div>
@@ -61,8 +48,7 @@ export function Home() {
 
       <section className="relative mx-auto max-w-6xl border-t border-border-default px-6 py-16">
         <p className="mb-10 max-w-lg text-sm text-content-muted">
-          Built so designers and developers share the same names for color,
-          space, and interaction.
+          {t('home.pillarsLead')}
         </p>
         <div className="grid gap-10 sm:grid-cols-3">
           {pillars.map(({ title, desc }) => (

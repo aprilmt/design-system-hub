@@ -15,6 +15,7 @@ import { Input } from '../components/ui/Input'
 import { Select } from '../components/ui/Select'
 import { Dialog, DialogContent } from '../components/ui/Dialog'
 import { useToast } from '../components/ui/Toast'
+import { useLocale } from '../i18n/LocaleContext'
 
 const Playground = lazy(() =>
   import('../components/Playground').then((m) => ({ default: m.Playground }))
@@ -77,15 +78,15 @@ const selectOptions = [
   { value: 'angular', label: 'Angular', disabled: true },
 ]
 
-const sidebarLinks = [
-  { id: 'playground', label: 'Live Playground' },
-  { id: 'tokens', label: 'Design Tokens' },
-  { id: 'button', label: 'Button' },
-  { id: 'input', label: 'Input' },
-  { id: 'select', label: 'Select' },
-  { id: 'dialog', label: 'Dialog' },
-  { id: 'toast', label: 'Toast' },
-  { id: 'a11y', label: 'Accessibility' },
+const sidebarLinkIds = [
+  'playground',
+  'tokens',
+  'button',
+  'input',
+  'select',
+  'dialog',
+  'toast',
+  'a11y',
 ]
 
 /* ─── page ─── */
@@ -120,11 +121,16 @@ function useActiveSection(ids) {
 }
 
 export function UISandbox() {
+  const { t, dict } = useLocale()
   const [selectValue, setSelectValue] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const { toast } = useToast()
 
-  const sectionIds = sidebarLinks.map((l) => l.id)
+  const sidebarLinks = sidebarLinkIds.map((id) => ({
+    id,
+    label: dict.sandbox.sidebar[id],
+  }))
+  const sectionIds = sidebarLinkIds
   const activeSection = useActiveSection(sectionIds)
 
   const scrollTo = useCallback((id) => {
@@ -135,11 +141,10 @@ export function UISandbox() {
     <div className="mx-auto max-w-6xl px-6 py-12">
       <div className="mb-12 max-w-2xl">
         <h1 className="mb-3 font-display text-3xl font-normal tracking-normal text-slate-950 dark:text-slate-50 sm:text-4xl">
-          Sandbox
+          {t('sandbox.title')}
         </h1>
         <p className="text-content-secondary leading-relaxed">
-          Every component, token, and accessibility pattern — interactive and
-          ready to inspect.
+          {t('sandbox.intro')}
         </p>
       </div>
 
@@ -148,7 +153,7 @@ export function UISandbox() {
         <aside className="hidden lg:block w-40 shrink-0">
           <nav
             className="sticky top-20 space-y-0.5"
-            aria-label="Sandbox sections"
+            aria-label={t('sandbox.sectionsAria')}
           >
             {sidebarLinks.map((l) => (
               <button
@@ -172,8 +177,8 @@ export function UISandbox() {
           {/* ── Live Playground ── */}
           <Section
             id="playground"
-            title="Live Playground"
-            description="Edit the code in real-time and see instant rendering. Components run inside an isolated iframe sandbox — errors won't crash the host page."
+            title={t('sandbox.playground.title')}
+            description={t('sandbox.playground.description')}
           >
             <Suspense
               fallback={
@@ -192,12 +197,12 @@ export function UISandbox() {
           {/* ── Design Tokens ── */}
           <Section
             id="tokens"
-            title="Design Tokens"
-            description="Semantic color tokens mapped 1-to-1 to Figma variables. Switch themes to see CSS custom properties adapt."
+            title={t('sandbox.tokens.title')}
+            description={t('sandbox.tokens.description')}
           >
             {colorTokens.map(({ group, tokens }) => (
               <div key={group} className="mb-6 last:mb-0">
-                <Label>{group}</Label>
+                <Label>{dict.sandbox.tokens.groups[group] ?? group}</Label>
                 <div className="flex flex-wrap gap-3">
                   {tokens.map((t) => (
                     <div key={t.name} className="text-center">
@@ -215,7 +220,7 @@ export function UISandbox() {
             ))}
 
             <div className="mt-6">
-              <Label>Border Radius</Label>
+              <Label>{t('sandbox.tokens.borderRadius')}</Label>
               <div className="flex items-end gap-4">
                 {[
                   ['token-sm', 'rounded-token-sm', 'sm'],
@@ -239,10 +244,10 @@ export function UISandbox() {
           {/* ── Button ── */}
           <Section
             id="button"
-            title="Button"
-            description="Five semantic variants, three sizes, plus loading and disabled states. All buttons expose proper disabled/busy ARIA attributes."
+            title={t('sandbox.button.title')}
+            description={t('sandbox.button.description')}
           >
-            <Label>Variants</Label>
+            <Label>{t('sandbox.button.variants')}</Label>
             <div className="flex flex-wrap gap-3 mb-6">
               {['primary', 'secondary', 'outline', 'ghost', 'destructive'].map(
                 (v) => (
@@ -253,14 +258,14 @@ export function UISandbox() {
               )}
             </div>
 
-            <Label>Sizes</Label>
+            <Label>{t('sandbox.button.sizes')}</Label>
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <Button size="sm">Small</Button>
               <Button size="md">Medium</Button>
               <Button size="lg">Large</Button>
             </div>
 
-            <Label>States</Label>
+            <Label>{t('sandbox.button.states')}</Label>
             <div className="flex flex-wrap items-center gap-3">
               <Button loading>Loading</Button>
               <Button disabled>Disabled</Button>
@@ -273,8 +278,8 @@ export function UISandbox() {
           {/* ── Input ── */}
           <Section
             id="input"
-            title="Input"
-            description="Accessible form inputs with auto-generated IDs, ARIA-invalid for errors, and aria-describedby linking hints and error messages."
+            title={t('sandbox.input.title')}
+            description={t('sandbox.input.description')}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Input label="Full Name" placeholder="Jane Doe" />
@@ -302,8 +307,8 @@ export function UISandbox() {
           {/* ── Select ── */}
           <Section
             id="select"
-            title="Select"
-            description="Radix Select primitive with keyboard navigation (Arrow keys to browse, Enter to select, Esc to close). Screen readers announce the selected value."
+            title={t('sandbox.select.title')}
+            description={t('sandbox.select.description')}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Select
@@ -323,8 +328,8 @@ export function UISandbox() {
           {/* ── Dialog ── */}
           <Section
             id="dialog"
-            title="Dialog"
-            description="Modal dialog with focus trap, backdrop overlay, and Esc key to close. Focus returns to the trigger element on close."
+            title={t('sandbox.dialog.title')}
+            description={t('sandbox.dialog.description')}
           >
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <Button onClick={() => setDialogOpen(true)}>
@@ -364,8 +369,8 @@ export function UISandbox() {
           {/* ── Toast ── */}
           <Section
             id="toast"
-            title="Toast"
-            description="Lightweight notifications with four semantic variants. Auto-dismisses after 5 seconds, swipe to dismiss on touch devices."
+            title={t('sandbox.toast.title')}
+            description={t('sandbox.toast.description')}
           >
             <div className="flex flex-wrap gap-3">
               <Button
@@ -426,8 +431,8 @@ export function UISandbox() {
           {/* ── Accessibility Showcase ── */}
           <Section
             id="a11y"
-            title="Accessibility Showcase"
-            description="WCAG 2.2 AA compliance demonstrated across all components. Tab through the demo below to verify every pattern."
+            title={t('sandbox.a11y.title')}
+            description={t('sandbox.a11y.description')}
           >
             {/* Focus Ring */}
             <div className="mb-8">

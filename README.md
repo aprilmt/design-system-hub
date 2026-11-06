@@ -72,6 +72,14 @@ The landing page includes a looping Stageshow demo (`DesignHubHero`) that walks 
 
 One-click theme toggle with `localStorage` persistence and no flash on page load (inline `<script>` in `<head>` checks preference before React hydrates).
 
+### Language toggle (English / 中文)
+
+A masthead segmented control (`LanguageToggle`) switches the site between English and Simplified Chinese:
+
+- Covers nav, home, System Matrix (timeline, comparison copy, and metric labels), sandbox chrome, theme labels, and footer
+- Preference is stored in `localStorage` (`locale`) and applied to `html[lang]` (`en` or `zh-CN`) before paint, so the page does not flash the wrong language
+- Copy lives in `src/i18n/messages.js` and is read through `useLocale()`
+
 ## Tech Stack
 
 - **React 19** + **React Router 7** (HashRouter for static hosting)
@@ -113,7 +121,11 @@ src/
 │   │   └── Toast.jsx
 │   ├── Playground.jsx           # Sandpack live editor with 5 presets
 │   ├── SystemMatrixCompare.tsx  # Timeline + compare matrix
+│   ├── LanguageToggle.jsx       # EN / 中文 masthead control
 │   └── ThemeToggle.jsx
+├── i18n/
+│   ├── messages.js              # English + Simplified Chinese copy
+│   └── LocaleContext.jsx        # locale state, persistence, useLocale()
 ├── pages/
 │   ├── Home.jsx                 # Landing + Stageshow hero
 │   ├── UISandbox.jsx            # /ui sandbox

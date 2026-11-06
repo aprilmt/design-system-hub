@@ -1,6 +1,8 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { ToastProvider } from './components/ui/Toast'
 import { ThemeToggle } from './components/ThemeToggle'
+import { LanguageToggle } from './components/LanguageToggle'
+import { useLocale } from './i18n/LocaleContext'
 import { Home } from './pages/Home'
 import { UISandbox } from './pages/UISandbox'
 import { Matrix } from './pages/Matrix'
@@ -24,13 +26,15 @@ function NavLink({ to, children }) {
 }
 
 export function App() {
+  const { t } = useLocale()
+
   return (
     <ToastProvider>
       <div className="min-h-screen flex flex-col">
         <header className="sticky top-0 z-40 bg-surface-primary/75 backdrop-blur-md">
           <nav
-            className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6"
-            aria-label="Main navigation"
+            className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-6"
+            aria-label={t('nav.aria')}
           >
             <Link
               to="/"
@@ -39,10 +43,11 @@ export function App() {
               DesignHub
             </Link>
 
-            <div className="flex items-center gap-7">
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/ui">Sandbox</NavLink>
-              <NavLink to="/matrix">Matrix</NavLink>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <NavLink to="/">{t('nav.home')}</NavLink>
+              <NavLink to="/ui">{t('nav.sandbox')}</NavLink>
+              <NavLink to="/matrix">{t('nav.matrix')}</NavLink>
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </nav>
@@ -57,7 +62,7 @@ export function App() {
         </main>
 
         <footer className="py-8 text-center text-xs text-content-muted">
-          April Ma. All Rights Reserved
+          {t('footer')}
         </footer>
       </div>
     </ToastProvider>
