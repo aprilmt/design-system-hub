@@ -6,7 +6,7 @@ A semantic, tokenized component library and interactive sandbox that bridges Fig
 
 **[Live Demo](https://aprilmt.github.io/design-system-hub/)**
 
-<img width="946" height="593" alt="dh" src="https://github.com/user-attachments/assets/8c6558de-0f42-496b-bcfd-079d3867b72a" />
+<img width="902" height="609" alt="dh" src="https://github.com/user-attachments/assets/8c6558de-0f42-496b-bcfd-079d3867b72a" />
 
 
 ## 🚀 The Core Philosophy
