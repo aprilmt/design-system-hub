@@ -17,7 +17,7 @@ export const messages = {
     },
     footer: 'April Ma. All Rights Reserved',
     home: {
-      headline: 'Tokens that become real components.',
+      headline: 'Semantic Design System Component',
       intro:
         'Try components live in the Sandbox, then use the Matrix to walk a 2014–2026 paradigm timeline and compare systems on Tailwind fit, agent readiness, and a11y.',
       openSandbox: 'Open Sandbox',
@@ -380,7 +380,7 @@ export const messages = {
     },
     footer: 'April Ma. 保留所有权利',
     home: {
-      headline: '让设计令牌变成真正的组件。',
+      headline: '语义化设计系统组件',
       intro:
         '在沙盒里实时试用组件，再用系统矩阵回顾 2014–2026 的设计范式，并对比 Tailwind 适配、Agent 就绪度与无障碍能力。',
       openSandbox: '打开沙盒',
