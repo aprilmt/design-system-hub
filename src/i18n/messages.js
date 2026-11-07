@@ -203,6 +203,7 @@ export const messages = {
         templateTabsAria: 'AI templates',
         templateWorkspace: 'Workspace',
         templateChat: 'Chat',
+        chatTitle: 'AI Chat',
         browserUrl: 'console.example.com/ai',
         chatUrl: 'console.example.com/ai/chat',
         workspaceAria:
@@ -560,6 +561,7 @@ export const messages = {
         templateTabsAria: 'AI 模板',
         templateWorkspace: '工作区',
         templateChat: '聊天',
+        chatTitle: 'AI Chat',
         browserUrl: 'console.example.com/ai',
         chatUrl: 'console.example.com/ai/chat',
         workspaceAria: '含顶栏、浮动工具条与斜线指标面板的骨架 AI 工作区',

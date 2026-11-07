@@ -137,7 +137,7 @@ function WorkspaceSkeleton({ copy }) {
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles size={18} className="text-brand-primary" aria-hidden />
-                <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">
+                <h3 className="text-lg font-bold text-slate-600 dark:text-slate-400">
                   {copy.workspaceTitle}
                 </h3>
               </div>
@@ -177,7 +177,12 @@ function ChatSkeleton({ copy }) {
       >
         {/* History rail */}
         <aside className="hidden w-52 shrink-0 flex-col border-r border-border-default bg-surface-elevated p-3 sm:flex">
-          <Bone className="mb-4 h-8 w-full rounded-token" />
+          <div className="mb-4 flex h-8 items-center gap-2">
+            <Sparkles size={16} className="shrink-0 text-brand-primary" aria-hidden />
+            <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
+              {copy.chatTitle}
+            </span>
+          </div>
           <div className="space-y-2">
             {[72, 56, 64, 48, 60].map((w, i) => (
               <Bone
@@ -198,10 +203,7 @@ function ChatSkeleton({ copy }) {
         {/* Thread */}
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex items-center justify-between gap-3 border-b border-border-default bg-surface-elevated px-4 py-3">
-            <div className="flex items-center gap-2">
-              <Sparkles size={16} className="text-brand-primary" aria-hidden />
-              <Bone className="h-3.5 w-28" />
-            </div>
+            <Bone className="h-3.5 w-28" />
             <Bone className="h-8 w-8 rounded-token" />
           </header>
 
