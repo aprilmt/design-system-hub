@@ -20,6 +20,21 @@ import { useLocale } from '../i18n/LocaleContext'
 const Playground = lazy(() =>
   import('../components/Playground').then((m) => ({ default: m.Playground }))
 )
+const MobileResponsiveShowcase = lazy(() =>
+  import('../components/mobile/MobileResponsiveShowcase').then((m) => ({
+    default: m.MobileResponsiveShowcase,
+  }))
+)
+const DashboardShowcase = lazy(() =>
+  import('../components/dashboard/DashboardShowcase').then((m) => ({
+    default: m.DashboardShowcase,
+  }))
+)
+const AIShowcase = lazy(() =>
+  import('../components/ai/AIShowcase').then((m) => ({
+    default: m.AIShowcase,
+  }))
+)
 
 /* ─── helpers ─── */
 
@@ -80,12 +95,15 @@ const selectOptions = [
 
 const sidebarLinkIds = [
   'playground',
+  'mobile',
   'tokens',
   'button',
   'input',
   'select',
   'dialog',
   'toast',
+  'dashboard',
+  'ai',
   'a11y',
 ]
 
@@ -124,6 +142,8 @@ export function UISandbox() {
   const { t, dict } = useLocale()
   const [selectValue, setSelectValue] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [viewMode, setViewMode] = useState('list')
+  const [density, setDensity] = useState('comfortable')
   const { toast } = useToast()
 
   const sidebarLinks = sidebarLinkIds.map((id) => ({
@@ -191,6 +211,26 @@ export function UISandbox() {
               }
             >
               <Playground />
+            </Suspense>
+          </Section>
+
+          {/* ── Mobile Responsive ── */}
+          <Section
+            id="mobile"
+            title={t('sandbox.mobile.title')}
+            description={t('sandbox.mobile.description')}
+          >
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+                  <Loader2
+                    size={24}
+                    className="animate-spin text-brand-primary"
+                  />
+                </div>
+              }
+            >
+              <MobileResponsiveShowcase />
             </Suspense>
           </Section>
 
@@ -266,12 +306,70 @@ export function UISandbox() {
             </div>
 
             <Label>{t('sandbox.button.states')}</Label>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               <Button loading>Loading</Button>
               <Button disabled>Disabled</Button>
               <Button variant="destructive" disabled>
                 Destructive Disabled
               </Button>
+            </div>
+
+            <Label>{t('sandbox.button.groups')}</Label>
+            <div className="flex flex-col gap-4">
+              <div
+                className="inline-flex rounded-token border border-border-default p-0.5"
+                role="group"
+                aria-label={t('sandbox.button.groupViewAria')}
+              >
+                {[
+                  ['list', t('sandbox.button.groupList')],
+                  ['grid', t('sandbox.button.groupGrid')],
+                  ['board', t('sandbox.button.groupBoard')],
+                ].map(([id, label]) => (
+                  <Button
+                    key={id}
+                    size="sm"
+                    variant={viewMode === id ? 'primary' : 'ghost'}
+                    className="rounded-[calc(var(--radius-token)-2px)]"
+                    aria-pressed={viewMode === id}
+                    onClick={() => setViewMode(id)}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </div>
+
+              <div
+                className="inline-flex overflow-hidden rounded-token border border-border-default"
+                role="group"
+                aria-label={t('sandbox.button.groupDensityAria')}
+              >
+                {[
+                  ['compact', t('sandbox.button.groupCompact')],
+                  ['comfortable', t('sandbox.button.groupComfortable')],
+                  ['spacious', t('sandbox.button.groupSpacious')],
+                ].map(([id, label], i, arr) => (
+                  <Button
+                    key={id}
+                    size="sm"
+                    variant={density === id ? 'secondary' : 'ghost'}
+                    className={`rounded-none ${i < arr.length - 1 ? 'border-r border-border-default' : ''}`}
+                    aria-pressed={density === id}
+                    onClick={() => setDensity(id)}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </div>
+
+              <div className="inline-flex gap-2" role="group" aria-label={t('sandbox.button.groupActionsAria')}>
+                <Button size="sm" variant="outline">
+                  {t('sandbox.button.groupCancel')}
+                </Button>
+                <Button size="sm" variant="primary">
+                  {t('sandbox.button.groupSave')}
+                </Button>
+              </div>
             </div>
           </Section>
 
@@ -426,6 +524,46 @@ export function UISandbox() {
                 <Info size={14} /> Info
               </Button>
             </div>
+          </Section>
+
+          {/* ── Dashboard ── */}
+          <Section
+            id="dashboard"
+            title={t('sandbox.dashboard.title')}
+            description={t('sandbox.dashboard.description')}
+          >
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+                  <Loader2
+                    size={24}
+                    className="animate-spin text-brand-primary"
+                  />
+                </div>
+              }
+            >
+              <DashboardShowcase />
+            </Suspense>
+          </Section>
+
+          {/* ── AI ── */}
+          <Section
+            id="ai"
+            title={t('sandbox.ai.title')}
+            description={t('sandbox.ai.description')}
+          >
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+                  <Loader2
+                    size={24}
+                    className="animate-spin text-brand-primary"
+                  />
+                </div>
+              }
+            >
+              <AIShowcase />
+            </Suspense>
           </Section>
 
           {/* ── Accessibility Showcase ── */}

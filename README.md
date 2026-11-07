@@ -32,7 +32,7 @@ Light and dark themes swap automatically via `:root` / `.dark` CSS variable scop
 
 | Component | Primitive | Highlights |
 |-----------|-----------|------------|
-| **Button** | Native `<button>` | 5 variants, 3 sizes, loading spinner, `aria-busy` |
+| **Button** | Native `<button>` | 5 variants, 3 sizes, loading spinner, `aria-busy`, button groups |
 | **Input** | Native `<input>` | Auto-generated IDs, `aria-invalid`, `aria-describedby` |
 | **Select** | `@radix-ui/react-select` | Keyboard navigation (Arrow/Enter/Esc), `aria-labelledby` |
 | **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
@@ -44,8 +44,32 @@ An embedded [Sandpack](https://sandpack.codesandbox.io/) editor on the `/#/ui` s
 
 - **Preview on the left, code editor on the right** — edit JSX and see real-time rendering
 - **Iframe isolation** — user code runs in a sandboxed iframe; errors can't crash the host page
-- **5 preset demos** — Button + Icons, Form Validation, Modal Dialog, Toast System, Dark Mode
+- **6 preset demos** — Button + Icons, Form Validation, Modal Dialog, Toast System, Dark Mode, Mobile Layout
 - **Theme-synced editor** — Sandpack theme switches with the site's light/dark mode
+
+### Mobile responsive (Sandbox)
+
+On `/#/ui` → **Mobile**:
+
+- Breakpoint strip (default / sm / md / lg)
+- Responsive stack, toolbar, and bottom-nav component demos
+- Templates with phone / tablet / desktop viewport frames — product grid, checkout form, app shell (bottom tabs → sidebar)
+
+### Dashboard skeletons (Sandbox)
+
+On `/#/ui` → **Dashboard**:
+
+- Skeleton shells for loading states and layout composition (no mock metrics)
+- Templates: Overview (icon rail + KPI tiles + table), Analytics (chart + activity), Operations (service health + incidents)
+- Browser chrome frame with pulsing bone placeholders
+
+### AI skeletons (Sandbox)
+
+On `/#/ui` → **AI**:
+
+- **Workspace** — top nav, floating side rails, hatched metric panels; only the sparkle + “AI & Automation” title stay live
+- **Chat** — history rail, skeleton message thread, composer
+- EN / 中文 chrome for the section
 
 ### System Matrix
 
@@ -105,7 +129,7 @@ Open [http://localhost:5173/design-system-hub/](http://localhost:5173/design-sys
 | Route | Page |
 |-------|------|
 | `/` | Home — brand intro, Stageshow hero, CTAs |
-| `/#/ui` | Sandbox — tokens, components, a11y, Sandpack |
+| `/#/ui` | Sandbox — tokens, mobile / dashboard / AI templates, components, a11y, Sandpack |
 | `/#/matrix` | System Matrix — timeline + comparison |
 
 ## Project Structure
@@ -119,7 +143,10 @@ src/
 │   │   ├── Select.jsx
 │   │   ├── Dialog.jsx
 │   │   └── Toast.jsx
-│   ├── Playground.jsx           # Sandpack live editor with 5 presets
+│   ├── Playground.jsx           # Sandpack live editor with 6 presets
+│   ├── mobile/                  # Mobile responsive showcase + templates
+│   ├── dashboard/               # Dashboard template showcase
+│   ├── ai/                      # AI chat + workspace skeleton templates
 │   ├── SystemMatrixCompare.tsx  # Timeline + compare matrix
 │   ├── LanguageToggle.jsx       # EN / 中文 masthead control
 │   └── ThemeToggle.jsx

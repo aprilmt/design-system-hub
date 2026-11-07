@@ -474,6 +474,121 @@ export default function App() {
   );
 }`,
   },
+
+  /* ── Mobile Responsive ── */
+  {
+    name: 'Mobile Layout',
+    description:
+      'Responsive product grid, stacked checkout actions, and a phone shell with bottom navigation that becomes a sidebar from md.',
+    dependencies: { 'lucide-react': 'latest' },
+    code: `import { useState } from 'react';
+import { Home, Search, ShoppingBag, User, Menu, Bell } from 'lucide-react';
+
+const products = [
+  { name: 'Canvas tote', price: '$48', tone: 'bg-indigo-100' },
+  { name: 'Studio lamp', price: '$72', tone: 'bg-sky-100' },
+  { name: 'Notebook set', price: '$36', tone: 'bg-emerald-100' },
+  { name: 'Desk mat', price: '$94', tone: 'bg-amber-100' },
+];
+
+const tabs = [
+  { id: 'home', label: 'Home', icon: Home },
+  { id: 'search', label: 'Search', icon: Search },
+  { id: 'bag', label: 'Bag', icon: ShoppingBag },
+  { id: 'profile', label: 'Profile', icon: User },
+];
+
+export default function App() {
+  const [tab, setTab] = useState('home');
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <div className="mx-auto max-w-5xl space-y-8 p-4 sm:p-6">
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <header className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+            <Menu size={18} className="text-slate-500" />
+            <span className="text-sm font-bold">Studio Shop</span>
+            <Bell size={18} className="text-slate-500" />
+          </header>
+          <div className="space-y-4 p-4">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Featured</p>
+              <h2 className="mt-1 text-lg font-bold">Season essentials</h2>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {products.map((p) => (
+                <article key={p.name} className="overflow-hidden rounded-xl border border-slate-200">
+                  <div className={\`h-24 \${p.tone}\`} />
+                  <div className="flex items-center justify-between gap-2 p-3">
+                    <h3 className="text-sm font-medium">{p.name}</h3>
+                    <span className="text-sm font-bold text-indigo-600">{p.price}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <h2 className="mb-4 text-base font-bold">Checkout</h2>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <input className="h-10 rounded-lg border border-slate-200 px-3 text-sm" placeholder="First name" />
+            <input className="h-10 rounded-lg border border-slate-200 px-3 text-sm" placeholder="Last name" />
+            <input className="h-10 rounded-lg border border-slate-200 px-3 text-sm md:col-span-2" placeholder="Email" />
+          </div>
+          <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <button className="h-10 w-full rounded-lg border border-slate-200 text-sm font-medium sm:w-auto sm:px-4">Cancel</button>
+            <button className="h-10 w-full rounded-lg bg-indigo-500 text-sm font-medium text-white sm:w-auto sm:px-4">Continue</button>
+          </div>
+        </section>
+
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex min-h-[280px] flex-col md:flex-row">
+            <aside className="hidden w-40 shrink-0 border-r border-slate-200 p-3 md:block">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-slate-400">Navigate</p>
+              <ul className="space-y-1">
+                {tabs.map(({ id, label }) => (
+                  <li key={id}>
+                    <button
+                      onClick={() => setTab(id)}
+                      className={\`w-full rounded-lg px-2 py-1.5 text-left text-sm \${
+                        tab === id ? 'bg-indigo-50 font-medium text-indigo-600' : 'text-slate-600 hover:bg-slate-50'
+                      }\`}
+                    >
+                      {label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+            <main className="flex-1 p-4">
+              <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Content</p>
+              <h2 className="mt-1 text-lg font-bold">{tabs.find((t) => t.id === tab)?.label}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Sidebar from md. On phones the same destinations live in the bottom tab bar.
+              </p>
+            </main>
+          </div>
+          <nav className="grid grid-cols-4 border-t border-slate-200 md:hidden" aria-label="Primary">
+            {tabs.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setTab(id)}
+                className={\`flex flex-col items-center gap-1 px-2 py-2.5 text-[11px] \${
+                  tab === id ? 'text-indigo-600' : 'text-slate-400'
+                }\`}
+              >
+                <Icon size={16} />
+                {label}
+              </button>
+            ))}
+          </nav>
+        </section>
+      </div>
+    </div>
+  );
+}`,
+  },
 ]
 
 /* ────────────────────────────────────────────
