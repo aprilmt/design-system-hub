@@ -1,96 +1,79 @@
-import { useState, useEffect } from 'react'
-import {
-  SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
-  SandpackPreview,
-} from '@codesandbox/sandpack-react'
-import { Code2 } from 'lucide-react'
+import { useState } from 'react'
+import { Check, Clipboard, Code2 } from 'lucide-react'
+import { cn } from '../lib/utils'
 
-const lightTheme = {
-  colors: {
-    surface1: '#ffffff',
-    surface2: '#f8fafc',
-    surface3: '#f1f5f9',
-    clickable: '#64748b',
-    base: '#0f172a',
-    disabled: '#94a3b8',
-    hover: '#1e293b',
-    accent: '#6366f1',
-    error: '#ef4444',
-    errorSurface: '#fef2f2',
-  },
-  syntax: {
-    plain: '#334155',
-    comment: { color: '#94a3b8', fontStyle: 'italic' },
-    keyword: '#6366f1',
-    tag: '#0ea5e9',
-    punctuation: '#64748b',
-    definition: '#0f172a',
-    property: '#6366f1',
-    static: '#059669',
-    string: '#059669',
-  },
-  font: {
-    body: 'Inter, system-ui, sans-serif',
-    mono: '"Fira Code", "JetBrains Mono", "SF Mono", monospace',
-    size: '13px',
-    lineHeight: '20px',
-  },
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
 }
 
-const darkTheme = {
-  colors: {
-    surface1: '#1e293b',
-    surface2: '#0f172a',
-    surface3: '#334155',
-    clickable: '#94a3b8',
-    base: '#e2e8f0',
-    disabled: '#64748b',
-    hover: '#f1f5f9',
-    accent: '#818cf8',
-    error: '#f87171',
-    errorSurface: '#450a0a',
-  },
-  syntax: {
-    plain: '#e2e8f0',
-    comment: { color: '#64748b', fontStyle: 'italic' },
-    keyword: '#818cf8',
-    tag: '#38bdf8',
-    punctuation: '#94a3b8',
-    definition: '#f1f5f9',
-    property: '#818cf8',
-    static: '#34d399',
-    string: '#34d399',
-  },
-  font: {
-    body: 'Inter, system-ui, sans-serif',
-    mono: '"Fira Code", "JetBrains Mono", "SF Mono", monospace',
-    size: '13px',
-    lineHeight: '20px',
-  },
+function highlightHtml(source) {
+  let out = escapeHtml(source)
+  out = out.replace(
+    /(&lt;!--[\s\S]*?--&gt;)/g,
+    '<span class="text-slate-500">$1</span>',
+  )
+  out = out.replace(
+    /(&lt;\/?)([\w-]+)([^&]*?)(\/?&gt;)/g,
+    (_, open, tag, rest, close) => {
+      const attrs = rest.replace(
+        /([\w-:]+)(=)(&quot;[^&]*&quot;|&#39;[^&]*&#39;)/g,
+        '<span class="text-slate-300">$1</span><span class="text-slate-500">$2</span><span class="text-violet-300">$3</span>',
+      )
+      return `<span class="text-sky-300">${open}${tag}</span>${attrs}<span class="text-sky-300">${close}</span>`
+    },
+  )
+  return out
 }
+
+function highlightJavascript(source) {
+  let out = escapeHtml(source)
+  out = out.replace(
+    /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm,
+    '<span class="text-slate-500">$1</span>',
+  )
+  out = out.replace(
+    /(&quot;[^&]*&quot;|&#39;[^&]*&#39;|`[^`]*`)/g,
+    '<span class="text-emerald-300">$1</span>',
+  )
+  out = out.replace(
+    /\b(import|from|export|default|function|const|let|var|return|if|else|true|false|null|undefined|new|class|extends|async|await)\b/g,
+    '<span class="text-violet-300">$1</span>',
+  )
+  return out
+}
+
+const TABS = [
+  { id: 'html', label: 'HTML' },
+  { id: 'javascript', label: 'JavaScript' },
+]
 
 export function LiveCode({
+  html = '',
+  javascript = '',
   code,
-  dependencies = {},
   description,
   height = 360,
 }) {
-  const [isDark, setIsDark] = useState(() =>
-    document.documentElement.classList.contains('dark'),
-  )
+  const jsSource = javascript || code || ''
+  const [tab, setTab] = useState(html ? 'html' : 'javascript')
+  const [copied, setCopied] = useState(false)
 
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'))
-    })
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    })
-    return () => observer.disconnect()
-  }, [])
+  const source = tab === 'html' ? html : jsSource
+  const highlighted =
+    tab === 'html' ? highlightHtml(source) : highlightJavascript(source)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(source)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch {
+      /* ignore */
+    }
+  }
 
   return (
     <div className="mt-8">
@@ -100,31 +83,51 @@ export function LiveCode({
           <p>{description}</p>
         </div>
       )}
+
       <div className="overflow-hidden rounded-token-lg border border-border-default shadow-token">
-        <SandpackProvider
-          key={isDark ? 'dark' : 'light'}
-          template="react"
-          theme={isDark ? darkTheme : lightTheme}
-          files={{ '/App.js': code }}
-          customSetup={{ dependencies }}
-          options={{
-            externalResources: ['https://cdn.tailwindcss.com'],
-          }}
+        <div className="flex items-center justify-between gap-3 border-b border-border-default bg-surface-secondary px-1">
+          <div className="flex items-center" role="tablist" aria-label="Code language">
+            {TABS.filter((t) => (t.id === 'html' ? Boolean(html) : Boolean(jsSource))).map(
+              (t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === t.id}
+                  onClick={() => setTab(t.id)}
+                  className={cn(
+                    'px-3 py-2.5 text-sm font-medium transition-colors outline-none',
+                    'focus-visible:!ring-2 focus-visible:!ring-[#DEE0E3] focus-visible:!ring-offset-0 focus-visible:!ring-offset-transparent',
+                    tab === t.id
+                      ? 'bg-[#DEE0E3] text-content-primary'
+                      : 'text-content-muted hover:text-content-primary',
+                  )}
+                >
+                  {t.label}
+                </button>
+              ),
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={copy}
+            className="mr-2 inline-flex items-center gap-1.5 rounded-token-sm px-2.5 py-1.5 text-xs font-medium text-content-secondary transition-colors outline-none hover:bg-[#DEE0E3] hover:text-content-primary focus-visible:!ring-2 focus-visible:!ring-[#DEE0E3] focus-visible:!ring-offset-0 focus-visible:!ring-offset-transparent"
+          >
+            {copied ? <Check size={14} aria-hidden /> : <Clipboard size={14} aria-hidden />}
+            {copied ? 'Copied' : 'Copy'}
+          </button>
+        </div>
+
+        <pre
+          className="overflow-auto bg-slate-900 p-4 text-[13px] leading-5 text-slate-100"
+          style={{ maxHeight: height }}
+          tabIndex={0}
         >
-          <SandpackLayout>
-            <SandpackPreview
-              style={{ height }}
-              showOpenInCodeSandbox={false}
-              showRefreshButton
-            />
-            <SandpackCodeEditor
-              style={{ height }}
-              showLineNumbers
-              showInlineErrors
-              wrapContent
-            />
-          </SandpackLayout>
-        </SandpackProvider>
+          <code
+            className="font-mono whitespace-pre"
+            dangerouslySetInnerHTML={{ __html: highlighted }}
+          />
+        </pre>
       </div>
     </div>
   )

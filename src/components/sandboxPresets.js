@@ -1,31 +1,65 @@
-/** Live Sandpack snippets for sandbox sections (not Dashboard / AI). */
+/** Code samples for sandbox sections (HTML + JavaScript tabs, not Dashboard / AI). */
 
 export const sandboxPresets = {
   tokens: {
-    dependencies: {},
-    code: `export default function App() {
+    html: `<!-- Prefer semantic utilities mapped to CSS variables -->
+<div class="space-y-6 bg-surface-secondary p-6">
+  <p class="text-xs font-medium uppercase tracking-wider text-content-muted">Brand</p>
+  <div class="flex gap-3">
+    <div class="h-12 w-12 rounded-token-lg bg-brand-primary" title="brand-primary"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-brand-primary-hover" title="brand-primary-hover"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-brand-primary-active" title="brand-primary-active"></div>
+    <div class="h-12 w-12 rounded-token-lg border border-border-default bg-brand-secondary" title="brand-secondary"></div>
+  </div>
+
+  <p class="text-xs font-medium uppercase tracking-wider text-content-muted">Feedback</p>
+  <div class="flex gap-3">
+    <div class="h-12 w-12 rounded-token-lg bg-feedback-success"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-feedback-error"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-feedback-warning"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-feedback-info"></div>
+  </div>
+
+  <p class="text-xs font-medium uppercase tracking-wider text-content-muted">Surface / Content / Border</p>
+  <div class="flex flex-wrap gap-3">
+    <div class="h-12 w-12 rounded-token-lg border border-border-default bg-surface-primary"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-content-primary"></div>
+    <div class="h-12 w-12 rounded-token-lg bg-border-focus"></div>
+  </div>
+
+  <p class="text-xs font-medium uppercase tracking-wider text-content-muted">Radius + Shadow</p>
+  <div class="flex items-end gap-4">
+    <div class="h-12 w-12 rounded-token-sm border-2 border-brand-primary bg-brand-secondary"></div>
+    <div class="h-12 w-12 rounded-token border-2 border-brand-primary bg-brand-secondary"></div>
+    <div class="h-12 w-12 rounded-token-lg border-2 border-brand-primary bg-brand-secondary shadow-token"></div>
+    <div class="h-12 w-12 rounded-token-full border-2 border-brand-primary bg-brand-secondary shadow-token-lg"></div>
+  </div>
+</div>`,
+    javascript: `export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 p-6 dark:bg-slate-900">
-      <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-slate-50">Semantic tokens</h2>
-      <p className="mb-4 text-xs uppercase tracking-wider text-slate-400">Brand</p>
-      <div className="mb-6 flex gap-3">
-        <div className="h-12 w-12 rounded-lg bg-indigo-500" title="brand-primary" />
-        <div className="h-12 w-12 rounded-lg bg-indigo-600" title="brand-primary-hover" />
-        <div className="h-12 w-12 rounded-lg border border-slate-200 bg-indigo-50" title="brand-secondary" />
+    <div className="space-y-6 bg-surface-secondary p-6">
+      <p className="text-xs font-medium uppercase tracking-wider text-content-muted">Brand</p>
+      <div className="flex gap-3">
+        <div className="h-12 w-12 rounded-token-lg bg-brand-primary" title="brand-primary" />
+        <div className="h-12 w-12 rounded-token-lg bg-brand-primary-hover" title="brand-primary-hover" />
+        <div className="h-12 w-12 rounded-token-lg bg-brand-primary-active" title="brand-primary-active" />
+        <div className="h-12 w-12 rounded-token-lg border border-border-default bg-brand-secondary" title="brand-secondary" />
       </div>
-      <p className="mb-4 text-xs uppercase tracking-wider text-slate-400">Feedback</p>
-      <div className="mb-6 flex gap-3">
-        <div className="h-12 w-12 rounded-lg bg-green-500" />
-        <div className="h-12 w-12 rounded-lg bg-red-500" />
-        <div className="h-12 w-12 rounded-lg bg-amber-500" />
-        <div className="h-12 w-12 rounded-lg bg-sky-500" />
+
+      <p className="text-xs font-medium uppercase tracking-wider text-content-muted">Feedback</p>
+      <div className="flex gap-3">
+        <div className="h-12 w-12 rounded-token-lg bg-feedback-success" />
+        <div className="h-12 w-12 rounded-token-lg bg-feedback-error" />
+        <div className="h-12 w-12 rounded-token-lg bg-feedback-warning" />
+        <div className="h-12 w-12 rounded-token-lg bg-feedback-info" />
       </div>
-      <p className="mb-4 text-xs uppercase tracking-wider text-slate-400">Radius</p>
+
+      <p className="text-xs font-medium uppercase tracking-wider text-content-muted">Radius + Shadow</p>
       <div className="flex items-end gap-4">
-        <div className="h-12 w-12 rounded border-2 border-indigo-500 bg-indigo-50" />
-        <div className="h-12 w-12 rounded-lg border-2 border-indigo-500 bg-indigo-50" />
-        <div className="h-12 w-12 rounded-xl border-2 border-indigo-500 bg-indigo-50" />
-        <div className="h-12 w-12 rounded-full border-2 border-indigo-500 bg-indigo-50" />
+        <div className="h-12 w-12 rounded-token-sm border-2 border-brand-primary bg-brand-secondary" />
+        <div className="h-12 w-12 rounded-token border-2 border-brand-primary bg-brand-secondary" />
+        <div className="h-12 w-12 rounded-token-lg border-2 border-brand-primary bg-brand-secondary shadow-token" />
+        <div className="h-12 w-12 rounded-token-full border-2 border-brand-primary bg-brand-secondary shadow-token-lg" />
       </div>
     </div>
   );
@@ -33,8 +67,32 @@ export const sandboxPresets = {
   },
 
   button: {
-    dependencies: { 'lucide-react': 'latest' },
-    code: `import { Loader2, ShoppingCart, Send, Trash2, Plus } from 'lucide-react';
+    html: `<div class="space-y-8 bg-white p-8">
+  <h2 class="text-xl font-bold text-slate-900">Button + groups</h2>
+  <div class="flex flex-wrap gap-3">
+    <button type="button" class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white hover:bg-indigo-600">
+      Add to Cart
+    </button>
+    <button type="button" class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-50 px-4 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+      Send
+    </button>
+    <button type="button" class="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-800 hover:bg-slate-50">
+      New
+    </button>
+    <button type="button" class="inline-flex h-10 items-center gap-2 rounded-lg bg-red-500 px-4 text-sm font-medium text-white hover:bg-red-600">
+      Delete
+    </button>
+    <button type="button" class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white" aria-busy="true" disabled>
+      Loading
+    </button>
+  </div>
+  <div class="inline-flex rounded-lg border border-slate-200 p-0.5" role="group" aria-label="View mode">
+    <button type="button" class="h-8 rounded-md bg-indigo-500 px-3 text-xs font-medium text-white">List</button>
+    <button type="button" class="h-8 rounded-md px-3 text-xs font-medium text-slate-800 hover:bg-slate-100">Grid</button>
+    <button type="button" class="h-8 rounded-md px-3 text-xs font-medium text-slate-800 hover:bg-slate-100">Board</button>
+  </div>
+</div>`,
+    javascript: `import { Loader2, ShoppingCart, Send, Trash2, Plus } from 'lucide-react';
 
 function Button({ variant = 'primary', size = 'md', loading, disabled, children, ...props }) {
   const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
@@ -76,8 +134,23 @@ export default function App() {
   },
 
   input: {
-    dependencies: { 'lucide-react': 'latest' },
-    code: `import { useState } from 'react';
+    html: `<div class="max-w-sm space-y-4 bg-white p-8">
+  <h2 class="text-xl font-bold text-slate-900">Input</h2>
+  <div class="space-y-1">
+    <label for="full-name" class="block text-sm font-medium text-slate-700">Full Name</label>
+    <input id="full-name" type="text" placeholder="Jane Doe" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm" />
+  </div>
+  <div class="space-y-1">
+    <label for="email" class="block text-sm font-medium text-slate-700">Email <span class="text-red-500">*</span></label>
+    <input id="email" type="email" required placeholder="jane@example.com" aria-describedby="email-hint" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm" />
+    <p id="email-hint" class="text-xs text-slate-400">We'll never share your email.</p>
+  </div>
+  <div class="space-y-1">
+    <label for="company" class="block text-sm font-medium text-slate-700">Company</label>
+    <input id="company" type="text" value="Read-only Corp" disabled class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm opacity-50" />
+  </div>
+</div>`,
+    javascript: `import { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 
 function Input({ label, error, hint, required, id, ...props }) {
@@ -124,8 +197,17 @@ export default function App() {
   },
 
   select: {
-    dependencies: {},
-    code: `import { useState } from 'react';
+    html: `<div class="max-w-sm space-y-4 bg-white p-8">
+  <h2 class="text-xl font-bold text-slate-900">Select</h2>
+  <label class="block text-sm font-medium text-slate-700" for="fw">Framework</label>
+  <select id="fw" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm">
+    <option value="react" selected>React</option>
+    <option value="vue">Vue</option>
+    <option value="svelte">Svelte</option>
+    <option value="angular" disabled>Angular</option>
+  </select>
+</div>`,
+    javascript: `import { useState } from 'react';
 
 const options = [
   { value: 'react', label: 'React' },
@@ -157,8 +239,23 @@ export default function App() {
   },
 
   dialog: {
-    dependencies: {},
-    code: `import { useState, useEffect, useRef } from 'react';
+    html: `<!-- Trigger -->
+<button type="button" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white hover:bg-indigo-600">
+  Open Dialog
+</button>
+
+<!-- Dialog -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4" role="presentation">
+  <div role="dialog" aria-modal="true" aria-labelledby="dlg-title" class="w-full max-w-sm rounded-xl bg-white p-5 shadow-lg">
+    <h2 id="dlg-title" class="text-lg font-bold text-slate-900">Confirm action</h2>
+    <p class="mt-2 text-sm text-slate-500">Esc or backdrop closes. Focus returns to the trigger.</p>
+    <div class="mt-4 flex justify-end gap-2">
+      <button type="button" class="h-9 rounded-lg border border-slate-200 px-3 text-sm">Cancel</button>
+      <button type="button" class="h-9 rounded-lg bg-indigo-500 px-3 text-sm text-white">Confirm</button>
+    </div>
+  </div>
+</div>`,
+    javascript: `import { useState, useEffect, useRef } from 'react';
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -210,8 +307,28 @@ export default function App() {
   },
 
   toast: {
-    dependencies: { 'lucide-react': 'latest' },
-    code: `import { useState } from 'react';
+    html: `<div class="space-y-4 bg-white p-8">
+  <h2 class="text-xl font-bold text-slate-900">Toast</h2>
+  <div class="flex flex-wrap gap-2">
+    <button type="button" class="h-9 rounded-lg border border-slate-200 px-3 text-sm">Success</button>
+    <button type="button" class="h-9 rounded-lg border border-slate-200 px-3 text-sm">Error</button>
+    <button type="button" class="h-9 rounded-lg border border-slate-200 px-3 text-sm">Warning</button>
+    <button type="button" class="h-9 rounded-lg border border-slate-200 px-3 text-sm">Info</button>
+  </div>
+
+  <!-- Example toast -->
+  <div class="flex w-80 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-md" role="status">
+    <div class="w-1 bg-green-500"></div>
+    <div class="flex flex-1 gap-2 p-3">
+      <div class="min-w-0 flex-1">
+        <p class="text-sm font-medium text-slate-900">Saved</p>
+        <p class="text-xs text-slate-500">Changes stored.</p>
+      </div>
+      <button type="button" aria-label="Dismiss" class="text-slate-400 hover:text-slate-600">×</button>
+    </div>
+  </div>
+</div>`,
+    javascript: `import { useState } from 'react';
 import { CheckCircle2, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 const styles = {
@@ -264,9 +381,200 @@ export default function App() {
 }`,
   },
 
+  dataList: {
+    html: `<dl class="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white">
+  <div class="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-4">
+    <dt class="text-xs font-medium uppercase tracking-wider text-slate-400">Name</dt>
+    <dd class="text-sm text-slate-900">Jane Doe</dd>
+  </div>
+  <div class="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-4">
+    <dt class="text-xs font-medium uppercase tracking-wider text-slate-400">Role</dt>
+    <dd class="text-sm text-slate-900">Product Designer</dd>
+  </div>
+  <div class="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-4">
+    <dt class="text-xs font-medium uppercase tracking-wider text-slate-400">Team</dt>
+    <dd class="text-sm text-slate-900">Design Systems</dd>
+  </div>
+  <div class="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-4">
+    <dt class="text-xs font-medium uppercase tracking-wider text-slate-400">Status</dt>
+    <dd class="text-sm text-slate-900">Active</dd>
+  </div>
+</dl>`,
+    javascript: `const items = [
+  { label: 'Name', value: 'Jane Doe' },
+  { label: 'Role', value: 'Product Designer' },
+  { label: 'Team', value: 'Design Systems' },
+  { label: 'Status', value: 'Active' },
+];
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-slate-50 p-6">
+      <h2 className="mb-4 text-lg font-bold text-slate-900">Data List</h2>
+      <dl className="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white">
+        {items.map((item) => (
+          <div key={item.label} className="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-4">
+            <dt className="text-xs font-medium uppercase tracking-wider text-slate-400">{item.label}</dt>
+            <dd className="text-sm text-slate-900">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}`,
+  },
+
+  table: {
+    html: `<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+  <table class="w-full min-w-[28rem] border-collapse text-left text-sm">
+    <caption class="sr-only">Team members</caption>
+    <thead>
+      <tr class="border-b border-slate-200 bg-slate-50">
+        <th scope="col" class="px-4 py-3 text-xs font-medium uppercase tracking-wider text-slate-400">Name</th>
+        <th scope="col" class="px-4 py-3 text-xs font-medium uppercase tracking-wider text-slate-400">Role</th>
+        <th scope="col" class="px-4 py-3 text-xs font-medium uppercase tracking-wider text-slate-400">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b border-slate-200 hover:bg-slate-50">
+        <td class="px-4 py-3 text-slate-900">Ada Lovelace</td>
+        <td class="px-4 py-3 text-slate-900">Designer</td>
+        <td class="px-4 py-3 text-slate-900">Active</td>
+      </tr>
+      <tr class="border-b border-slate-200 hover:bg-slate-50">
+        <td class="px-4 py-3 text-slate-900">Grace Hopper</td>
+        <td class="px-4 py-3 text-slate-900">Engineer</td>
+        <td class="px-4 py-3 text-slate-900">Active</td>
+      </tr>
+      <tr class="hover:bg-slate-50">
+        <td class="px-4 py-3 text-slate-900">Alan Turing</td>
+        <td class="px-4 py-3 text-slate-900">Research</td>
+        <td class="px-4 py-3 text-slate-900">Away</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
+    javascript: `const columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'role', label: 'Role' },
+  { key: 'status', label: 'Status' },
+];
+
+const rows = [
+  { name: 'Ada Lovelace', role: 'Designer', status: 'Active' },
+  { name: 'Grace Hopper', role: 'Engineer', status: 'Active' },
+  { name: 'Alan Turing', role: 'Research', status: 'Away' },
+];
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-slate-50 p-6">
+      <h2 className="mb-4 text-lg font-bold text-slate-900">Table</h2>
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <table className="w-full min-w-[28rem] border-collapse text-left text-sm">
+          <caption className="sr-only">Team members</caption>
+          <thead>
+            <tr className="border-b border-slate-200 bg-slate-50">
+              {columns.map((col) => (
+                <th key={col.key} scope="col" className="px-4 py-3 text-xs font-medium uppercase tracking-wider text-slate-400">
+                  {col.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.name} className="border-b border-slate-200 last:border-b-0 hover:bg-slate-50">
+                {columns.map((col) => (
+                  <td key={col.key} className="px-4 py-3 text-slate-900">{row[col.key]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}`,
+  },
+
+  dateTime: {
+    html: `<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <div class="space-y-1.5">
+    <label class="block text-sm font-medium text-slate-900" for="date">Date</label>
+    <button id="date" type="button" class="relative flex h-10 w-full items-center rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-10 text-left text-sm font-medium text-slate-900">
+      Nov 8, 2026
+    </button>
+    <p class="text-xs text-slate-400">Custom calendar with brand selection</p>
+  </div>
+  <div class="space-y-1.5">
+    <label class="block text-sm font-medium text-slate-900" for="time">Time</label>
+    <button id="time" type="button" class="relative flex h-10 w-full items-center rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-10 text-left text-sm font-medium text-slate-900">
+      2:30 PM
+    </button>
+    <p class="text-xs text-slate-400">Custom time picker with brand selection</p>
+  </div>
+</div>`,
+    javascript: `import { useState } from 'react';
+
+export default function App() {
+  const [date, setDate] = useState('2026-11-08');
+  const [time, setTime] = useState('14:30');
+
+  return (
+    <div className="grid grid-cols-1 gap-4 bg-slate-50 p-6 sm:grid-cols-2">
+      <div className="space-y-1.5">
+        <label className="block text-sm font-medium text-slate-900">Date</label>
+        <button
+          type="button"
+          onClick={() => setDate('2026-11-08')}
+          className="flex h-10 w-full items-center rounded-lg border border-slate-200 bg-white px-3 text-left text-sm font-medium text-slate-900"
+        >
+          {date}
+        </button>
+      </div>
+      <div className="space-y-1.5">
+        <label className="block text-sm font-medium text-slate-900">Time</label>
+        <button
+          type="button"
+          onClick={() => setTime('14:30')}
+          className="flex h-10 w-full items-center rounded-lg border border-slate-200 bg-white px-3 text-left text-sm font-medium text-slate-900"
+        >
+          {time}
+        </button>
+      </div>
+    </div>
+  );
+}`,
+  },
+
   mobile: {
-    dependencies: { 'lucide-react': 'latest' },
-    code: `import { useState } from 'react';
+    html: `<div class="mx-auto flex min-h-[28rem] max-w-sm flex-col border border-slate-200 bg-white">
+  <header class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+    <span class="text-slate-500">Menu</span>
+    <span class="text-sm font-bold">Studio Shop</span>
+    <span class="h-4 w-4"></span>
+  </header>
+  <main class="flex-1 p-4">
+    <div class="grid grid-cols-1 gap-3">
+      <article class="overflow-hidden rounded-xl border border-slate-200">
+        <div class="h-20 bg-indigo-100"></div>
+        <p class="p-3 text-sm font-medium">Canvas tote</p>
+      </article>
+      <article class="overflow-hidden rounded-xl border border-slate-200">
+        <div class="h-20 bg-indigo-100"></div>
+        <p class="p-3 text-sm font-medium">Studio lamp</p>
+      </article>
+    </div>
+  </main>
+  <nav class="grid grid-cols-4 border-t border-slate-200" aria-label="Primary">
+    <button type="button" class="py-2.5 text-[11px] text-indigo-600">Home</button>
+    <button type="button" class="py-2.5 text-[11px] text-slate-400">Search</button>
+    <button type="button" class="py-2.5 text-[11px] text-slate-400">Bag</button>
+    <button type="button" class="py-2.5 text-[11px] text-slate-400">Profile</button>
+  </nav>
+</div>`,
+    javascript: `import { useState } from 'react';
 import { Home, Search, ShoppingBag, User, Menu } from 'lucide-react';
 
 export default function App() {
@@ -307,8 +615,23 @@ export default function App() {
   },
 
   a11y: {
-    dependencies: {},
-    code: `export default function App() {
+    html: `<div class="space-y-6 bg-white p-8">
+  <h2 class="text-xl font-bold text-slate-900">Accessibility</h2>
+  <p class="text-sm text-slate-500">Tab through — every control shows a visible focus ring.</p>
+  <div class="flex flex-wrap gap-3">
+    <button type="button" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Primary</button>
+    <button type="button" class="h-10 rounded-lg border border-slate-200 px-4 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Outline</button>
+    <a href="#a11y" class="inline-flex h-10 items-center rounded-lg px-4 text-sm font-medium text-indigo-600 underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Link</a>
+  </div>
+  <form class="max-w-sm space-y-3">
+    <label class="block text-sm font-medium text-slate-700" for="fn">First name</label>
+    <input id="fn" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Ada" />
+    <label class="block text-sm font-medium text-slate-700" for="ln">Last name</label>
+    <input id="ln" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Lovelace" />
+    <button type="submit" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Submit</button>
+  </form>
+</div>`,
+    javascript: `export default function App() {
   return (
     <div className="min-h-screen space-y-6 bg-white p-8">
       <h2 className="text-xl font-bold text-slate-900">Accessibility</h2>

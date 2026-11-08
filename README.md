@@ -28,7 +28,7 @@ CSS custom properties mapped to Tailwind utility classes that mirror Figma varia
 
 Light and dark themes swap automatically via `:root` / `.dark` CSS variable scopes.
 
-### 5 Core Components
+### Core Components
 
 | Component | Primitive | Highlights |
 |-----------|-----------|------------|
@@ -37,15 +37,18 @@ Light and dark themes swap automatically via `:root` / `.dark` CSS variable scop
 | **Select** | `@radix-ui/react-select` | Keyboard navigation (Arrow/Enter/Esc), `aria-labelledby` |
 | **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
 | **Toast** | `@radix-ui/react-toast` | 4 semantic variants, auto-dismiss, swipe to dismiss |
+| **Data List** | Native `<dl>` | Label–value pairs; stacks on small screens, two-column from `sm` |
+| **Table** | Native `<table>` | Semantic headers, optional caption, horizontal scroll, row hover |
+| **Date and Time** | Custom calendar + time picker | Brand purple selection (no border), label typeface, Clear / Today / Now |
 
-### Per-section Live Code (Sandpack)
+### Per-section code samples
 
-Each sandbox section (except **Dashboard** and **AI**) ends with an embedded [Sandpack](https://sandpack.codesandbox.io/) editor:
+Each sandbox section (except **Dashboard** and **AI**) ends with a code panel:
 
-- **Tokens, Button, Input, Select, Dialog, Toast, Mobile, Accessibility** — edit JSX and see real-time rendering
-- **Iframe isolation** — user code runs in a sandboxed iframe; errors can't crash the host page
-- **Theme-synced editor** — Sandpack theme switches with the site's light/dark mode
-- Presets live in `src/components/sandboxPresets.js`; the shared editor is `LiveCode.jsx`
+- **HTML / JavaScript tabs** — switch between markup and JS samples, with one-click Copy
+- Dark syntax-highlighted code body (Flowbite-style panel)
+- Covers Tokens, Button, Input, Select, Dialog, Toast, Data List, Table, Date and Time, Mobile, Accessibility
+- Presets live in `src/components/sandboxPresets.js`; the shared panel is `LiveCode.jsx`
 
 ### Mobile responsive (Sandbox)
 
@@ -70,7 +73,8 @@ On `/#/ui` → **AI** (demo-only — no Live Code):
 
 - **Workspace** — top nav, floating side rails, hatched metric panels; only the sparkle + “AI & Automation” title stay live
 - **Chat** — history rail, skeleton message thread, composer
-- **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI toolbar: **Ask anything** opens an input bar, Close collapses the pill into a sparkle FAB with a width transition
+- **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
+- **Beta** — purple pill on the AI nav item and section heading (heading tip explains the beta label)
 - EN / 中文 chrome for the section
 
 ### System Matrix
@@ -113,7 +117,6 @@ A masthead segmented control (`LanguageToggle`) switches the site between Englis
 - **Tailwind CSS 3** — utility-first styling with `darkMode: 'class'`
 - **TypeScript** — used for Stageshow kit and `SystemMatrixCompare`
 - **Radix UI** — accessible primitives for Select, Dialog, Toast
-- **Sandpack** — in-browser code editor with runtime transpilation
 - **Lucide React** — icons
 - **Stageshow kit** — faux product UI for the home hero
 
@@ -131,7 +134,7 @@ Open [http://localhost:5173/design-system-hub/](http://localhost:5173/design-sys
 | Route | Page |
 |-------|------|
 | `/` | Home — brand intro, Stageshow hero, CTAs |
-| `/#/ui` | Sandbox — tokens, components, mobile / dashboard / AI, a11y + per-section Sandpack |
+| `/#/ui` | Sandbox — tokens, components, mobile / dashboard / AI, a11y + HTML/JS code samples |
 | `/#/matrix` | System Matrix — timeline + comparison |
 
 ## Project Structure
@@ -144,9 +147,12 @@ src/
 │   │   ├── Input.jsx
 │   │   ├── Select.jsx
 │   │   ├── Dialog.jsx
-│   │   └── Toast.jsx
-│   ├── LiveCode.jsx             # Per-section Sandpack editor
-│   ├── sandboxPresets.js        # Live-code snippets (not Dashboard / AI)
+│   │   ├── Toast.jsx
+│   │   ├── DataList.jsx
+│   │   ├── Table.jsx
+│   │   └── DateTime.jsx
+│   ├── LiveCode.jsx             # Per-section HTML / JavaScript code panel
+│   ├── sandboxPresets.js        # HTML + JS samples (not Dashboard / AI)
 │   ├── mobile/                  # Mobile responsive showcase + templates
 │   ├── dashboard/               # Dashboard template showcase
 │   ├── ai/                      # AI workspace, chat, scenario (+ interactive toolbar)

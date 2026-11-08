@@ -130,3 +130,14 @@
     @apply outline-none ring-2 ring-border-focus ring-offset-2 ring-offset-surface-primary;
   }
 }
+
+@keyframes scenario-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}

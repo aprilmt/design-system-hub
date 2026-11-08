@@ -1,7 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUp, List, MousePointerClick, Sparkles, User, X } from 'lucide-react'
 import { useLocale } from '../../i18n/LocaleContext'
 import { cn } from '../../lib/utils'
+
+/** Looping demo beats for the Scenario toolbar only (page chrome stays still). */
+const TOOLBAR_WALKTHROUGH = [
+  { id: 'ask', duration: 1200 },
+  { id: 'ask-open', duration: 4800 },
+  { id: 'summarize', duration: 1600 },
+  { id: 'select', duration: 1600 },
+  { id: 'rest', duration: 1100 },
+]
+
+const TYPE_MS = 42
+const PILL_EASE = 'duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]'
 
 function Label({ children }) {
   return (
@@ -170,6 +182,69 @@ function WorkspaceSkeleton({ copy }) {
 function ScenarioSkeleton({ copy }) {
   const [promptsOpen, setPromptsOpen] = useState(true)
   const [askOpen, setAskOpen] = useState(false)
+  const [typedText, setTypedText] = useState('')
+  const [tourStep, setTourStep] = useState('ask')
+  const [tourPaused, setTourPaused] = useState(false)
+  const stepIndexRef = useRef(0)
+  const questionIndexRef = useRef(0)
+
+  const pauseTour = () => setTourPaused(true)
+  const sampleQuestions = copy.scenarioAskSamples ?? ['Type your questions…']
+  const toolbarExpanded = promptsOpen && !askOpen
+
+  useEffect(() => {
+    if (tourPaused) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+
+    let timer
+    const run = () => {
+      const beat = TOOLBAR_WALKTHROUGH[stepIndexRef.current]
+      setTourStep(beat.id)
+      setAskOpen(beat.id === 'ask-open')
+      setPromptsOpen(true)
+      timer = window.setTimeout(() => {
+        stepIndexRef.current =
+          (stepIndexRef.current + 1) % TOOLBAR_WALKTHROUGH.length
+        run()
+      }, beat.duration)
+    }
+    run()
+    return () => window.clearTimeout(timer)
+  }, [tourPaused])
+
+  useEffect(() => {
+    if (!askOpen) {
+      setTypedText('')
+      return
+    }
+    if (tourPaused || tourStep !== 'ask-open') return
+
+    const questions = sampleQuestions.length
+      ? sampleQuestions
+      : ['Type your questions…']
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const question = questions[questionIndexRef.current % questions.length]
+    questionIndexRef.current += 1
+
+    if (reduced) {
+      setTypedText(question)
+      return
+    }
+
+    setTypedText('')
+    let i = 0
+    const timer = window.setInterval(() => {
+      i += 1
+      setTypedText(question.slice(0, i))
+      if (i >= question.length) window.clearInterval(timer)
+    }, TYPE_MS)
+    return () => window.clearInterval(timer)
+  }, [askOpen, tourPaused, tourStep, sampleQuestions])
+
+  const highlightAsk = !tourPaused && tourStep === 'ask'
+  const highlightSummarize = !tourPaused && tourStep === 'summarize'
+  const highlightSelect = !tourPaused && tourStep === 'select'
 
   return (
     <BrowserChrome title={copy.scenarioUrl}>
@@ -178,7 +253,7 @@ function ScenarioSkeleton({ copy }) {
         role="img"
         aria-label={copy.scenarioAria}
       >
-        {/* Icon rail */}
+        {/* Icon rail — static */}
         <aside className="flex w-14 shrink-0 flex-col items-center justify-between border-r border-border-default bg-surface-elevated py-4">
           <div className="flex flex-col items-center gap-3">
             {[0, 1, 2, 3].map((i) => (
@@ -190,176 +265,250 @@ function ScenarioSkeleton({ copy }) {
           </span>
         </aside>
 
+        {/* Dashboard shell — static (no pulse on bones during tour) */}
         <div className="flex min-w-0 flex-1 flex-col gap-5 p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <Bone className="h-7 w-7 rounded-token" />
+              <div className="h-7 w-7 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
               <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
                 {copy.scenarioDashboard}
               </span>
             </div>
-            <Bone className="h-9 w-9 rounded-token" />
+            <div className="h-9 w-9 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
           </div>
 
-          {/* KPI cards */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
                 className="rounded-token-lg border border-border-default bg-surface-elevated p-4"
               >
-                <Bone className="h-2.5 w-16" />
-                <Bone className="mt-4 h-8 w-28" />
+                <div className="h-2.5 w-16 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
+                <div className="mt-4 h-8 w-28 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
               </div>
             ))}
           </div>
 
-          {/* Context-aware table */}
           <div className="flex-1 rounded-token-lg border border-border-default bg-surface-elevated p-4">
             <div className="mb-4 flex gap-6 border-b border-border-default pb-3">
-              <Bone className="h-2.5 w-14" />
-              <Bone className="h-2.5 w-16" />
-              <Bone className="h-2.5 w-12" />
-              <Bone className="hidden h-2.5 w-14 sm:block" />
+              <div className="h-2.5 w-14 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
+              <div className="h-2.5 w-16 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
+              <div className="h-2.5 w-12 rounded-token bg-slate-200 dark:bg-slate-700" aria-hidden />
+              <div className="hidden h-2.5 w-14 rounded-token bg-slate-200 dark:bg-slate-700 sm:block" aria-hidden />
             </div>
             <div className="space-y-4">
               {[0, 1, 2].map((row) => (
                 <div key={row} className="flex items-center gap-4">
-                  <Bone className="h-3 w-24 flex-1 sm:max-w-[140px]" />
-                  <Bone className="hidden h-3 w-20 sm:block" />
-                  <Bone className="hidden h-3 w-16 md:block" />
-                  <Bone className="ml-auto h-6 w-16 rounded-full" />
+                  <div className="h-3 w-24 flex-1 rounded-token bg-slate-200 dark:bg-slate-700 sm:max-w-[140px]" aria-hidden />
+                  <div className="hidden h-3 w-20 rounded-token bg-slate-200 dark:bg-slate-700 sm:block" aria-hidden />
+                  <div className="hidden h-3 w-16 rounded-token bg-slate-200 dark:bg-slate-700 md:block" aria-hidden />
+                  <div className="ml-auto h-6 w-16 rounded-full bg-slate-200 dark:bg-slate-700" aria-hidden />
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Floating AI prompts — ask input / collapsing toolbar → sparkle FAB */}
-        {askOpen ? (
-          <form
-            className="absolute bottom-5 right-5 z-10 flex w-[min(100%-2.5rem,22rem)] items-center gap-2 rounded-full border border-slate-300 bg-slate-500 px-2 py-1.5 shadow-token dark:border-slate-400 dark:bg-slate-600"
-            aria-label={copy.scenarioAskBarAria}
-            onSubmit={(e) => {
-              e.preventDefault()
-            }}
-          >
-            <Sparkles size={14} className="ml-1.5 shrink-0 text-white/80" aria-hidden />
-            <input
-              type="text"
-              autoFocus
-              placeholder={copy.scenarioAskPlaceholder}
-              className="min-w-0 flex-1 bg-transparent py-1.5 text-xs text-white placeholder:text-white/55 outline-none ring-0 ring-offset-0 focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              aria-label={copy.scenarioAskPlaceholder}
-              onKeyDown={(e) => {
-                if (e.key === 'Escape') setAskOpen(false)
-              }}
-            />
-            <button
-              type="submit"
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
-              aria-label={copy.scenarioAskSend}
-            >
-              <ArrowUp size={14} aria-hidden />
-            </button>
-            <button
-              type="button"
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white/90 hover:bg-white/10"
-              aria-label={copy.scenarioClose}
-              onClick={() => setAskOpen(false)}
-            >
-              <X size={14} aria-hidden />
-            </button>
-          </form>
-        ) : (
+        {/* One pill: ask / toolbar / FAB all share the same width-collapse motion */}
+        <div
+          className={cn(
+            'absolute bottom-5 right-5 z-10 flex h-11 items-center overflow-hidden rounded-full border border-border-default bg-slate-500 shadow-token dark:bg-slate-600',
+            (toolbarExpanded || askOpen) && 'overflow-visible',
+            askOpen && 'border-slate-300 dark:border-slate-400',
+          )}
+          aria-label={
+            askOpen
+              ? copy.scenarioAskBarAria
+              : promptsOpen
+                ? copy.scenarioToolbarAria
+                : undefined
+          }
+          onPointerDown={pauseTour}
+        >
+          {/* Ask input — collapses with the same grid motion as the toolbar */}
           <div
             className={cn(
-              'absolute bottom-5 right-5 z-10 flex h-11 items-center rounded-full border border-border-default bg-slate-500 shadow-token dark:bg-slate-600',
-              promptsOpen ? 'overflow-visible' : 'overflow-hidden',
+              'grid transition-[grid-template-columns]',
+              PILL_EASE,
+              askOpen ? 'grid-cols-[1fr]' : 'grid-cols-[0fr]',
             )}
-            aria-label={promptsOpen ? copy.scenarioToolbarAria : undefined}
+          >
+            <div className="min-w-0 overflow-hidden">
+              <form
+                className={cn(
+                  'flex w-[min(100vw-5rem,20rem)] items-center gap-2 whitespace-nowrap px-2 py-1.5 transition-opacity duration-200',
+                  askOpen ? 'opacity-100 delay-75' : 'pointer-events-none opacity-0',
+                )}
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <Sparkles size={14} className="ml-1 shrink-0 text-white/80" aria-hidden />
+                {tourPaused ? (
+                  <input
+                    type="text"
+                    autoFocus
+                    placeholder={copy.scenarioAskPlaceholder}
+                    className="min-w-0 flex-1 bg-transparent py-1.5 text-xs text-white caret-white placeholder:text-white/55 outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    aria-label={copy.scenarioAskPlaceholder}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') setAskOpen(false)
+                    }}
+                  />
+                ) : (
+                  <p className="min-w-0 flex-1 truncate py-1.5 text-xs text-white">
+                    {typedText}
+                    <span
+                      className="ml-0.5 inline-block h-3 w-px translate-y-px bg-white align-middle"
+                      style={{ animation: 'scenario-caret 1s steps(1) infinite' }}
+                      aria-hidden
+                    />
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className={cn(
+                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white transition-colors',
+                    typedText ? 'bg-white/25' : 'bg-white/15',
+                  )}
+                  tabIndex={askOpen ? 0 : -1}
+                  aria-label={copy.scenarioAskSend}
+                >
+                  <ArrowUp size={14} aria-hidden />
+                </button>
+                <button
+                  type="button"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white/90 hover:bg-white/10"
+                  tabIndex={askOpen ? 0 : -1}
+                  aria-label={copy.scenarioClose}
+                  onClick={() => {
+                    pauseTour()
+                    setAskOpen(false)
+                  }}
+                >
+                  <X size={14} aria-hidden />
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Toolbar actions */}
+          <div
+            className={cn(
+              'grid transition-[grid-template-columns]',
+              PILL_EASE,
+              toolbarExpanded ? 'grid-cols-[1fr]' : 'grid-cols-[0fr]',
+            )}
           >
             <div
               className={cn(
-                'grid transition-[grid-template-columns] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
-                promptsOpen ? 'grid-cols-[1fr]' : 'grid-cols-[0fr]',
+                'min-w-0',
+                toolbarExpanded ? 'overflow-visible' : 'overflow-hidden',
               )}
             >
               <div
                 className={cn(
-                  'min-w-0',
-                  promptsOpen ? 'overflow-visible' : 'overflow-hidden',
+                  'flex items-center gap-2 whitespace-nowrap py-2 pl-3 pr-3 transition-opacity duration-200',
+                  toolbarExpanded
+                    ? 'opacity-100 delay-75'
+                    : 'pointer-events-none opacity-0',
                 )}
               >
-                <div
+                <button
+                  type="button"
                   className={cn(
-                    'flex items-center gap-2 whitespace-nowrap py-2 pl-3 pr-3 transition-opacity duration-200',
-                    promptsOpen
-                      ? 'opacity-100 delay-75'
-                      : 'pointer-events-none opacity-0',
+                    'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium text-white transition-all duration-300',
+                    highlightAsk
+                      ? 'scale-105 bg-white/20 ring-2 ring-white/50'
+                      : 'hover:bg-white/10',
                   )}
+                  tabIndex={toolbarExpanded ? 0 : -1}
+                  onClick={() => {
+                    pauseTour()
+                    setAskOpen(true)
+                  }}
                 >
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium text-white hover:bg-white/10"
-                    tabIndex={promptsOpen ? 0 : -1}
-                    onClick={() => setAskOpen(true)}
+                  <Sparkles size={14} aria-hidden />
+                  {copy.scenarioAsk}
+                </button>
+                <button
+                  type="button"
+                  className={cn(
+                    'relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
+                    highlightSummarize
+                      ? 'scale-110 bg-white/20 ring-2 ring-white/50'
+                      : 'hover:bg-white/10',
+                  )}
+                  aria-label={copy.scenarioSummarizeTip}
+                  tabIndex={toolbarExpanded ? 0 : -1}
+                >
+                  <List size={14} aria-hidden />
+                  <span
+                    className={cn(
+                      'pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white shadow-token transition-opacity duration-300 dark:bg-slate-900',
+                      highlightSummarize ? 'opacity-100' : 'opacity-0',
+                    )}
                   >
-                    <Sparkles size={14} aria-hidden />
-                    {copy.scenarioAsk}
-                  </button>
-                  <button
-                    type="button"
-                    className="group relative flex h-7 w-7 items-center justify-center rounded-full text-white/90"
-                    aria-label={copy.scenarioSummarizeTip}
-                    tabIndex={promptsOpen ? 0 : -1}
+                    {copy.scenarioSummarizeTip}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className={cn(
+                    'relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
+                    highlightSelect
+                      ? 'scale-110 bg-white/20 ring-2 ring-white/50'
+                      : 'hover:bg-white/10',
+                  )}
+                  aria-label={copy.scenarioSelectTip}
+                  tabIndex={toolbarExpanded ? 0 : -1}
+                >
+                  <MousePointerClick size={14} aria-hidden />
+                  <span
+                    className={cn(
+                      'pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white shadow-token transition-opacity duration-300 dark:bg-slate-900',
+                      highlightSelect ? 'opacity-100' : 'opacity-0',
+                    )}
                   >
-                    <List size={14} aria-hidden />
-                    <span className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white opacity-0 shadow-token transition-opacity group-hover:opacity-100 dark:bg-slate-900">
-                      {copy.scenarioSummarizeTip}
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className="group relative flex h-7 w-7 items-center justify-center rounded-full text-white/90"
-                    aria-label={copy.scenarioSelectTip}
-                    tabIndex={promptsOpen ? 0 : -1}
-                  >
-                    <MousePointerClick size={14} aria-hidden />
-                    <span className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white opacity-0 shadow-token transition-opacity group-hover:opacity-100 dark:bg-slate-900">
-                      {copy.scenarioSelectTip}
-                    </span>
-                  </button>
-                  <span className="h-4 w-px bg-white/30" aria-hidden />
-                  <button
-                    type="button"
-                    className="flex h-7 w-7 items-center justify-center rounded-full text-white/90 hover:bg-white/10"
-                    aria-label={copy.scenarioClose}
-                    tabIndex={promptsOpen ? 0 : -1}
-                    onClick={() => setPromptsOpen(false)}
-                  >
-                    <X size={14} aria-hidden />
-                  </button>
-                </div>
+                    {copy.scenarioSelectTip}
+                  </span>
+                </button>
+                <span className="h-4 w-px bg-white/30" aria-hidden />
+                <button
+                  type="button"
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-white/90 hover:bg-white/10"
+                  aria-label={copy.scenarioClose}
+                  tabIndex={toolbarExpanded ? 0 : -1}
+                  onClick={() => {
+                    pauseTour()
+                    setPromptsOpen(false)
+                  }}
+                >
+                  <X size={14} aria-hidden />
+                </button>
               </div>
             </div>
-
-            <button
-              type="button"
-              className={cn(
-                'flex h-11 shrink-0 items-center justify-center text-white transition-[width,opacity] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-slate-600 dark:hover:bg-slate-500',
-                promptsOpen
-                  ? 'pointer-events-none w-0 opacity-0'
-                  : 'w-11 opacity-100',
-              )}
-              aria-label={copy.scenarioOpen}
-              tabIndex={promptsOpen ? -1 : 0}
-              onClick={() => setPromptsOpen(true)}
-            >
-              <Sparkles size={18} aria-hidden className="shrink-0" />
-            </button>
           </div>
-        )}
+
+          {/* FAB sparkle when fully collapsed */}
+          <button
+            type="button"
+            className={cn(
+              'flex h-11 shrink-0 items-center justify-center text-white transition-[width,opacity]',
+              PILL_EASE,
+              'hover:bg-slate-600 dark:hover:bg-slate-500',
+              promptsOpen || askOpen
+                ? 'pointer-events-none w-0 opacity-0'
+                : 'w-11 opacity-100',
+            )}
+            aria-label={copy.scenarioOpen}
+            tabIndex={promptsOpen || askOpen ? -1 : 0}
+            onClick={() => {
+              pauseTour()
+              setPromptsOpen(true)
+            }}
+          >
+            <Sparkles size={18} aria-hidden className="shrink-0" />
+          </button>
+        </div>
       </div>
     </BrowserChrome>
   )

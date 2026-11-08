@@ -42,29 +42,39 @@ export const messages = {
     sandbox: {
       title: 'Sandbox',
       intro:
-        'Every component, token, and accessibility pattern — interactive demos with live editable code (except Dashboard and AI skeletons).',
+        'Every component, token, and accessibility pattern — interactive demos with HTML / JavaScript code samples (except Dashboard and AI skeletons).',
       sectionsAria: 'Sandbox sections',
       sidebar: {
         mobile: 'Mobile',
         tokens: 'Design Tokens',
+        components: 'Components',
         button: 'Button',
         input: 'Input',
         select: 'Select',
         dialog: 'Dialog',
         toast: 'Toast',
+        dataList: 'Data List',
+        table: 'Table',
+        dateTime: 'Date and Time',
         dashboard: 'Dashboard',
         ai: 'AI',
+        beta: 'Beta',
+        betaTip:
+          'This beta component is currently under review and is still open for further evolution.',
         a11y: 'Accessibility',
       },
       liveCode: {
-        tokens: 'Edit token swatches live — Tailwind utilities map to semantic color and radius tokens.',
-        button: 'Edit button variants, sizes, loading state, and segmented groups in the Sandpack editor.',
-        input: 'Edit accessible inputs with labels, hints, and live validation errors.',
-        select: 'Edit a native select pattern with keyboard-friendly options.',
-        dialog: 'Edit a modal with Esc close, backdrop dismiss, and focus return.',
-        toast: 'Edit toast variants — trigger notifications from the preview.',
-        mobile: 'Edit a responsive phone shell with product grid and bottom navigation.',
-        a11y: 'Edit focus-ring and tab-order patterns — Tab through the preview to verify.',
+        tokens: 'HTML and JavaScript for semantic token swatches — brand, feedback, surface, content, border, radius, and shadow.',
+        button: 'HTML and JavaScript for button variants, sizes, loading state, and segmented groups.',
+        input: 'HTML and JavaScript for accessible inputs with labels, hints, and validation.',
+        select: 'HTML and JavaScript for a native select pattern with keyboard-friendly options.',
+        dialog: 'HTML and JavaScript for a modal with Esc close, backdrop dismiss, and focus return.',
+        toast: 'HTML and JavaScript for toast variants and notification markup.',
+        dataList: 'HTML and JavaScript for a semantic description list of label–value pairs.',
+        table: 'HTML and JavaScript for an accessible data table with headers and row hover.',
+        dateTime: 'HTML and JavaScript for date and time fields with labels and validation.',
+        mobile: 'HTML and JavaScript for a responsive phone shell with product grid and bottom nav.',
+        a11y: 'HTML and JavaScript for focus-ring and tab-order patterns.',
       },
       mobile: {
         title: 'Mobile Responsive',
@@ -133,13 +143,16 @@ export const messages = {
       tokens: {
         title: 'Design Tokens',
         description:
-          'Semantic color tokens mapped 1-to-1 to Figma variables. Switch themes to see CSS custom properties adapt.',
+          'Semantic color, radius, and shadow tokens mapped 1-to-1 to Figma variables. Switch themes to see CSS custom properties adapt.',
         groups: {
           Brand: 'Brand',
           Feedback: 'Feedback',
           Surface: 'Surface',
+          Content: 'Content',
+          Border: 'Border',
         },
         borderRadius: 'Border Radius',
+        shadow: 'Shadow',
       },
       button: {
         title: 'Button',
@@ -181,6 +194,30 @@ export const messages = {
         description:
           'Lightweight notifications with four semantic variants. Auto-dismisses after 5 seconds, swipe to dismiss on touch devices.',
       },
+      dataList: {
+        title: 'Data List',
+        description:
+          'Semantic description list for label–value pairs. Stacks on small screens and aligns as a two-column grid from sm up.',
+      },
+      table: {
+        title: 'Table',
+        description:
+          'Accessible data table with sticky semantic headers, horizontal scroll on narrow widths, and row hover states.',
+        caption: 'Team members',
+      },
+      dateTime: {
+        title: 'Date and Time',
+        description:
+          'Accessible date, time, and datetime fields with labels, hints, and validation. The calendar uses brand purple selection and the same typeface as form labels.',
+        dateLabel: 'Date',
+        dateHint: 'Custom calendar with brand selection',
+        timeLabel: 'Time',
+        timeHint: 'Custom time picker with brand selection',
+        datetimeLabel: 'Date & time',
+        datetimeHint: 'Calendar + time field',
+        errorLabel: 'Deadline',
+        errorMessage: 'Choose a valid date to continue.',
+      },
       dashboard: {
         title: 'Dashboard',
         description:
@@ -215,6 +252,12 @@ export const messages = {
         scenarioAdd: 'Add widget',
         scenarioAsk: 'Ask anything',
         scenarioAskPlaceholder: 'Ask anything about this page…',
+        scenarioAskSamples: [
+          'Type your questions…',
+          'Summarize the open incidents',
+          'What is driving the KPI change?',
+          'Draft a status update for April',
+        ],
         scenarioAskSend: 'Send',
         scenarioAskBarAria: 'Ask AI input',
         scenarioSummarize: 'Summarize',
@@ -431,29 +474,38 @@ export const messages = {
     },
     sandbox: {
       title: '沙盒',
-      intro: '每个组件、令牌与无障碍模式——可交互演示，并附带可编辑实时代码（仪表盘与 AI 骨架除外）。',
+      intro: '每个组件、令牌与无障碍模式——可交互演示，并附带 HTML / JavaScript 代码示例（仪表盘与 AI 骨架除外）。',
       sectionsAria: '沙盒章节',
       sidebar: {
         mobile: '移动端',
         tokens: '设计令牌',
+        components: '组件',
         button: '按钮',
         input: '输入框',
         select: '选择器',
         dialog: '对话框',
         toast: '轻提示',
+        dataList: '数据列表',
+        table: '表格',
+        dateTime: '日期与时间',
         dashboard: '仪表盘',
         ai: 'AI',
+        beta: 'Beta',
+        betaTip: '该 Beta 组件仍在评审中，后续形态可能继续演进。',
         a11y: '无障碍',
       },
       liveCode: {
-        tokens: '实时编辑令牌色板——Tailwind 工具类映射到语义色与圆角令牌。',
-        button: '在 Sandpack 中编辑按钮变体、尺寸、加载态与分段按钮组。',
-        input: '编辑带标签、提示与实时校验错误的无障碍输入框。',
-        select: '编辑原生 select 模式，支持键盘友好选项。',
-        dialog: '编辑带 Esc 关闭、背景点击关闭与焦点回退的模态框。',
-        toast: '编辑轻提示变体——在预览中触发通知。',
-        mobile: '编辑带商品网格与底部导航的响应式手机壳。',
-        a11y: '编辑焦点环与 Tab 顺序模式——在预览中按 Tab 验证。',
+        tokens: '语义令牌色板的 HTML 与 JavaScript——品牌、反馈、表面、内容、边框、圆角与阴影。',
+        button: '按钮变体、尺寸、加载态与分段按钮组的 HTML 与 JavaScript。',
+        input: '带标签、提示与校验的无障碍输入框 HTML 与 JavaScript。',
+        select: '原生 select 模式的 HTML 与 JavaScript。',
+        dialog: '带 Esc 关闭与焦点回退的模态框 HTML 与 JavaScript。',
+        toast: '轻提示变体与通知结构的 HTML 与 JavaScript。',
+        dataList: '标签–值描述列表的 HTML 与 JavaScript。',
+        table: '无障碍数据表的 HTML 与 JavaScript。',
+        dateTime: '日期与时间字段的 HTML 与 JavaScript。',
+        mobile: '响应式手机壳的 HTML 与 JavaScript。',
+        a11y: '焦点环与 Tab 顺序模式的 HTML 与 JavaScript。',
       },
       mobile: {
         title: '移动端响应式',
@@ -520,13 +572,16 @@ export const messages = {
       },
       tokens: {
         title: '设计令牌',
-        description: '语义化颜色令牌与 Figma 变量一一映射。切换主题即可看到 CSS 自定义属性变化。',
+        description: '语义化颜色、圆角与阴影令牌与 Figma 变量一一映射。切换主题即可看到 CSS 自定义属性变化。',
         groups: {
           Brand: '品牌',
           Feedback: '反馈',
           Surface: '表面',
+          Content: '内容',
+          Border: '边框',
         },
         borderRadius: '圆角',
+        shadow: '阴影',
       },
       button: {
         title: '按钮',
@@ -566,6 +621,30 @@ export const messages = {
         title: '轻提示',
         description: '四种语义变体的轻量通知。约 5 秒后自动消失，触控设备可滑动关闭。',
       },
+      dataList: {
+        title: '数据列表',
+        description:
+          '用于标签–值对的语义化描述列表。小屏纵向堆叠，自 sm 起对齐为两列网格。',
+      },
+      table: {
+        title: '表格',
+        description:
+          '无障碍数据表：语义表头、窄屏横向滚动，以及行悬停状态。',
+        caption: '团队成员',
+      },
+      dateTime: {
+        title: '日期与时间',
+        description:
+          '带标签、提示与校验的无障碍日期、时间与日期时间字段。日历使用品牌紫色选中态，字体与表单标签一致。',
+        dateLabel: '日期',
+        dateHint: '自定义日历，品牌色选中',
+        timeLabel: '时间',
+        timeHint: '自定义时间选择器，品牌色选中',
+        datetimeLabel: '日期与时间',
+        datetimeHint: '日历 + 时间字段',
+        errorLabel: '截止日期',
+        errorMessage: '请选择有效日期以继续。',
+      },
       dashboard: {
         title: '仪表盘',
         description:
@@ -600,6 +679,12 @@ export const messages = {
         scenarioAdd: '添加组件',
         scenarioAsk: 'Ask anything',
         scenarioAskPlaceholder: '就当前页面随便问问…',
+        scenarioAskSamples: [
+          '输入你的问题…',
+          '总结当前未处理事件',
+          'KPI 波动的主要原因是什么？',
+          '帮 April 起草一则状态更新',
+        ],
         scenarioAskSend: '发送',
         scenarioAskBarAria: '向 AI 提问输入框',
         scenarioSummarize: 'Summarize',

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Suspense, lazy, useCallback } from 'react'
+import { useState, useEffect, useRef, useId, Suspense, lazy, useCallback } from 'react'
 import {
   Keyboard,
   MousePointerClick,
@@ -9,12 +9,16 @@ import {
   AlertTriangle,
   Info,
   Loader2,
+  ChevronDown,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Select } from '../components/ui/Select'
 import { Dialog, DialogContent } from '../components/ui/Dialog'
 import { useToast } from '../components/ui/Toast'
+import { DataList } from '../components/ui/DataList'
+import { Table } from '../components/ui/Table'
+import { DateTime } from '../components/ui/DateTime'
 import { useLocale } from '../i18n/LocaleContext'
 import { sandboxPresets } from '../components/sandboxPresets'
 
@@ -49,8 +53,8 @@ function SectionLiveCode({ presetKey, description }) {
       }
     >
       <LiveCode
-        code={preset.code}
-        dependencies={preset.dependencies}
+        html={preset.html}
+        javascript={preset.javascript}
         description={description}
       />
     </Suspense>
@@ -59,14 +63,77 @@ function SectionLiveCode({ presetKey, description }) {
 
 /* ─── helpers ─── */
 
-function Section({ id, title, description, children }) {
+function BetaBadge({ label, tip, className = '' }) {
+  const [open, setOpen] = useState(false)
+  const rootRef = useRef(null)
+  const tipId = useId()
+  const pillClass =
+    'inline-flex h-5 items-center rounded-full bg-brand-secondary px-2 font-sans text-[10px] font-medium leading-none tracking-wide text-brand-primary'
+
+  useEffect(() => {
+    if (!open || !tip) return
+    const onPointer = (e) => {
+      if (!rootRef.current?.contains(e.target)) setOpen(false)
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointer)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointer)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open, tip])
+
+  if (!tip) {
+    return (
+      <span className={`shrink-0 self-center ${pillClass} ${className}`}>
+        {label}
+      </span>
+    )
+  }
+
+  return (
+    <span ref={rootRef} className={`relative inline-flex shrink-0 self-center ${className}`}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-describedby={open ? tipId : undefined}
+        onClick={(e) => {
+          e.stopPropagation()
+          setOpen((v) => !v)
+        }}
+        className={`${pillClass} outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0`}
+      >
+        {label}
+      </button>
+      {open ? (
+        <span
+          id={tipId}
+          role="tooltip"
+          className="absolute bottom-full left-1/2 z-50 mb-2 w-[min(16.5rem,calc(100vw-2rem))] -translate-x-1/2 rounded-md bg-slate-900 px-3 py-2 text-center font-sans text-xs font-normal leading-relaxed text-white shadow-token"
+        >
+          {tip}
+          <span
+            className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-slate-900"
+            aria-hidden
+          />
+        </span>
+      ) : null}
+    </span>
+  )
+}
+
+function Section({ id, title, description, badge, children }) {
   return (
     <section
       id={id}
       className="scroll-mt-20 border-b border-border-default pb-10 pt-10 first:pt-0 last:border-b-0"
     >
-      <h2 className="mb-1 font-display text-2xl font-normal tracking-normal text-slate-950 dark:text-slate-50">
+      <h2 className="mb-1 flex items-center gap-2.5 font-display text-2xl font-normal tracking-normal text-slate-950 dark:text-slate-50">
         {title}
+        {badge}
       </h2>
       {description && (
         <p className="mb-7 max-w-2xl text-sm leading-relaxed text-content-secondary">
@@ -92,6 +159,7 @@ const colorTokens = [
   { group: 'Brand', tokens: [
     { name: 'brand-primary', tw: 'bg-brand-primary' },
     { name: 'brand-primary-hover', tw: 'bg-brand-primary-hover' },
+    { name: 'brand-primary-active', tw: 'bg-brand-primary-active' },
     { name: 'brand-secondary', tw: 'bg-brand-secondary border border-border-default' },
   ]},
   { group: 'Feedback', tokens: [
@@ -105,6 +173,23 @@ const colorTokens = [
     { name: 'surface-secondary', tw: 'bg-surface-secondary border border-border-default' },
     { name: 'surface-elevated', tw: 'bg-surface-elevated border border-border-default' },
   ]},
+  { group: 'Content', tokens: [
+    { name: 'content-primary', tw: 'bg-content-primary' },
+    { name: 'content-secondary', tw: 'bg-content-secondary' },
+    { name: 'content-muted', tw: 'bg-content-muted' },
+    { name: 'content-on-brand', tw: 'bg-content-on-brand border border-border-default' },
+  ]},
+  { group: 'Border', tokens: [
+    { name: 'border-default', tw: 'bg-border-default' },
+    { name: 'border-strong', tw: 'bg-border-strong' },
+    { name: 'border-focus', tw: 'bg-border-focus' },
+  ]},
+]
+
+const shadowTokens = [
+  { name: 'shadow-token-sm', tw: 'shadow-token-sm' },
+  { name: 'shadow-token', tw: 'shadow-token' },
+  { name: 'shadow-token-lg', tw: 'shadow-token-lg' },
 ]
 
 const selectOptions = [
@@ -114,18 +199,49 @@ const selectOptions = [
   { value: 'angular', label: 'Angular', disabled: true },
 ]
 
-const sidebarLinkIds = [
-  'tokens',
+const componentSectionIds = [
   'button',
   'input',
   'select',
   'dialog',
   'toast',
-  'mobile',
-  'dashboard',
-  'ai',
-  'a11y',
+  'dataList',
+  'table',
+  'dateTime',
 ]
+
+const dataListDemoItems = [
+  { label: 'Name', value: 'Jane Doe' },
+  { label: 'Role', value: 'Product Designer' },
+  { label: 'Team', value: 'Design Systems' },
+  { label: 'Status', value: 'Active' },
+]
+
+const tableDemoColumns = [
+  { key: 'name', label: 'Name' },
+  { key: 'role', label: 'Role' },
+  { key: 'status', label: 'Status' },
+]
+
+const tableDemoRows = [
+  { id: 1, name: 'Ada Lovelace', role: 'Designer', status: 'Active' },
+  { id: 2, name: 'Grace Hopper', role: 'Engineer', status: 'Active' },
+  { id: 3, name: 'Alan Turing', role: 'Research', status: 'Away' },
+  { id: 4, name: 'Katherine Johnson', role: 'Analyst', status: 'Active' },
+]
+
+const sidebarItems = [
+  { type: 'link', id: 'tokens' },
+  { type: 'group', id: 'components', children: componentSectionIds },
+  { type: 'link', id: 'mobile' },
+  { type: 'link', id: 'dashboard' },
+  { type: 'link', id: 'ai', badge: 'beta' },
+  { type: 'link', id: 'a11y' },
+]
+
+const sidebarLinkIds = sidebarItems.flatMap((item) =>
+  item.type === 'group' ? item.children : [item.id],
+)
 
 /* ─── page ─── */
 
@@ -164,14 +280,16 @@ export function UISandbox() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [viewMode, setViewMode] = useState('list')
   const [density, setDensity] = useState('comfortable')
+  const [componentsOpen, setComponentsOpen] = useState(true)
   const { toast } = useToast()
 
-  const sidebarLinks = sidebarLinkIds.map((id) => ({
-    id,
-    label: dict.sandbox.sidebar[id],
-  }))
   const sectionIds = sidebarLinkIds
   const activeSection = useActiveSection(sectionIds)
+  const componentActive = componentSectionIds.includes(activeSection)
+
+  useEffect(() => {
+    if (componentActive) setComponentsOpen(true)
+  }, [componentActive])
 
   const scrollTo = useCallback((id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -195,19 +313,91 @@ export function UISandbox() {
             className="sticky top-20 space-y-0.5"
             aria-label={t('sandbox.sectionsAria')}
           >
-            {sidebarLinks.map((l) => (
-              <button
-                key={l.id}
-                onClick={() => scrollTo(l.id)}
-                className={`block w-full text-left px-2 py-1.5 text-sm transition-colors ${
-                  activeSection === l.id
-                    ? 'font-medium text-content-primary'
-                    : 'text-content-muted hover:text-content-primary'
-                }`}
-              >
-                {l.label}
-              </button>
-            ))}
+            {sidebarItems.map((item) => {
+              if (item.type === 'group') {
+                const open = componentsOpen
+                return (
+                  <div key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => setComponentsOpen((v) => !v)}
+                      aria-expanded={open}
+                      className={`flex w-full items-center justify-between gap-1 px-2 py-1.5 text-left text-sm transition-colors ${
+                        componentActive
+                          ? 'font-medium text-content-primary'
+                          : 'text-content-muted hover:text-content-primary'
+                      }`}
+                    >
+                      <span>{dict.sandbox.sidebar[item.id]}</span>
+                      <ChevronDown
+                        size={14}
+                        className={`shrink-0 transition-transform duration-200 ${
+                          open ? 'rotate-0' : '-rotate-90'
+                        }`}
+                        aria-hidden
+                      />
+                    </button>
+                    <div
+                      className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                        open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                      }`}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <div className="space-y-0.5 pb-0.5 pl-2">
+                          {item.children.map((id) => (
+                            <button
+                              key={id}
+                              type="button"
+                              onClick={() => scrollTo(id)}
+                              className={`block w-full text-left px-2 py-1.5 text-sm transition-colors ${
+                                activeSection === id
+                                  ? 'font-medium text-content-primary'
+                                  : 'text-content-muted hover:text-content-primary'
+                              }`}
+                            >
+                              {dict.sandbox.sidebar[id]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+
+              if (item.badge === 'beta') {
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => scrollTo(item.id)}
+                    className={`flex w-full items-center gap-1.5 px-2 py-1.5 text-left text-sm transition-colors ${
+                      activeSection === item.id
+                        ? 'font-medium text-content-primary'
+                        : 'text-content-muted hover:text-content-primary'
+                    }`}
+                  >
+                    <span>{dict.sandbox.sidebar[item.id]}</span>
+                    <BetaBadge label={dict.sandbox.sidebar.beta} />
+                  </button>
+                )
+              }
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollTo(item.id)}
+                  className={`block w-full px-2 py-1.5 text-left text-sm transition-colors ${
+                    activeSection === item.id
+                      ? 'font-medium text-content-primary'
+                      : 'text-content-muted hover:text-content-primary'
+                  }`}
+                >
+                  {dict.sandbox.sidebar[item.id]}
+                </button>
+              )
+            })}
           </nav>
         </aside>
 
@@ -254,6 +444,23 @@ export function UISandbox() {
                     />
                     <span className="mt-1.5 block text-[10px] text-content-muted">
                       {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Label>{t('sandbox.tokens.shadow')}</Label>
+              <div className="flex flex-wrap gap-4">
+                {shadowTokens.map(({ name, tw }) => (
+                  <div key={name} className="text-center">
+                    <div
+                      className={`h-12 w-12 rounded-token-lg border border-border-default bg-surface-elevated ${tw}`}
+                      title={name}
+                    />
+                    <span className="mt-1.5 block text-[10px] leading-tight text-content-muted">
+                      {name.replace('shadow-', '')}
                     </span>
                   </div>
                 ))}
@@ -530,6 +737,70 @@ export function UISandbox() {
             />
           </Section>
 
+          {/* ── Data List ── */}
+          <Section
+            id="dataList"
+            title={t('sandbox.dataList.title')}
+            description={t('sandbox.dataList.description')}
+          >
+            <DataList items={dataListDemoItems} />
+            <SectionLiveCode
+              presetKey="dataList"
+              description={t('sandbox.liveCode.dataList')}
+            />
+          </Section>
+
+          {/* ── Table ── */}
+          <Section
+            id="table"
+            title={t('sandbox.table.title')}
+            description={t('sandbox.table.description')}
+          >
+            <Table
+              caption={t('sandbox.table.caption')}
+              columns={tableDemoColumns}
+              rows={tableDemoRows}
+            />
+            <SectionLiveCode
+              presetKey="table"
+              description={t('sandbox.liveCode.table')}
+            />
+          </Section>
+
+          {/* ── Date and Time ── */}
+          <Section
+            id="dateTime"
+            title={t('sandbox.dateTime.title')}
+            description={t('sandbox.dateTime.description')}
+          >
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <DateTime
+                type="date"
+                label={t('sandbox.dateTime.dateLabel')}
+                hint={t('sandbox.dateTime.dateHint')}
+                defaultValue="2026-11-08"
+              />
+              <DateTime
+                type="time"
+                label={t('sandbox.dateTime.timeLabel')}
+                hint={t('sandbox.dateTime.timeHint')}
+                defaultValue="14:30"
+              />
+            </div>
+            <div className="mt-6 max-w-sm">
+              <DateTime
+                type="date"
+                label={t('sandbox.dateTime.errorLabel')}
+                error={t('sandbox.dateTime.errorMessage')}
+                defaultValue=""
+              />
+            </div>
+            <SectionLiveCode
+              presetKey="dateTime"
+              description={t('sandbox.liveCode.dateTime')}
+            />
+          </Section>
+
           {/* ── Mobile Responsive ── */}
           <Section
             id="mobile"
@@ -579,6 +850,12 @@ export function UISandbox() {
             id="ai"
             title={t('sandbox.ai.title')}
             description={t('sandbox.ai.description')}
+            badge={
+              <BetaBadge
+                label={dict.sandbox.sidebar.beta}
+                tip={dict.sandbox.sidebar.betaTip}
+              />
+            }
           >
             <Suspense
               fallback={
