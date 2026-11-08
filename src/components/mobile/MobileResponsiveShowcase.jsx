@@ -193,7 +193,7 @@ function ShopTemplate({ copy, viewportId }) {
                   <h4 className="text-sm font-medium text-content-primary">
                     {copy[product.nameKey]}
                   </h4>
-                  <span className="text-sm font-bold text-brand-primary">
+                  <span className="text-sm font-bold text-content-secondary">
                     {product.price}
                   </span>
                 </div>

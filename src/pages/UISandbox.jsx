@@ -16,9 +16,10 @@ import { Select } from '../components/ui/Select'
 import { Dialog, DialogContent } from '../components/ui/Dialog'
 import { useToast } from '../components/ui/Toast'
 import { useLocale } from '../i18n/LocaleContext'
+import { sandboxPresets } from '../components/sandboxPresets'
 
-const Playground = lazy(() =>
-  import('../components/Playground').then((m) => ({ default: m.Playground }))
+const LiveCode = lazy(() =>
+  import('../components/LiveCode').then((m) => ({ default: m.LiveCode }))
 )
 const MobileResponsiveShowcase = lazy(() =>
   import('../components/mobile/MobileResponsiveShowcase').then((m) => ({
@@ -36,13 +37,33 @@ const AIShowcase = lazy(() =>
   }))
 )
 
+function SectionLiveCode({ presetKey, description }) {
+  const preset = sandboxPresets[presetKey]
+  if (!preset) return null
+  return (
+    <Suspense
+      fallback={
+        <div className="mt-8 flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+          <Loader2 size={24} className="animate-spin text-brand-primary" />
+        </div>
+      }
+    >
+      <LiveCode
+        code={preset.code}
+        dependencies={preset.dependencies}
+        description={description}
+      />
+    </Suspense>
+  )
+}
+
 /* ─── helpers ─── */
 
 function Section({ id, title, description, children }) {
   return (
     <section
       id={id}
-      className="scroll-mt-20 border-b border-border-default py-10 last:border-b-0"
+      className="scroll-mt-20 border-b border-border-default pb-10 pt-10 first:pt-0 last:border-b-0"
     >
       <h2 className="mb-1 font-display text-2xl font-normal tracking-normal text-slate-950 dark:text-slate-50">
         {title}
@@ -94,14 +115,13 @@ const selectOptions = [
 ]
 
 const sidebarLinkIds = [
-  'playground',
-  'mobile',
   'tokens',
   'button',
   'input',
   'select',
   'dialog',
   'toast',
+  'mobile',
   'dashboard',
   'ai',
   'a11y',
@@ -194,46 +214,6 @@ export function UISandbox() {
         {/* main content */}
         <div className="flex-1 min-w-0">
 
-          {/* ── Live Playground ── */}
-          <Section
-            id="playground"
-            title={t('sandbox.playground.title')}
-            description={t('sandbox.playground.description')}
-          >
-            <Suspense
-              fallback={
-                <div className="flex items-center justify-center h-64 rounded-token-lg border border-border-default bg-surface-secondary">
-                  <Loader2
-                    size={24}
-                    className="animate-spin text-brand-primary"
-                  />
-                </div>
-              }
-            >
-              <Playground />
-            </Suspense>
-          </Section>
-
-          {/* ── Mobile Responsive ── */}
-          <Section
-            id="mobile"
-            title={t('sandbox.mobile.title')}
-            description={t('sandbox.mobile.description')}
-          >
-            <Suspense
-              fallback={
-                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
-                  <Loader2
-                    size={24}
-                    className="animate-spin text-brand-primary"
-                  />
-                </div>
-              }
-            >
-              <MobileResponsiveShowcase />
-            </Suspense>
-          </Section>
-
           {/* ── Design Tokens ── */}
           <Section
             id="tokens"
@@ -279,6 +259,10 @@ export function UISandbox() {
                 ))}
               </div>
             </div>
+            <SectionLiveCode
+              presetKey="tokens"
+              description={t('sandbox.liveCode.tokens')}
+            />
           </Section>
 
           {/* ── Button ── */}
@@ -371,6 +355,10 @@ export function UISandbox() {
                 </Button>
               </div>
             </div>
+            <SectionLiveCode
+              presetKey="button"
+              description={t('sandbox.liveCode.button')}
+            />
           </Section>
 
           {/* ── Input ── */}
@@ -400,6 +388,10 @@ export function UISandbox() {
                 value="Read-only Corp"
               />
             </div>
+            <SectionLiveCode
+              presetKey="input"
+              description={t('sandbox.liveCode.input')}
+            />
           </Section>
 
           {/* ── Select ── */}
@@ -421,6 +413,10 @@ export function UISandbox() {
                 disabled
               />
             </div>
+            <SectionLiveCode
+              presetKey="select"
+              description={t('sandbox.liveCode.select')}
+            />
           </Section>
 
           {/* ── Dialog ── */}
@@ -462,6 +458,10 @@ export function UISandbox() {
                 to trigger on close
               </span>
             </div>
+            <SectionLiveCode
+              presetKey="dialog"
+              description={t('sandbox.liveCode.dialog')}
+            />
           </Section>
 
           {/* ── Toast ── */}
@@ -524,6 +524,34 @@ export function UISandbox() {
                 <Info size={14} /> Info
               </Button>
             </div>
+            <SectionLiveCode
+              presetKey="toast"
+              description={t('sandbox.liveCode.toast')}
+            />
+          </Section>
+
+          {/* ── Mobile Responsive ── */}
+          <Section
+            id="mobile"
+            title={t('sandbox.mobile.title')}
+            description={t('sandbox.mobile.description')}
+          >
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+                  <Loader2
+                    size={24}
+                    className="animate-spin text-brand-primary"
+                  />
+                </div>
+              }
+            >
+              <MobileResponsiveShowcase />
+            </Suspense>
+            <SectionLiveCode
+              presetKey="mobile"
+              description={t('sandbox.liveCode.mobile')}
+            />
           </Section>
 
           {/* ── Dashboard ── */}
@@ -729,6 +757,10 @@ export function UISandbox() {
                 ))}
               </div>
             </div>
+            <SectionLiveCode
+              presetKey="a11y"
+              description={t('sandbox.liveCode.a11y')}
+            />
           </Section>
         </div>
       </div>

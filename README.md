@@ -38,26 +38,27 @@ Light and dark themes swap automatically via `:root` / `.dark` CSS variable scop
 | **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
 | **Toast** | `@radix-ui/react-toast` | 4 semantic variants, auto-dismiss, swipe to dismiss |
 
-### Live Playground (Sandpack)
+### Per-section Live Code (Sandpack)
 
-An embedded [Sandpack](https://sandpack.codesandbox.io/) editor on the `/#/ui` sandbox page with:
+Each sandbox section (except **Dashboard** and **AI**) ends with an embedded [Sandpack](https://sandpack.codesandbox.io/) editor:
 
-- **Preview on the left, code editor on the right** — edit JSX and see real-time rendering
+- **Tokens, Button, Input, Select, Dialog, Toast, Mobile, Accessibility** — edit JSX and see real-time rendering
 - **Iframe isolation** — user code runs in a sandboxed iframe; errors can't crash the host page
-- **6 preset demos** — Button + Icons, Form Validation, Modal Dialog, Toast System, Dark Mode, Mobile Layout
 - **Theme-synced editor** — Sandpack theme switches with the site's light/dark mode
+- Presets live in `src/components/sandboxPresets.js`; the shared editor is `LiveCode.jsx`
 
 ### Mobile responsive (Sandbox)
 
-On `/#/ui` → **Mobile**:
+On `/#/ui` → **Mobile** (after Toast, before Dashboard):
 
 - Breakpoint strip (default / sm / md / lg)
 - Responsive stack, toolbar, and bottom-nav component demos
 - Templates with phone / tablet / desktop viewport frames — product grid, checkout form, app shell (bottom tabs → sidebar)
+- Per-section Live Code editor
 
 ### Dashboard skeletons (Sandbox)
 
-On `/#/ui` → **Dashboard**:
+On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 
 - Skeleton shells for loading states and layout composition (no mock metrics)
 - Templates: Overview (icon rail + KPI tiles + table), Analytics (chart + activity), Operations (service health + incidents)
@@ -65,10 +66,11 @@ On `/#/ui` → **Dashboard**:
 
 ### AI skeletons (Sandbox)
 
-On `/#/ui` → **AI**:
+On `/#/ui` → **AI** (demo-only — no Live Code):
 
 - **Workspace** — top nav, floating side rails, hatched metric panels; only the sparkle + “AI & Automation” title stay live
 - **Chat** — history rail, skeleton message thread, composer
+- **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI toolbar: **Ask anything** opens an input bar, Close collapses the pill into a sparkle FAB with a width transition
 - EN / 中文 chrome for the section
 
 ### System Matrix
@@ -129,7 +131,7 @@ Open [http://localhost:5173/design-system-hub/](http://localhost:5173/design-sys
 | Route | Page |
 |-------|------|
 | `/` | Home — brand intro, Stageshow hero, CTAs |
-| `/#/ui` | Sandbox — tokens, mobile / dashboard / AI templates, components, a11y, Sandpack |
+| `/#/ui` | Sandbox — tokens, components, mobile / dashboard / AI, a11y + per-section Sandpack |
 | `/#/matrix` | System Matrix — timeline + comparison |
 
 ## Project Structure
@@ -143,10 +145,11 @@ src/
 │   │   ├── Select.jsx
 │   │   ├── Dialog.jsx
 │   │   └── Toast.jsx
-│   ├── Playground.jsx           # Sandpack live editor with 6 presets
+│   ├── LiveCode.jsx             # Per-section Sandpack editor
+│   ├── sandboxPresets.js        # Live-code snippets (not Dashboard / AI)
 │   ├── mobile/                  # Mobile responsive showcase + templates
 │   ├── dashboard/               # Dashboard template showcase
-│   ├── ai/                      # AI chat + workspace skeleton templates
+│   ├── ai/                      # AI workspace, chat, scenario (+ interactive toolbar)
 │   ├── SystemMatrixCompare.tsx  # Timeline + compare matrix
 │   ├── LanguageToggle.jsx       # EN / 中文 masthead control
 │   └── ThemeToggle.jsx
