@@ -273,7 +273,10 @@ function ScenarioSkeleton({ copy }) {
           </form>
         ) : (
           <div
-            className="absolute bottom-5 right-5 z-10 flex h-11 items-center overflow-hidden rounded-full border border-border-default bg-slate-500 shadow-token dark:bg-slate-600"
+            className={cn(
+              'absolute bottom-5 right-5 z-10 flex h-11 items-center rounded-full border border-border-default bg-slate-500 shadow-token dark:bg-slate-600',
+              promptsOpen ? 'overflow-visible' : 'overflow-hidden',
+            )}
             aria-label={promptsOpen ? copy.scenarioToolbarAria : undefined}
           >
             <div
@@ -282,7 +285,12 @@ function ScenarioSkeleton({ copy }) {
                 promptsOpen ? 'grid-cols-[1fr]' : 'grid-cols-[0fr]',
               )}
             >
-              <div className="min-w-0 overflow-hidden">
+              <div
+                className={cn(
+                  'min-w-0',
+                  promptsOpen ? 'overflow-visible' : 'overflow-hidden',
+                )}
+              >
                 <div
                   className={cn(
                     'flex items-center gap-2 whitespace-nowrap py-2 pl-3 pr-3 transition-opacity duration-200',
