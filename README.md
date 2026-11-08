@@ -59,7 +59,7 @@ On `/#/ui` → **Mobile** (after Toast, before Dashboard):
 - Templates with phone / tablet / desktop viewport frames — product grid, checkout form, app shell (bottom tabs → sidebar)
 - Per-section Live Code editor
 
-### Dashboard skeletons (Sandbox)
+### Dashboard templates (Sandbox)
 
 On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 
@@ -67,13 +67,13 @@ On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 - Templates: Overview (icon rail + KPI tiles + table), Analytics (chart + activity), Operations (service health + incidents)
 - Browser chrome frame with pulsing bone placeholders
 
-### AI skeletons (Sandbox)
+### AI templates (Sandbox)
 
 On `/#/ui` → **AI** (demo-only — no Live Code):
 
 - **Beta state** - the component is under review, still needs further evaluation;
 - **Workspace view** — top nav, floating side rails, hatched metric panels;
-- **Chat view** — history rail, skeleton message thread, composer
+- **Chat view** — history rail, skeleton message thread, composer;
 - **Scenario view** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
 
 ### System Matrix
