@@ -71,10 +71,10 @@ On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 
 On `/#/ui` → **AI** (demo-only — no Live Code):
 
-- **Beta** - the component is under review, still needs further evaluation;
-- **Workspace** — top nav, floating side rails, hatched metric panels;
-- **Chat** — history rail, skeleton message thread, composer
-- **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
+- **Beta state** - the component is under review, still needs further evaluation;
+- **Workspace view** — top nav, floating side rails, hatched metric panels;
+- **Chat view** — history rail, skeleton message thread, composer
+- **Scenario view** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
 
 ### System Matrix
 
