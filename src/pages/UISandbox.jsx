@@ -14,11 +14,13 @@ import {
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Select } from '../components/ui/Select'
+import { Tabs } from '../components/ui/Tabs'
 import { Dialog, DialogContent } from '../components/ui/Dialog'
 import { useToast } from '../components/ui/Toast'
 import { DataList } from '../components/ui/DataList'
 import { Table } from '../components/ui/Table'
 import { DateTime } from '../components/ui/DateTime'
+import { EmptyStateDemo } from '../components/ui/EmptyState'
 import { useLocale } from '../i18n/LocaleContext'
 import { sandboxPresets } from '../components/sandboxPresets'
 
@@ -203,11 +205,13 @@ const componentSectionIds = [
   'button',
   'input',
   'select',
+  'tabs',
   'dialog',
   'toast',
   'dataList',
   'table',
   'dateTime',
+  'emptyState',
 ]
 
 const dataListDemoItems = [
@@ -626,6 +630,99 @@ export function UISandbox() {
             />
           </Section>
 
+          {/* ── Tabs ── */}
+          <Section
+            id="tabs"
+            title={t('sandbox.tabs.title')}
+            description={t('sandbox.tabs.description')}
+          >
+            <Label>{t('sandbox.tabs.variantDefault')}</Label>
+            <Tabs
+              aria-label={t('sandbox.tabs.ariaLabel')}
+              defaultValue="overview"
+              items={[
+                {
+                  value: 'overview',
+                  label: t('sandbox.tabs.overview'),
+                  content: (
+                    <p className="text-sm text-content-secondary">
+                      {t('sandbox.tabs.overviewBody')}
+                    </p>
+                  ),
+                },
+                {
+                  value: 'pricing',
+                  label: t('sandbox.tabs.pricing'),
+                  content: (
+                    <p className="text-sm text-content-secondary">
+                      {t('sandbox.tabs.pricingBody')}
+                    </p>
+                  ),
+                },
+                {
+                  value: 'reviews',
+                  label: t('sandbox.tabs.reviews'),
+                  content: (
+                    <p className="text-sm text-content-secondary">
+                      {t('sandbox.tabs.reviewsBody')}
+                    </p>
+                  ),
+                },
+              ]}
+            />
+
+            <div className="mt-8">
+              <Label>{t('sandbox.tabs.variantPills')}</Label>
+              <Tabs
+                variant="pills"
+                aria-label={t('sandbox.tabs.ariaLabelPills')}
+                defaultValue="tab1"
+                items={[
+                  {
+                    value: 'tab1',
+                    label: t('sandbox.tabs.pill1'),
+                    content: (
+                      <p className="text-sm text-content-secondary">
+                        {t('sandbox.tabs.pill1Body')}
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'tab2',
+                    label: t('sandbox.tabs.pill2'),
+                    content: (
+                      <p className="text-sm text-content-secondary">
+                        {t('sandbox.tabs.pill2Body')}
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'tab3',
+                    label: t('sandbox.tabs.pill3'),
+                    content: (
+                      <p className="text-sm text-content-secondary">
+                        {t('sandbox.tabs.pill3Body')}
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'tab4',
+                    label: t('sandbox.tabs.pill4'),
+                    content: (
+                      <p className="text-sm text-content-secondary">
+                        {t('sandbox.tabs.pill4Body')}
+                      </p>
+                    ),
+                  },
+                ]}
+              />
+            </div>
+            <SectionLiveCode
+              presetKey="tabs"
+              description={t('sandbox.liveCode.tabs')}
+            />
+          </Section>
+
           {/* ── Dialog ── */}
           <Section
             id="dialog"
@@ -798,6 +895,28 @@ export function UISandbox() {
             <SectionLiveCode
               presetKey="dateTime"
               description={t('sandbox.liveCode.dateTime')}
+            />
+          </Section>
+
+          {/* ── Empty State ── */}
+          <Section
+            id="emptyState"
+            title={t('sandbox.emptyState.title')}
+            description={t('sandbox.emptyState.description')}
+          >
+            <EmptyStateDemo
+              copy={{
+                listTitle: t('sandbox.emptyState.listTitle'),
+                listHint: t('sandbox.emptyState.listHint'),
+                emptyTitle: t('sandbox.emptyState.emptyTitle'),
+                emptyDescription: t('sandbox.emptyState.emptyDescription'),
+                addLabel: t('sandbox.emptyState.addLabel'),
+                deleteLabel: t('sandbox.emptyState.deleteLabel'),
+              }}
+            />
+            <SectionLiveCode
+              presetKey="emptyState"
+              description={t('sandbox.liveCode.emptyState')}
             />
           </Section>
 
@@ -1004,6 +1123,11 @@ export function UISandbox() {
                     icon: Eye,
                     component: 'Select',
                     attrs: 'aria-labelledby → label, role="listbox" via Radix',
+                  },
+                  {
+                    icon: Eye,
+                    component: 'Tabs',
+                    attrs: 'role="tablist" / tab / tabpanel, aria-selected, Arrow keys',
                   },
                   {
                     icon: Monitor,

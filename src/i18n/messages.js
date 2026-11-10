@@ -51,11 +51,13 @@ export const messages = {
         button: 'Button',
         input: 'Input',
         select: 'Select',
+        tabs: 'Tabs',
         dialog: 'Dialog',
         toast: 'Toast',
         dataList: 'Data List',
         table: 'Table',
         dateTime: 'Date and Time',
+        emptyState: 'Empty State',
         dashboard: 'Dashboard',
         ai: 'AI',
         beta: 'Beta',
@@ -68,11 +70,13 @@ export const messages = {
         button: 'HTML and JavaScript for button variants, sizes, loading state, and segmented groups.',
         input: 'HTML and JavaScript for accessible inputs with labels, hints, and validation.',
         select: 'HTML and JavaScript for a native select pattern with keyboard-friendly options.',
+        tabs: 'HTML and JavaScript for an accessible tablist with underline indicator and panel swap.',
         dialog: 'HTML and JavaScript for a modal with Esc close, backdrop dismiss, and focus return.',
         toast: 'HTML and JavaScript for toast variants and notification markup.',
         dataList: 'HTML and JavaScript for a semantic description list of label–value pairs.',
         table: 'HTML and JavaScript for an accessible data table with headers and row hover.',
         dateTime: 'HTML and JavaScript for date and time fields with labels and validation.',
+        emptyState: 'HTML and JavaScript for a first-use / no-results empty state with action CTA.',
         mobile: 'HTML and JavaScript for a responsive phone shell with product grid and bottom nav.',
         a11y: 'HTML and JavaScript for focus-ring and tab-order patterns.',
       },
@@ -184,6 +188,36 @@ export const messages = {
         description:
           'Radix Select primitive with keyboard navigation (Arrow keys to browse, Enter to select, Esc to close). Screen readers announce the selected value.',
       },
+      tabs: {
+        title: 'Tabs',
+        description:
+          'Switch related views in the same space. The underline slides to the active label; panels crossfade with a short rise on enter. Arrow keys move focus across tabs.',
+        variantDefault: 'Underline',
+        variantPills: 'Pills',
+        ariaLabel: 'Product sections',
+        ariaLabelPills: 'Pill tabs',
+        overview: 'Overview',
+        pricing: 'Pricing',
+        reviews: 'Reviews',
+        pill1: 'Tab 1',
+        pill2: 'Tab 2',
+        pill3: 'Tab 3',
+        pill4: 'Tab 4',
+        overviewBody:
+          'This is some placeholder content the Overview tab’s associated content. Clicking another tab will toggle the visibility of this one for the next.',
+        pricingBody:
+          'This is some placeholder content the Pricing tab’s associated content. Clicking another tab will toggle the visibility of this one for the next.',
+        reviewsBody:
+          'This is some placeholder content the Reviews tab’s associated content. Clicking another tab will toggle the visibility of this one for the next.',
+        pill1Body:
+          'This is some placeholder content for Tab 1. Clicking another tab will toggle the visibility of this one for the next.',
+        pill2Body:
+          'This is some placeholder content for Tab 2. Clicking another tab will toggle the visibility of this one for the next.',
+        pill3Body:
+          'This is some placeholder content for Tab 3. Clicking another tab will toggle the visibility of this one for the next.',
+        pill4Body:
+          'This is some placeholder content for Tab 4. Clicking another tab will toggle the visibility of this one for the next.',
+      },
       dialog: {
         title: 'Dialog',
         description:
@@ -217,6 +251,17 @@ export const messages = {
         datetimeHint: 'Calendar + time field',
         errorLabel: 'Deadline',
         errorMessage: 'Choose a valid date to continue.',
+      },
+      emptyState: {
+        title: 'Empty State',
+        description:
+          'First-use or no-results screen with a clear next action. Delete the sample rows to reveal the empty state, then press Add to restore the list.',
+        listTitle: 'Recent files',
+        listHint: 'Delete both rows to reveal the empty state, then press Add.',
+        emptyTitle: 'Nothing here yet',
+        emptyDescription: 'Add a file to get started, or restore the sample list.',
+        addLabel: 'Add',
+        deleteLabel: 'Delete',
       },
       dashboard: {
         title: 'Dashboard',
@@ -483,11 +528,13 @@ export const messages = {
         button: '按钮',
         input: '输入框',
         select: '选择器',
+        tabs: '选项卡',
         dialog: '对话框',
         toast: '轻提示',
         dataList: '数据列表',
         table: '表格',
         dateTime: '日期与时间',
+        emptyState: '空状态',
         dashboard: '仪表盘',
         ai: 'AI',
         beta: 'Beta',
@@ -499,11 +546,13 @@ export const messages = {
         button: '按钮变体、尺寸、加载态与分段按钮组的 HTML 与 JavaScript。',
         input: '带标签、提示与校验的无障碍输入框 HTML 与 JavaScript。',
         select: '原生 select 模式的 HTML 与 JavaScript。',
+        tabs: '带下划线指示与面板切换的无障碍选项卡 HTML 与 JavaScript。',
         dialog: '带 Esc 关闭与焦点回退的模态框 HTML 与 JavaScript。',
         toast: '轻提示变体与通知结构的 HTML 与 JavaScript。',
         dataList: '标签–值描述列表的 HTML 与 JavaScript。',
         table: '无障碍数据表的 HTML 与 JavaScript。',
         dateTime: '日期与时间字段的 HTML 与 JavaScript。',
+        emptyState: '首次使用 / 无结果空状态与操作按钮的 HTML 与 JavaScript。',
         mobile: '响应式手机壳的 HTML 与 JavaScript。',
         a11y: '焦点环与 Tab 顺序模式的 HTML 与 JavaScript。',
       },
@@ -613,6 +662,32 @@ export const messages = {
         description:
           '基于 Radix 的 Select：方向键浏览、Enter 选择、Esc 关闭。读屏会播报当前值。',
       },
+      tabs: {
+        title: '选项卡',
+        description:
+          '在同一区域切换相关视图。下划线滑向当前标签，面板交叉淡入淡出并轻微上移。可用方向键在标签间移动焦点。',
+        variantDefault: '下划线',
+        variantPills: '胶囊',
+        ariaLabel: '产品分区',
+        ariaLabelPills: '胶囊选项卡',
+        overview: '概览',
+        pricing: '定价',
+        reviews: '评价',
+        pill1: '选项 1',
+        pill2: '选项 2',
+        pill3: '选项 3',
+        pill4: '选项 4',
+        overviewBody:
+          '这是「概览」选项卡的占位内容。点击其他选项卡会切换到对应面板。',
+        pricingBody:
+          '这是「定价」选项卡的占位内容。点击其他选项卡会切换到对应面板。',
+        reviewsBody:
+          '这是「评价」选项卡的占位内容。点击其他选项卡会切换到对应面板。',
+        pill1Body: '这是「选项 1」的占位内容。点击其他选项卡会切换到对应面板。',
+        pill2Body: '这是「选项 2」的占位内容。点击其他选项卡会切换到对应面板。',
+        pill3Body: '这是「选项 3」的占位内容。点击其他选项卡会切换到对应面板。',
+        pill4Body: '这是「选项 4」的占位内容。点击其他选项卡会切换到对应面板。',
+      },
       dialog: {
         title: '对话框',
         description: '带焦点陷阱与遮罩的模态对话框，可用 Esc 关闭。关闭后焦点回到触发元素。',
@@ -644,6 +719,17 @@ export const messages = {
         datetimeHint: '日历 + 时间字段',
         errorLabel: '截止日期',
         errorMessage: '请选择有效日期以继续。',
+      },
+      emptyState: {
+        title: '空状态',
+        description:
+          '首次使用或无结果时的引导界面，并给出明确下一步。删除示例行以显示空状态，再点击添加即可恢复列表。',
+        listTitle: '最近文件',
+        listHint: '删除两行以显示空状态，再点击添加。',
+        emptyTitle: '还没有任何内容',
+        emptyDescription: '添加文件开始使用，或恢复示例列表。',
+        addLabel: '添加',
+        deleteLabel: '删除',
       },
       dashboard: {
         title: '仪表盘',

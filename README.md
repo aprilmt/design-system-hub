@@ -35,11 +35,13 @@ Light and dark themes swap automatically via `:root` / `.dark` CSS variable scop
 | **Button** | Native `<button>` | 5 variants, 3 sizes, loading spinner, `aria-busy`, button groups |
 | **Input** | Native `<input>` | Auto-generated IDs, `aria-invalid`, `aria-describedby` |
 | **Select** | `@radix-ui/react-select` | Keyboard navigation (Arrow/Enter/Esc), `aria-labelledby` |
+| **Tabs** | Native `role="tablist"` | Flowbite underline + pills variants; sliding brand indicator (250ms), panel crossfade + 8px rise |
 | **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
 | **Toast** | `@radix-ui/react-toast` | 4 semantic variants, auto-dismiss, swipe to dismiss |
 | **Data List** | Native `<dl>` | Label–value pairs; stacks on small screens, two-column from `sm` |
 | **Table** | Native `<table>` | Semantic headers, optional caption, horizontal scroll, row hover |
 | **Date and Time** | Custom calendar + time picker | Brand purple selection (no border), label typeface, Clear / Today / Now |
+| **Empty State** | Custom panel + list demo | First-use / no-results; Motion Prompt #072 delete → empty rise → Add restore |
 
 ### Per-section code samples
 
@@ -47,7 +49,7 @@ Each sandbox section (except **Dashboard** and **AI**) ends with a code panel:
 
 - **HTML / JavaScript tabs** — switch between markup and JS samples, with one-click Copy
 - Dark syntax-highlighted code body (Flowbite-style panel)
-- Covers Tokens, Button, Input, Select, Dialog, Toast, Data List, Table, Date and Time, Mobile, Accessibility
+- Covers Tokens, Button, Input, Select, Tabs, Dialog, Toast, Data List, Table, Date and Time, Empty State, Mobile, Accessibility
 - Presets live in `src/components/sandboxPresets.js`; the shared panel is `LiveCode.jsx`
 
 ### Mobile responsive (Sandbox)
@@ -59,7 +61,7 @@ On `/#/ui` → **Mobile** (after Toast, before Dashboard):
 - Templates with phone / tablet / desktop viewport frames — product grid, checkout form, app shell (bottom tabs → sidebar)
 - Per-section Live Code editor
 
-### Dashboard templates (Sandbox)
+### Dashboard skeletons (Sandbox)
 
 On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 
@@ -67,14 +69,15 @@ On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 - Templates: Overview (icon rail + KPI tiles + table), Analytics (chart + activity), Operations (service health + incidents)
 - Browser chrome frame with pulsing bone placeholders
 
-### AI templates (Sandbox)
+### AI skeletons (Sandbox)
 
 On `/#/ui` → **AI** (demo-only — no Live Code):
 
-- **Beta state** - the component is under review, still needs further evaluation;
-- **Workspace view** — top nav, floating side rails, hatched metric panels;
-- **Chat view** — history rail, skeleton message thread, composer;
-- **Scenario view** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
+- **Workspace** — top nav, floating side rails, hatched metric panels; only the sparkle + “AI & Automation” title stay live
+- **Chat** — history rail, skeleton message thread, composer
+- **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
+- **Beta** — purple pill on the AI nav item and section heading (heading tip explains the beta label)
+- EN / 中文 chrome for the section
 
 ### System Matrix
 
@@ -145,11 +148,13 @@ src/
 │   │   ├── Button.jsx
 │   │   ├── Input.jsx
 │   │   ├── Select.jsx
+│   │   ├── Tabs.jsx
 │   │   ├── Dialog.jsx
 │   │   ├── Toast.jsx
 │   │   ├── DataList.jsx
 │   │   ├── Table.jsx
-│   │   └── DateTime.jsx
+│   │   ├── DateTime.jsx
+│   │   └── EmptyState.jsx
 │   ├── LiveCode.jsx             # Per-section HTML / JavaScript code panel
 │   ├── sandboxPresets.js        # HTML + JS samples (not Dashboard / AI)
 │   ├── mobile/                  # Mobile responsive showcase + templates

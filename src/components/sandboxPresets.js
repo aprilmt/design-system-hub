@@ -238,6 +238,71 @@ export default function App() {
 }`,
   },
 
+  tabs: {
+    html: `<div class="space-y-8 bg-white p-8">
+  <div class="mb-4 border-b border-slate-200">
+    <ul class="flex flex-wrap -mb-px text-center text-sm font-medium" role="tablist">
+      <li class="me-2" role="presentation">
+        <button type="button" role="tab" aria-selected="true" class="inline-flex items-center justify-center rounded-t-lg border-b-2 border-indigo-500 p-4 text-indigo-500">Overview</button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button type="button" role="tab" aria-selected="false" class="inline-flex items-center justify-center rounded-t-lg border-b-2 border-transparent p-4 text-slate-400 hover:border-indigo-500 hover:text-indigo-500">Pricing</button>
+      </li>
+      <li role="presentation">
+        <button type="button" role="tab" aria-selected="false" class="inline-flex items-center justify-center rounded-t-lg border-b-2 border-transparent p-4 text-slate-400 hover:border-indigo-500 hover:text-indigo-500">Reviews</button>
+      </li>
+    </ul>
+  </div>
+  <div role="tabpanel" class="rounded-lg bg-slate-50 p-4">
+    <p class="text-sm text-slate-500">This is some placeholder content the <strong class="font-medium text-slate-900">Overview tab's associated content</strong>.</p>
+  </div>
+</div>`,
+    javascript: `import { useState } from 'react';
+import { User, LayoutDashboard, Settings, MessageSquare } from 'lucide-react';
+
+const items = [
+  { value: 'profile', label: 'Profile', icon: User, body: "This is some placeholder content the Profile tab's associated content." },
+  { value: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, body: "This is some placeholder content the Dashboard tab's associated content." },
+  { value: 'settings', label: 'Settings', icon: Settings, body: "This is some placeholder content the Settings tab's associated content." },
+  { value: 'contacts', label: 'Contacts', icon: MessageSquare, body: "This is some placeholder content the Contacts tab's associated content." },
+];
+
+export default function App() {
+  const [value, setValue] = useState('profile');
+  const active = items.find((item) => item.value === value);
+
+  return (
+    <div className="min-h-screen bg-white p-8">
+      <div className="mb-4 border-b border-slate-200">
+        <ul className="flex flex-wrap -mb-px text-center text-sm font-medium" role="tablist">
+          {items.map((item, i) => {
+            const selected = item.value === value;
+            const Icon = item.icon;
+            return (
+              <li key={item.value} className={i < items.length - 1 ? 'me-2' : undefined} role="presentation">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setValue(item.value)}
+                  className={\`group inline-flex items-center justify-center rounded-t-lg border-b-2 p-4 \${selected ? 'border-indigo-500 text-indigo-500' : 'border-transparent text-slate-400 hover:border-indigo-500 hover:text-indigo-500'}\`}
+                >
+                  <Icon size={16} className={\`me-2 \${selected ? 'text-indigo-500' : 'text-slate-400 group-hover:text-indigo-500'}\`} />
+                  {item.label}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div role="tabpanel" className="rounded-lg bg-slate-50 p-4">
+        <p className="text-sm text-slate-500">{active.body}</p>
+      </div>
+    </div>
+  );
+}`,
+  },
+
   dialog: {
     html: `<!-- Trigger -->
 <button type="button" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white hover:bg-indigo-600">
@@ -301,6 +366,63 @@ export default function App() {
           </div>
         </div>
       )}
+    </div>
+  );
+}`,
+  },
+
+  emptyState: {
+    html: `<div class="flex min-h-[240px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-10 text-center">
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.75" aria-hidden="true">
+    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+    <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+  </svg>
+  <p class="mt-4 text-base font-semibold text-slate-900">Nothing here yet</p>
+  <p class="mt-1 max-w-xs text-sm text-slate-500">Add a file to get started.</p>
+  <button type="button" class="mt-5 inline-flex h-[34px] min-w-[112px] items-center justify-center rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white">Add</button>
+</div>`,
+    javascript: `import { useState } from 'react';
+import { Inbox, Trash2 } from 'lucide-react';
+
+const seed = [
+  { id: 'a', title: 'Brand guidelines.pdf', meta: 'Shared · 2 days ago' },
+  { id: 'b', title: 'Q4 research notes', meta: 'Private · Yesterday' },
+];
+
+export default function App() {
+  const [items, setItems] = useState(seed);
+
+  if (items.length === 0) {
+    return (
+      <div className="flex min-h-[240px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-10 text-center">
+        <Inbox size={40} strokeWidth={1.75} className="text-indigo-500" />
+        <p className="mt-4 text-base font-semibold text-slate-900">Nothing here yet</p>
+        <p className="mt-1 max-w-xs text-sm text-slate-500">Add a file to get started.</p>
+        <button
+          type="button"
+          onClick={() => setItems(seed)}
+          className="mt-5 inline-flex h-[34px] min-w-[112px] items-center justify-center rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white"
+        >
+          Add
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2.5 rounded-xl border border-slate-200 bg-white p-4">
+      {items.map((row) => (
+        <div key={row.id} className="flex h-12 items-center gap-3 rounded-lg border border-slate-200 px-3">
+          <span className="size-4 rounded-full border-2 border-slate-300" />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-medium text-slate-900">{row.title}</p>
+            <p className="truncate text-xs text-slate-500">{row.meta}</p>
+          </div>
+          <button type="button" aria-label={\`Delete \${row.title}\`} onClick={() => setItems((list) => list.filter((x) => x.id !== row.id))} className="rounded p-1.5 text-slate-400 hover:text-red-500">
+            <Trash2 size={16} />
+          </button>
+        </div>
+      ))}
     </div>
   );
 }`,

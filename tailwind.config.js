@@ -74,26 +74,59 @@ export default {
           from: { opacity: '0', transform: 'translate(-50%, -48%) scale(0.96)' },
           to: { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
         },
+        // Motion Prompt #056 — slide 240px, 350ms easeOutCubic / easeInOutCubic
         'toast-slide-in': {
-          from: { transform: 'translateX(calc(100% + 1rem))' },
+          from: { transform: 'translateX(240px)' },
           to: { transform: 'translateX(0)' },
         },
-        'toast-hide': {
-          from: { opacity: '1' },
-          to: { opacity: '0' },
+        'toast-slide-out': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(240px)' },
+        },
+        'toast-life': {
+          from: { transform: 'scaleX(1)' },
+          to: { transform: 'scaleX(0)' },
         },
         'toast-swipe-out': {
           from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
-          to: { transform: 'translateX(calc(100% + 1rem))' },
+          to: { transform: 'translateX(240px)' },
+        },
+        // Motion Prompt #072 — empty rise 8px / 350ms linear; fade out 200ms; rows return 60px / 350ms easeOutCubic
+        'empty-rise-in': {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'empty-fade-out': {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
+        },
+        'empty-row-in': {
+          from: { opacity: '0', transform: 'translateX(-60px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        // Motion Prompt #057 — panel out 200ms linear; panel in 200ms linear + rise 8px
+        'tab-panel-out': {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
+        },
+        'tab-panel-in': {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
         'overlay-show': 'overlay-show 150ms ease-out',
         'overlay-hide': 'overlay-hide 150ms ease-in',
         'content-show': 'content-show 150ms ease-out',
-        'toast-slide-in': 'toast-slide-in 200ms ease-out',
-        'toast-hide': 'toast-hide 100ms ease-in',
-        'toast-swipe-out': 'toast-swipe-out 100ms ease-out',
+        'toast-slide-in': 'toast-slide-in 350ms cubic-bezier(0.33, 1, 0.68, 1)',
+        'toast-slide-out': 'toast-slide-out 350ms cubic-bezier(0.65, 0, 0.35, 1)',
+        'toast-life': 'toast-life var(--toast-life-ms, 1800ms) linear forwards',
+        'toast-swipe-out': 'toast-swipe-out 350ms cubic-bezier(0.65, 0, 0.35, 1)',
+        'empty-rise-in': 'empty-rise-in 350ms linear both',
+        'empty-fade-out': 'empty-fade-out 200ms linear both',
+        'empty-row-in': 'empty-row-in 350ms cubic-bezier(0.33, 1, 0.68, 1) both',
+        'tab-panel-out': 'tab-panel-out 200ms linear both',
+        'tab-panel-in': 'tab-panel-in 200ms linear both',
       },
     },
   },
