@@ -74,7 +74,7 @@ On `/#/ui` → **Dashboard** (demo-only — no Live Code):
 On `/#/ui` → **AI** (demo-only — no Live Code):
 
 - **Workspace** — top nav, floating side rails, hatched metric panels; only the sparkle + “AI & Automation” title stay live
-- **Chat** — history rail, skeleton message thread, composer
+- **Chatbot** — history rail, skeleton message thread, composer
 - **Scenario** — April’s dashboard shell (icon rail, KPI cards, table) with a grey floating AI pill: toolbar → Ask input → sparkle FAB, all sharing one width-collapse transition; auto-typed sample questions walk through the ask bar (pauses on interaction)
 - **Beta** — purple pill on the AI nav item and section heading (heading tip explains the beta label)
 - EN / 中文 chrome for the section
