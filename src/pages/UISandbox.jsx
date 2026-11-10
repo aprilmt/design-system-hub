@@ -106,7 +106,7 @@ function BetaBadge({ label, tip, className = '' }) {
           e.stopPropagation()
           setOpen((v) => !v)
         }}
-        className={`${pillClass} outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0`}
+        className={`${pillClass} outline-hidden ring-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0`}
       >
         {label}
       </button>
@@ -455,7 +455,7 @@ export function UISandbox() {
             </div>
 
             <div className="mt-6">
-              <Label>{t('sandbox.tokens.shadow')}</Label>
+              <Label>{t('sandbox.tokens.shadow-sm')}</Label>
               <div className="flex flex-wrap gap-4">
                 {shadowTokens.map(({ name, tw }) => (
                   <div key={name} className="text-center">
@@ -484,7 +484,7 @@ export function UISandbox() {
           >
             <Label>{t('sandbox.button.variants')}</Label>
             <div className="flex flex-wrap gap-3 mb-6">
-              {['primary', 'secondary', 'outline', 'ghost', 'destructive'].map(
+              {['primary', 'secondary', 'outline-solid', 'ghost', 'destructive'].map(
                 (v) => (
                   <Button key={v} variant={v}>
                     {v.charAt(0).toUpperCase() + v.slice(1)}
@@ -757,7 +757,7 @@ export function UISandbox() {
             <div className="mt-4 flex items-start gap-2 rounded-token bg-surface-secondary p-3 text-xs text-content-secondary">
               <Keyboard size={14} className="mt-0.5 shrink-0 text-content-muted" />
               <span>
-                Press <kbd className="rounded bg-surface-primary px-1.5 py-0.5 font-mono text-[11px] border border-border-default">Esc</kbd> to
+                Press <kbd className="rounded-sm bg-surface-primary px-1.5 py-0.5 font-mono text-[11px] border border-border-default">Esc</kbd> to
                 close &middot; Focus is trapped inside &middot; Focus returns
                 to trigger on close
               </span>
@@ -1001,7 +1001,7 @@ export function UISandbox() {
               <Label>Focus Ring</Label>
               <p className="text-sm text-content-secondary mb-3">
                 Every interactive element renders a visible
-                2px focus ring on <code className="rounded bg-surface-secondary px-1 py-0.5 text-xs font-mono">:focus-visible</code>,
+                2px focus ring on <code className="rounded-sm bg-surface-secondary px-1 py-0.5 text-xs font-mono">:focus-visible</code>,
                 meeting WCAG 2.4.7. Click an element then use Tab to see the ring.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -1023,7 +1023,7 @@ export function UISandbox() {
             <div className="mb-8">
               <Label>Tab Key Sequence</Label>
               <p className="text-sm text-content-secondary mb-3">
-                Use <kbd className="rounded bg-surface-secondary px-1.5 py-0.5 font-mono text-xs border border-border-default">Tab</kbd> to
+                Use <kbd className="rounded-sm bg-surface-secondary px-1.5 py-0.5 font-mono text-xs border border-border-default">Tab</kbd> to
                 walk through this mini-form. The focus order follows the visual
                 reading order (top-to-bottom, left-to-right).
               </p>
@@ -1084,7 +1084,7 @@ export function UISandbox() {
                       className="mt-0.5 shrink-0 text-brand-primary"
                     />
                     <div>
-                      <kbd className="rounded bg-surface-primary px-1.5 py-0.5 font-mono text-xs font-medium border border-border-default">
+                      <kbd className="rounded-sm bg-surface-primary px-1.5 py-0.5 font-mono text-xs font-medium border border-border-default">
                         {keys}
                       </kbd>
                       <p className="mt-1 text-xs text-content-secondary">

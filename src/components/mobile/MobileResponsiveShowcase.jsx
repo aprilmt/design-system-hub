@@ -70,7 +70,7 @@ function ResponsiveStackDemo({ copy }) {
         ))}
       </div>
       <p className="mt-2 text-xs text-content-muted">
-        <code className="rounded bg-surface-secondary px-1.5 py-0.5 font-mono text-[11px]">
+        <code className="rounded-sm bg-surface-secondary px-1.5 py-0.5 font-mono text-[11px]">
           flex-col md:flex-row
         </code>
       </p>

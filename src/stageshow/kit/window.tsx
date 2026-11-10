@@ -6,7 +6,7 @@ export interface WindowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
   /** The address. A string, or any node: roll just the path with `<>site.app/<Roll>{path}</Roll></>`. */
   url?: ReactNode
   /** Browser: the address field's shape. `pill` for the round field of current Safari and Chrome. */
-  urlShape?: 'rounded' | 'pill'
+  urlShape?: 'rounded-sm' | 'pill'
   /** Browser: tab titles above the address bar; the first is the active tab. */
   /** Tab titles. A title that changes should animate the part that changed, so pass a node */
   tabs?: ReactNode[]

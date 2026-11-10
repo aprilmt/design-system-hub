@@ -14,7 +14,7 @@ export const Table = forwardRef(function Table(
     >
       <table
         ref={ref}
-        className="w-full min-w-[28rem] border-collapse text-left text-sm"
+        className="w-full min-w-md border-collapse text-left text-sm"
         {...props}
       >
         {caption ? (

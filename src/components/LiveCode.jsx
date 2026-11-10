@@ -96,8 +96,8 @@ export function LiveCode({
                   aria-selected={tab === t.id}
                   onClick={() => setTab(t.id)}
                   className={cn(
-                    'px-3 py-2.5 text-sm font-medium transition-colors outline-none',
-                    'focus-visible:!ring-2 focus-visible:!ring-[#DEE0E3] focus-visible:!ring-offset-0 focus-visible:!ring-offset-transparent',
+                    'px-3 py-2.5 text-sm font-medium transition-colors outline-hidden',
+                    'focus-visible:ring-2! focus-visible:ring-[#DEE0E3]! focus-visible:ring-offset-0! focus-visible:ring-offset-transparent!',
                     tab === t.id
                       ? 'bg-[#DEE0E3] text-content-primary'
                       : 'text-content-muted hover:text-content-primary',
@@ -111,7 +111,7 @@ export function LiveCode({
           <button
             type="button"
             onClick={copy}
-            className="mr-2 inline-flex items-center gap-1.5 rounded-token-sm px-2.5 py-1.5 text-xs font-medium text-content-secondary transition-colors outline-none hover:bg-[#DEE0E3] hover:text-content-primary focus-visible:!ring-2 focus-visible:!ring-[#DEE0E3] focus-visible:!ring-offset-0 focus-visible:!ring-offset-transparent"
+            className="mr-2 inline-flex items-center gap-1.5 rounded-token-sm px-2.5 py-1.5 text-xs font-medium text-content-secondary transition-colors outline-hidden hover:bg-[#DEE0E3] hover:text-content-primary focus-visible:ring-2! focus-visible:ring-[#DEE0E3]! focus-visible:ring-offset-0! focus-visible:ring-offset-transparent!"
           >
             {copied ? <Check size={14} aria-hidden /> : <Clipboard size={14} aria-hidden />}
             {copied ? 'Copied' : 'Copy'}

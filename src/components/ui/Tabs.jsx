@@ -217,8 +217,8 @@ export function Tabs({
                   tabIndex={selected ? 0 : -1}
                   onClick={() => select(item.value)}
                   className={cn(
-                    'group relative z-[1] inline-flex items-center justify-center',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2',
+                    'group relative z-1 inline-flex items-center justify-center',
+                    'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2',
                     isPills
                       ? 'rounded-token px-4 py-2.5'
                       : 'rounded-t-lg border-b-2 border-transparent p-4',
@@ -253,7 +253,7 @@ export function Tabs({
         </div>
       </div>
 
-      <div className="relative min-h-[6rem]">
+      <div className="relative min-h-24">
         {transitioning ? (
           <>
             {leaving != null ? renderPanel(leaving, 'leaving') : null}

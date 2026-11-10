@@ -132,7 +132,7 @@ function CalendarPanel({
   }
 
   return (
-    <div className="w-[17.5rem] rounded-token border border-border-default bg-surface-elevated p-3 shadow-token font-sans">
+    <div className="w-70 rounded-token border border-border-default bg-surface-elevated p-3 shadow-token font-sans">
       <div className="mb-3 flex items-center justify-between gap-2">
         <span className="text-sm font-medium text-content-primary">
           {MONTHS[viewMonth]} {viewYear}
@@ -260,7 +260,7 @@ function DateField({
           'relative flex h-10 w-full items-center rounded-token border bg-surface-primary py-2 pl-3 pr-10 text-left text-sm font-medium text-content-primary',
           'transition-colors duration-150',
           'disabled:pointer-events-none disabled:opacity-50',
-          'outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-0',
+          'outline-hidden focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-0',
           error ? 'border-feedback-error' : 'border-border-default',
           className,
         )}
@@ -346,7 +346,7 @@ function TimePanel({ hour, minute, onChange }) {
   }
 
   return (
-    <div className="w-[14rem] rounded-token border border-border-default bg-surface-elevated p-3 shadow-token font-sans">
+    <div className="w-56 rounded-token border border-border-default bg-surface-elevated p-3 shadow-token font-sans">
       <div className="mb-2 grid grid-cols-2 gap-2 text-center">
         <span className="text-sm font-medium text-content-primary">Hour</span>
         <span className="text-sm font-medium text-content-primary">Minute</span>
@@ -475,7 +475,7 @@ function TimeField({
           'relative flex h-10 w-full items-center rounded-token border bg-surface-primary py-2 pl-3 pr-10 text-left text-sm font-medium text-content-primary',
           'transition-colors duration-150',
           'disabled:pointer-events-none disabled:opacity-50',
-          'outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-0',
+          'outline-hidden focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-0',
           error ? 'border-feedback-error' : 'border-border-default',
           className,
         )}

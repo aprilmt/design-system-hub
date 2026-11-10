@@ -23,7 +23,7 @@ export function DialogContent({
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay
         className={cn(
-          'fixed inset-0 z-50 bg-surface-overlay backdrop-blur-sm',
+          'fixed inset-0 z-50 bg-surface-overlay backdrop-blur-xs',
           'data-[state=open]:animate-overlay-show data-[state=closed]:animate-overlay-hide'
         )}
       />
@@ -32,7 +32,7 @@ export function DialogContent({
           'fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2',
           'rounded-token-lg border border-border-default bg-surface-elevated p-6 shadow-token-lg',
           'data-[state=open]:animate-content-show',
-          'focus:outline-none',
+          'focus:outline-hidden',
           className
         )}
       >

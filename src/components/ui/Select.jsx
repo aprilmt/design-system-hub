@@ -42,7 +42,7 @@ export function Select({
             'bg-surface-primary text-content-primary',
             'transition-colors duration-150',
             'disabled:opacity-50 disabled:pointer-events-none',
-            'data-[placeholder]:text-content-muted',
+            'data-placeholder:text-content-muted',
             error ? 'border-feedback-error' : 'border-border-default'
           )}
           aria-labelledby={label ? `${id}-label` : undefined}
@@ -70,10 +70,10 @@ export function Select({
                   value={option.value}
                   disabled={option.disabled}
                   className={cn(
-                    'relative flex items-center h-9 pl-8 pr-3 rounded-token-sm text-sm select-none outline-none',
+                    'relative flex items-center h-9 pl-8 pr-3 rounded-token-sm text-sm select-none outline-hidden',
                     'text-content-primary cursor-pointer',
-                    'data-[highlighted]:bg-brand-secondary data-[highlighted]:text-brand-primary',
-                    'data-[disabled]:opacity-50 data-[disabled]:pointer-events-none'
+                    'data-highlighted:bg-brand-secondary data-highlighted:text-brand-primary',
+                    'data-disabled:opacity-50 data-disabled:pointer-events-none'
                   )}
                 >
                   <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">

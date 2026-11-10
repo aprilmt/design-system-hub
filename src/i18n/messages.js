@@ -147,7 +147,7 @@ export const messages = {
       tokens: {
         title: 'Design Tokens',
         description:
-          'Semantic color, radius, and shadow tokens mapped 1-to-1 to Figma variables. Switch themes to see CSS custom properties adapt.',
+          'Semantic color, radius, and shadow-sm tokens mapped 1-to-1 to Figma variables. Switch themes to see CSS custom properties adapt.',
         groups: {
           Brand: 'Brand',
           Feedback: 'Feedback',

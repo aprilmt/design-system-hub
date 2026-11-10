@@ -33,7 +33,7 @@ const PIXEL = { w: 412, h: 915, r: 38 }
  * outline: line art, a stroke around the screen. For blueprint and minimal looks.
  * android: a Pixel. Its own screen size, tighter corners, a punch-hole camera.
  */
-export type PhoneFrame = 'pro' | 'photo' | 'bezel' | 'soft' | 'bare' | 'silver' | 'clay' | 'outline' | 'android'
+export type PhoneFrame = 'pro' | 'photo' | 'bezel' | 'soft' | 'bare' | 'silver' | 'clay' | 'outline-solid' | 'android'
 
 const FRAMES: Record<PhoneFrame, { band: number; glass: number }> = {
   pro: { band: 3, glass: 10 },
@@ -151,7 +151,7 @@ export function Phone({ width, frame: asked = 'pro', time = '9:41', island, stat
         ...style,
       }}
     >
-      {(bands || frame === 'outline') && outline && (
+      {(bands || frame === 'outline-solid') && outline && (
         <svg className="ss-phone__bands" width="100%" height="100%" aria-hidden>
           <defs>
             <linearGradient id={`${id}-band`} x1="0.2" y1="0" x2="0.8" y2="1">
@@ -163,7 +163,7 @@ export function Phone({ width, frame: asked = 'pro', time = '9:41', island, stat
               <stop offset="0" style={{ stopColor: 'var(--ss-phone-clay-top)' }} />
               <stop offset="1" style={{ stopColor: 'var(--ss-phone-clay-bottom)' }} />
             </linearGradient>
-            {frame === 'outline' && (
+            {frame === 'outline-solid' && (
               // Line art: a ring between 7 and 8pt out, cut from a mask so it is one hairline
               <mask id={`${id}-ring`} maskUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
                 <path d={outline} fill="none" stroke="#fff" strokeWidth={pt(16)} />
@@ -172,7 +172,7 @@ export function Phone({ width, frame: asked = 'pro', time = '9:41', island, stat
             )}
           </defs>
           <g transform={`translate(${pt(edge)} ${pt(edge)})`} strokeLinejoin="round">
-            {frame === 'outline' ? (
+            {frame === 'outline-solid' ? (
               <>
                 <rect x={-pt(9)} y={-pt(9)} width={pt(SCREEN.w + 18)} height={pt(SCREEN.h + 18)} mask={`url(#${id}-ring)`} style={{ fill: 'var(--ss-phone-line)' }} />
                 <path d={outline} fill="none" strokeWidth="2" style={{ stroke: 'var(--ss-line, rgba(0, 0, 0, 0.06))' }} />

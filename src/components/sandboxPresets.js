@@ -95,7 +95,7 @@ export const sandboxPresets = {
     javascript: `import { Loader2, ShoppingCart, Send, Trash2, Plus } from 'lucide-react';
 
 function Button({ variant = 'primary', size = 'md', loading, disabled, children, ...props }) {
-  const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+  const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-150 focus:outline-hidden focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
   const variants = {
     primary: 'bg-indigo-500 text-white hover:bg-indigo-600',
     secondary: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100',
@@ -164,7 +164,7 @@ function Input({ label, error, hint, required, id, ...props }) {
       )}
       <input
         id={inputId}
-        className={\`w-full h-10 px-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 \${
+        className={\`w-full h-10 px-3 rounded-lg border text-sm focus:outline-hidden focus:ring-2 focus:ring-offset-2 \${
           error ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-indigo-400'
         }\`}
         aria-invalid={!!error}
@@ -226,7 +226,7 @@ export default function App() {
         id="fw"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-400"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>
@@ -418,7 +418,7 @@ export default function App() {
             <p className="truncate text-sm font-medium text-slate-900">{row.title}</p>
             <p className="truncate text-xs text-slate-500">{row.meta}</p>
           </div>
-          <button type="button" aria-label={\`Delete \${row.title}\`} onClick={() => setItems((list) => list.filter((x) => x.id !== row.id))} className="rounded p-1.5 text-slate-400 hover:text-red-500">
+          <button type="button" aria-label={\`Delete \${row.title}\`} onClick={() => setItems((list) => list.filter((x) => x.id !== row.id))} className="rounded-sm p-1.5 text-slate-400 hover:text-red-500">
             <Trash2 size={16} />
           </button>
         </div>
@@ -548,7 +548,7 @@ export default function App() {
 
   table: {
     html: `<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-  <table class="w-full min-w-[28rem] border-collapse text-left text-sm">
+  <table class="w-full min-w-md border-collapse text-left text-sm">
     <caption class="sr-only">Team members</caption>
     <thead>
       <tr class="border-b border-slate-200 bg-slate-50">
@@ -593,7 +593,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 p-6">
       <h2 className="mb-4 text-lg font-bold text-slate-900">Table</h2>
       <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <table className="w-full min-w-[28rem] border-collapse text-left text-sm">
+        <table className="w-full min-w-md border-collapse text-left text-sm">
           <caption className="sr-only">Team members</caption>
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50">
@@ -671,7 +671,7 @@ export default function App() {
   },
 
   mobile: {
-    html: `<div class="mx-auto flex min-h-[28rem] max-w-sm flex-col border border-slate-200 bg-white">
+    html: `<div class="mx-auto flex min-h-112 max-w-sm flex-col border border-slate-200 bg-white">
   <header class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
     <span class="text-slate-500">Menu</span>
     <span class="text-sm font-bold">Studio Shop</span>
@@ -741,16 +741,16 @@ export default function App() {
   <h2 class="text-xl font-bold text-slate-900">Accessibility</h2>
   <p class="text-sm text-slate-500">Tab through — every control shows a visible focus ring.</p>
   <div class="flex flex-wrap gap-3">
-    <button type="button" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Primary</button>
-    <button type="button" class="h-10 rounded-lg border border-slate-200 px-4 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Outline</button>
-    <a href="#a11y" class="inline-flex h-10 items-center rounded-lg px-4 text-sm font-medium text-indigo-600 underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Link</a>
+    <button type="button" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Primary</button>
+    <button type="button" class="h-10 rounded-lg border border-slate-200 px-4 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Outline</button>
+    <a href="#a11y" class="inline-flex h-10 items-center rounded-lg px-4 text-sm font-medium text-indigo-600 underline-offset-2 hover:underline focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Link</a>
   </div>
   <form class="max-w-sm space-y-3">
     <label class="block text-sm font-medium text-slate-700" for="fn">First name</label>
-    <input id="fn" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Ada" />
+    <input id="fn" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Ada" />
     <label class="block text-sm font-medium text-slate-700" for="ln">Last name</label>
-    <input id="ln" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Lovelace" />
-    <button type="submit" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Submit</button>
+    <input id="ln" class="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Lovelace" />
+    <button type="submit" class="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Submit</button>
   </form>
 </div>`,
     javascript: `export default function App() {
@@ -759,16 +759,16 @@ export default function App() {
       <h2 className="text-xl font-bold text-slate-900">Accessibility</h2>
       <p className="text-sm text-slate-500">Tab through — every control shows a visible focus ring.</p>
       <div className="flex flex-wrap gap-3">
-        <button className="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Primary</button>
-        <button className="h-10 rounded-lg border border-slate-200 px-4 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Outline</button>
-        <a href="#a11y" className="inline-flex h-10 items-center rounded-lg px-4 text-sm font-medium text-indigo-600 underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Link</a>
+        <button className="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Primary</button>
+        <button className="h-10 rounded-lg border border-slate-200 px-4 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Outline</button>
+        <a href="#a11y" className="inline-flex h-10 items-center rounded-lg px-4 text-sm font-medium text-indigo-600 underline-offset-2 hover:underline focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Link</a>
       </div>
       <form className="max-w-sm space-y-3" onSubmit={(e) => e.preventDefault()}>
         <label className="block text-sm font-medium text-slate-700" htmlFor="fn">First name</label>
-        <input id="fn" className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Ada" />
+        <input id="fn" className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Ada" />
         <label className="block text-sm font-medium text-slate-700" htmlFor="ln">Last name</label>
-        <input id="ln" className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Lovelace" />
-        <button type="submit" className="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Submit</button>
+        <input id="ln" className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400" placeholder="Lovelace" />
+        <button type="submit" className="h-10 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2">Submit</button>
       </form>
     </div>
   );

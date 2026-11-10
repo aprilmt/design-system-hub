@@ -90,7 +90,7 @@ export function ToastProvider({ children }) {
                 'relative flex items-start gap-3 overflow-hidden rounded-[10px] border border-border-default p-4 pb-5 shadow-token-lg',
                 'data-[state=open]:animate-toast-slide-in',
                 'data-[state=closed]:animate-toast-slide-out',
-                'data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]',
+                'data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x)',
                 'data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform',
                 'data-[swipe=end]:animate-toast-swipe-out',
                 'motion-reduce:data-[state=open]:animate-none motion-reduce:data-[state=closed]:animate-none',
@@ -139,7 +139,7 @@ export function ToastProvider({ children }) {
         })}
 
         <ToastPrimitive.Viewport
-          className="fixed bottom-4 right-[18px] z-[100] flex w-96 max-w-[calc(100vw-2rem)] flex-col gap-2 outline-none"
+          className="fixed bottom-4 right-[18px] z-100 flex w-96 max-w-[calc(100vw-2rem)] flex-col gap-2 outline-hidden"
         />
       </ToastPrimitive.Provider>
     </ToastContext.Provider>

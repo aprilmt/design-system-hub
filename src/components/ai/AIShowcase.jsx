@@ -347,7 +347,7 @@ function ScenarioSkeleton({ copy }) {
                     type="text"
                     autoFocus
                     placeholder={copy.scenarioAskPlaceholder}
-                    className="min-w-0 flex-1 bg-transparent py-1.5 text-xs text-white caret-white placeholder:text-white/55 outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="min-w-0 flex-1 bg-transparent py-1.5 text-xs text-white caret-white placeholder:text-white/55 outline-hidden ring-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0"
                     aria-label={copy.scenarioAskPlaceholder}
                     onKeyDown={(e) => {
                       if (e.key === 'Escape') setAskOpen(false)

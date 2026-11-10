@@ -18,7 +18,7 @@ This sandbox addresses these problems by introducing a Single Source of Truth br
 
 ### Semantic Design Tokens
 
-CSS custom properties mapped to Tailwind utility classes that mirror Figma variable naming:
+CSS custom properties in `src/index.css` (`:root` / `.dark`), registered as Tailwind utilities via `@theme inline` so they mirror Figma variable naming:
 
 - **Brand** — `bg-brand-primary`, `bg-brand-secondary`
 - **Surface** — `bg-surface-primary`, `bg-surface-elevated`
@@ -26,7 +26,7 @@ CSS custom properties mapped to Tailwind utility classes that mirror Figma varia
 - **Feedback** — `text-feedback-error`, `bg-feedback-success-light`
 - **Border & Radius** — `border-border-default`, `rounded-token`, `rounded-token-lg`
 
-Light and dark themes swap automatically via `:root` / `.dark` CSS variable scopes.
+Light and dark themes swap via class-based dark mode (`@custom-variant dark`). No `tailwind.config.js` — theme, keyframes, and tokens live in CSS.
 
 ### Core Components
 
@@ -116,7 +116,7 @@ A masthead segmented control (`LanguageToggle`) switches the site between Englis
 
 - **React 19** + **React Router 7** (HashRouter for static hosting)
 - **Vite 6** — build tooling
-- **Tailwind CSS 3** — utility-first styling with `darkMode: 'class'`
+- **Tailwind CSS 4** — `@import "tailwindcss"` + `@tailwindcss/vite` (no PostCSS / Autoprefixer config)
 - **TypeScript** — used for Stageshow kit and `SystemMatrixCompare`
 - **Radix UI** — accessible primitives for Select, Dialog, Toast
 - **Lucide React** — icons
@@ -176,10 +176,11 @@ src/
 │   └── kit/                     # Stageshow React kit
 ├── lib/
 │   └── utils.js
-├── index.css
+├── index.css                    # Tailwind v4 entry, @theme inline tokens, dark variant
 ├── App.jsx
 └── main.jsx
 ```
+
 
 ## Scripts
 

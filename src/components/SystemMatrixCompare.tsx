@@ -140,7 +140,7 @@ export function SystemMatrixCompare({ className }: SystemMatrixCompareProps) {
                   role="tab"
                   aria-selected={selectedYear}
                   onClick={() => setActiveYear(year)}
-                  className={`relative z-10 flex min-w-[7.5rem] flex-1 flex-col items-start rounded-2xl px-3 py-3 text-left transition-colors duration-300 ${
+                  className={`relative z-10 flex min-w-30 flex-1 flex-col items-start rounded-2xl px-3 py-3 text-left transition-colors duration-300 ${
                     selectedYear
                       ? 'bg-brand-primary text-content-on-brand'
                       : 'bg-surface-primary text-content-secondary hover:bg-surface-secondary hover:text-content-primary'
@@ -191,7 +191,7 @@ export function SystemMatrixCompare({ className }: SystemMatrixCompareProps) {
                   type="button"
                   aria-pressed={on}
                   onClick={() => toggleSystem(system.id)}
-                  className={`flex w-full items-start gap-3 rounded-[1.5rem] border px-4 py-3 text-left transition-colors duration-300 ${
+                  className={`flex w-full items-start gap-3 rounded-3xl border px-4 py-3 text-left transition-colors duration-300 ${
                     on
                       ? 'border-brand-primary bg-brand-secondary'
                       : 'border-border-default bg-surface-primary hover:bg-surface-secondary'
@@ -231,7 +231,7 @@ export function SystemMatrixCompare({ className }: SystemMatrixCompareProps) {
         ) : null}
 
         <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+          <table className="w-full min-w-160 border-collapse text-left text-sm">
             <caption className="mb-3 text-left font-bold text-slate-950 dark:text-slate-50">
               {t('matrix.comparison')}
             </caption>
