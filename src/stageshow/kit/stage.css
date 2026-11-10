@@ -3,6 +3,10 @@
    than one part shares, and the guards against host CSS. Imported by
    stage.tsx; every other component imports its own file. */
 
+/* Vite often injects this file before index.css. Declare layer order here so
+   @layer stageshow sorts after Tailwind preflight (base), not before it. */
+@layer theme, base, components, utilities, stageshow;
+
 @layer stageshow {
   /* Stageshow kit. Tokens, the stage, the cursor, window chrome and faux atoms.
      Copy this file with the rest of kit/ and import it once. */
@@ -418,19 +422,17 @@
   all: revert;
 }
 
-/* A universal reset (Tailwind v3's preflight: `* { border-width: 0;
-   box-sizing: border-box }`) is unlayered, so it would beat the kit's own
-   borders, box model and spacing (a bare `* { padding: 0 }` put window
-   lights flush against the edge on a blog). revert-layer hands each property back to the kit's
-   layer. One type selector's worth, so it beats `*` but not a host's element
-   rules, which the guard above already handles */
+/* Host universal resets that are unlayered (Tailwind v3 preflight, a blog's
+   `* { padding: 0 }`) beat @layer stageshow. Tailwind v4 puts preflight in
+   @layer base, so kit rules already win there — do NOT unlayered-revert
+   padding/margin against v4, or revert-layer collapses back to base's
+   padding: 0 and crushes control spacing (ss-button labels overflow).
+   Keep border/box-sizing revert for hosts that still zero borders unlayered. */
 :where(.ss-stage, .ss-stage *, .ss-stage ::before, .ss-stage ::after):not(html) {
   border-width: revert-layer;
   border-style: revert-layer;
   border-color: revert-layer;
   box-sizing: revert-layer;
-  padding: revert-layer;
-  margin: revert-layer;
 }
 
 /* Hosts often cap images and SVGs at their container (max-width: 100%),

@@ -1,3 +1,7 @@
+/* Reserve stageshow after Tailwind layers so kit controls beat preflight
+   padding:0 (Vite can inject kit CSS before this file otherwise). */
+@layer theme, base, components, utilities, stageshow;
+
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
