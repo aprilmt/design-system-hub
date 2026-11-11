@@ -33,15 +33,15 @@ Light and dark themes swap via class-based dark mode (`@custom-variant dark`). N
 | Component | Primitive | Highlights |
 |-----------|-----------|------------|
 | **Button** | Native `<button>` | 5 variants, 3 sizes, loading spinner, `aria-busy`, button groups |
+| **Data List** | Native `<dl>` | Label–value pairs; stacks on small screens, two-column from `sm` |
+| **Date and Time** | Custom calendar + time picker | Brand purple selection (no border), label typeface, Clear / Today / Now |
+| **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
+| **Empty State** | Custom panel + list demo | First-use / no-results; Motion Prompt #072 delete → empty rise → Add restore |
 | **Input** | Native `<input>` | Auto-generated IDs, `aria-invalid`, `aria-describedby` |
 | **Select** | `@radix-ui/react-select` | Keyboard navigation (Arrow/Enter/Esc), `aria-labelledby` |
-| **Tabs** | Native `role="tablist"` | Flowbite underline + pills variants; sliding brand indicator (250ms), panel crossfade + 8px rise |
-| **Dialog** | `@radix-ui/react-dialog` | Focus trap, Esc to close, focus return to trigger |
-| **Toast** | `@radix-ui/react-toast` | 4 semantic variants, auto-dismiss, swipe to dismiss |
-| **Data List** | Native `<dl>` | Label–value pairs; stacks on small screens, two-column from `sm` |
 | **Table** | Native `<table>` | Semantic headers, optional caption, horizontal scroll, row hover |
-| **Date and Time** | Custom calendar + time picker | Brand purple selection (no border), label typeface, Clear / Today / Now |
-| **Empty State** | Custom panel + list demo | First-use / no-results; Motion Prompt #072 delete → empty rise → Add restore |
+| **Tabs** | Native `role="tablist"` | Flowbite underline + pills variants; sliding brand indicator (250ms), panel crossfade + 8px rise |
+| **Toast** | `@radix-ui/react-toast` | 4 semantic variants, auto-dismiss, swipe to dismiss |
 
 ### Per-section code samples
 
@@ -49,7 +49,7 @@ Each sandbox section (except **Dashboard** and **AI**) ends with a code panel:
 
 - **HTML / JavaScript tabs** — switch between markup and JS samples, with one-click Copy
 - Dark syntax-highlighted code body (Flowbite-style panel)
-- Covers Tokens, Button, Input, Select, Tabs, Dialog, Toast, Data List, Table, Date and Time, Empty State, Mobile, Accessibility
+- Covers Tokens, Button, Data List, Date and Time, Dialog, Empty State, Input, Select, Table, Tabs, Toast, Mobile, Accessibility
 - Presets live in `src/components/sandboxPresets.js`; the shared panel is `LiveCode.jsx`
 
 ### Mobile responsive (Sandbox)
@@ -146,15 +146,15 @@ src/
 ├── components/
 │   ├── ui/
 │   │   ├── Button.jsx
+│   │   ├── DataList.jsx
+│   │   ├── DateTime.jsx
+│   │   ├── Dialog.jsx
+│   │   ├── EmptyState.jsx
 │   │   ├── Input.jsx
 │   │   ├── Select.jsx
-│   │   ├── Tabs.jsx
-│   │   ├── Dialog.jsx
-│   │   ├── Toast.jsx
-│   │   ├── DataList.jsx
 │   │   ├── Table.jsx
-│   │   ├── DateTime.jsx
-│   │   └── EmptyState.jsx
+│   │   ├── Tabs.jsx
+│   │   └── Toast.jsx
 │   ├── LiveCode.jsx             # Per-section HTML / JavaScript code panel
 │   ├── sandboxPresets.js        # HTML + JS samples (not Dashboard / AI)
 │   ├── mobile/                  # Mobile responsive showcase + templates

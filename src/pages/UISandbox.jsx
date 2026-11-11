@@ -203,15 +203,15 @@ const selectOptions = [
 
 const componentSectionIds = [
   'button',
+  'dataList',
+  'dateTime',
+  'dialog',
+  'emptyState',
   'input',
   'select',
-  'tabs',
-  'dialog',
-  'toast',
-  'dataList',
   'table',
-  'dateTime',
-  'emptyState',
+  'tabs',
+  'toast',
 ]
 
 const dataListDemoItems = [
@@ -572,6 +572,120 @@ export function UISandbox() {
             />
           </Section>
 
+          {/* ── Data List ── */}
+          <Section
+            id="dataList"
+            title={t('sandbox.dataList.title')}
+            description={t('sandbox.dataList.description')}
+          >
+            <DataList items={dataListDemoItems} />
+            <SectionLiveCode
+              presetKey="dataList"
+              description={t('sandbox.liveCode.dataList')}
+            />
+          </Section>
+
+          {/* ── Date and Time ── */}
+          <Section
+            id="dateTime"
+            title={t('sandbox.dateTime.title')}
+            description={t('sandbox.dateTime.description')}
+          >
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <DateTime
+                type="date"
+                label={t('sandbox.dateTime.dateLabel')}
+                hint={t('sandbox.dateTime.dateHint')}
+                defaultValue="2026-11-08"
+              />
+              <DateTime
+                type="time"
+                label={t('sandbox.dateTime.timeLabel')}
+                hint={t('sandbox.dateTime.timeHint')}
+                defaultValue="14:30"
+              />
+            </div>
+            <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <DateTime
+                type="date"
+                label={t('sandbox.dateTime.errorLabel')}
+                error={t('sandbox.dateTime.errorMessage')}
+                defaultValue=""
+              />
+            </div>
+            <SectionLiveCode
+              presetKey="dateTime"
+              description={t('sandbox.liveCode.dateTime')}
+            />
+          </Section>
+
+          {/* ── Dialog ── */}
+          <Section
+            id="dialog"
+            title={t('sandbox.dialog.title')}
+            description={t('sandbox.dialog.description')}
+          >
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <Button onClick={() => setDialogOpen(true)}>
+                Open Dialog
+              </Button>
+              <DialogContent
+                title="Confirm Action"
+                description="This dialog traps focus and can be closed with the Esc key or the close button. Try tabbing through the elements inside."
+              >
+                <div className="space-y-4">
+                  <Input label="Confirmation" placeholder="Type 'confirm'" />
+                  <div className="flex justify-end gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setDialogOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button onClick={() => setDialogOpen(false)}>
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <div className="mt-4 flex items-start gap-2 rounded-token bg-surface-secondary p-3 text-xs text-content-secondary">
+              <Keyboard size={14} className="mt-0.5 shrink-0 text-content-muted" />
+              <span>
+                Press <kbd className="rounded-sm bg-surface-primary px-1.5 py-0.5 font-mono text-[11px] border border-border-default">Esc</kbd> to
+                close &middot; Focus is trapped inside &middot; Focus returns
+                to trigger on close
+              </span>
+            </div>
+            <SectionLiveCode
+              presetKey="dialog"
+              description={t('sandbox.liveCode.dialog')}
+            />
+          </Section>
+
+          {/* ── Empty State ── */}
+          <Section
+            id="emptyState"
+            title={t('sandbox.emptyState.title')}
+            description={t('sandbox.emptyState.description')}
+          >
+            <EmptyStateDemo
+              copy={{
+                listTitle: t('sandbox.emptyState.listTitle'),
+                listHint: t('sandbox.emptyState.listHint'),
+                emptyTitle: t('sandbox.emptyState.emptyTitle'),
+                emptyDescription: t('sandbox.emptyState.emptyDescription'),
+                addLabel: t('sandbox.emptyState.addLabel'),
+                deleteLabel: t('sandbox.emptyState.deleteLabel'),
+              }}
+            />
+            <SectionLiveCode
+              presetKey="emptyState"
+              description={t('sandbox.liveCode.emptyState')}
+            />
+          </Section>
+
           {/* ── Input ── */}
           <Section
             id="input"
@@ -627,6 +741,23 @@ export function UISandbox() {
             <SectionLiveCode
               presetKey="select"
               description={t('sandbox.liveCode.select')}
+            />
+          </Section>
+
+          {/* ── Table ── */}
+          <Section
+            id="table"
+            title={t('sandbox.table.title')}
+            description={t('sandbox.table.description')}
+          >
+            <Table
+              caption={t('sandbox.table.caption')}
+              columns={tableDemoColumns}
+              rows={tableDemoRows}
+            />
+            <SectionLiveCode
+              presetKey="table"
+              description={t('sandbox.liveCode.table')}
             />
           </Section>
 
@@ -723,51 +854,6 @@ export function UISandbox() {
             />
           </Section>
 
-          {/* ── Dialog ── */}
-          <Section
-            id="dialog"
-            title={t('sandbox.dialog.title')}
-            description={t('sandbox.dialog.description')}
-          >
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <Button onClick={() => setDialogOpen(true)}>
-                Open Dialog
-              </Button>
-              <DialogContent
-                title="Confirm Action"
-                description="This dialog traps focus and can be closed with the Esc key or the close button. Try tabbing through the elements inside."
-              >
-                <div className="space-y-4">
-                  <Input label="Confirmation" placeholder="Type 'confirm'" />
-                  <div className="flex justify-end gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={() => setDialogOpen(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button onClick={() => setDialogOpen(false)}>
-                      Confirm
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-
-            <div className="mt-4 flex items-start gap-2 rounded-token bg-surface-secondary p-3 text-xs text-content-secondary">
-              <Keyboard size={14} className="mt-0.5 shrink-0 text-content-muted" />
-              <span>
-                Press <kbd className="rounded-sm bg-surface-primary px-1.5 py-0.5 font-mono text-[11px] border border-border-default">Esc</kbd> to
-                close &middot; Focus is trapped inside &middot; Focus returns
-                to trigger on close
-              </span>
-            </div>
-            <SectionLiveCode
-              presetKey="dialog"
-              description={t('sandbox.liveCode.dialog')}
-            />
-          </Section>
-
           {/* ── Toast ── */}
           <Section
             id="toast"
@@ -831,92 +917,6 @@ export function UISandbox() {
             <SectionLiveCode
               presetKey="toast"
               description={t('sandbox.liveCode.toast')}
-            />
-          </Section>
-
-          {/* ── Data List ── */}
-          <Section
-            id="dataList"
-            title={t('sandbox.dataList.title')}
-            description={t('sandbox.dataList.description')}
-          >
-            <DataList items={dataListDemoItems} />
-            <SectionLiveCode
-              presetKey="dataList"
-              description={t('sandbox.liveCode.dataList')}
-            />
-          </Section>
-
-          {/* ── Table ── */}
-          <Section
-            id="table"
-            title={t('sandbox.table.title')}
-            description={t('sandbox.table.description')}
-          >
-            <Table
-              caption={t('sandbox.table.caption')}
-              columns={tableDemoColumns}
-              rows={tableDemoRows}
-            />
-            <SectionLiveCode
-              presetKey="table"
-              description={t('sandbox.liveCode.table')}
-            />
-          </Section>
-
-          {/* ── Date and Time ── */}
-          <Section
-            id="dateTime"
-            title={t('sandbox.dateTime.title')}
-            description={t('sandbox.dateTime.description')}
-          >
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <DateTime
-                type="date"
-                label={t('sandbox.dateTime.dateLabel')}
-                hint={t('sandbox.dateTime.dateHint')}
-                defaultValue="2026-11-08"
-              />
-              <DateTime
-                type="time"
-                label={t('sandbox.dateTime.timeLabel')}
-                hint={t('sandbox.dateTime.timeHint')}
-                defaultValue="14:30"
-              />
-            </div>
-            <div className="mt-6 max-w-sm">
-              <DateTime
-                type="date"
-                label={t('sandbox.dateTime.errorLabel')}
-                error={t('sandbox.dateTime.errorMessage')}
-                defaultValue=""
-              />
-            </div>
-            <SectionLiveCode
-              presetKey="dateTime"
-              description={t('sandbox.liveCode.dateTime')}
-            />
-          </Section>
-
-          {/* ── Empty State ── */}
-          <Section
-            id="emptyState"
-            title={t('sandbox.emptyState.title')}
-            description={t('sandbox.emptyState.description')}
-          >
-            <EmptyStateDemo
-              copy={{
-                listTitle: t('sandbox.emptyState.listTitle'),
-                listHint: t('sandbox.emptyState.listHint'),
-                emptyTitle: t('sandbox.emptyState.emptyTitle'),
-                emptyDescription: t('sandbox.emptyState.emptyDescription'),
-                addLabel: t('sandbox.emptyState.addLabel'),
-                deleteLabel: t('sandbox.emptyState.deleteLabel'),
-              }}
-            />
-            <SectionLiveCode
-              presetKey="emptyState"
-              description={t('sandbox.liveCode.emptyState')}
             />
           </Section>
 
@@ -1115,6 +1115,11 @@ export function UISandbox() {
                     attrs: 'aria-busy (loading), aria-disabled',
                   },
                   {
+                    icon: Monitor,
+                    component: 'Dialog',
+                    attrs: 'role="dialog", aria-label="Close dialog", focus trap, return focus',
+                  },
+                  {
                     icon: Eye,
                     component: 'Input',
                     attrs: 'aria-invalid (error), aria-describedby → hint/error, htmlFor → label',
@@ -1128,11 +1133,6 @@ export function UISandbox() {
                     icon: Eye,
                     component: 'Tabs',
                     attrs: 'role="tablist" / tab / tabpanel, aria-selected, Arrow keys',
-                  },
-                  {
-                    icon: Monitor,
-                    component: 'Dialog',
-                    attrs: 'role="dialog", aria-label="Close dialog", focus trap, return focus',
                   },
                   {
                     icon: Monitor,

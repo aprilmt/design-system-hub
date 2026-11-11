@@ -193,7 +193,7 @@ function CalendarPanel({
       <div className="mt-3 flex items-center justify-between border-t border-border-default pt-2">
         <button
           type="button"
-          className="text-sm font-medium text-brand-primary hover:text-brand-primary-hover"
+          className="text-sm font-medium text-content-secondary hover:text-content-primary"
           onClick={onClear}
         >
           Clear
@@ -404,7 +404,7 @@ function TimePanel({ hour, minute, onChange }) {
       <div className="mt-3 flex items-center justify-between border-t border-border-default pt-2">
         <button
           type="button"
-          className="text-sm font-medium text-brand-primary hover:text-brand-primary-hover"
+          className="text-sm font-medium text-content-secondary hover:text-content-primary"
           onClick={() => onChange('')}
         >
           Clear
