@@ -432,7 +432,7 @@ function ScenarioSkeleton({ copy }) {
                 <button
                   type="button"
                   className={cn(
-                    'relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
+                    'group relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
                     highlightSummarize
                       ? 'scale-110 bg-white/20 ring-2 ring-white/50'
                       : 'hover:bg-white/10',
@@ -444,7 +444,9 @@ function ScenarioSkeleton({ copy }) {
                   <span
                     className={cn(
                       'pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white shadow-token transition-opacity duration-300 dark:bg-slate-900',
-                      highlightSummarize ? 'opacity-100' : 'opacity-0',
+                      highlightSummarize
+                        ? 'opacity-100'
+                        : 'opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100',
                     )}
                   >
                     {copy.scenarioSummarizeTip}
@@ -453,7 +455,7 @@ function ScenarioSkeleton({ copy }) {
                 <button
                   type="button"
                   className={cn(
-                    'relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
+                    'group relative flex h-7 w-7 items-center justify-center rounded-full text-white/90 transition-all duration-300',
                     highlightSelect
                       ? 'scale-110 bg-white/20 ring-2 ring-white/50'
                       : 'hover:bg-white/10',
@@ -465,7 +467,9 @@ function ScenarioSkeleton({ copy }) {
                   <span
                     className={cn(
                       'pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-token bg-slate-800 px-2 py-1 text-[11px] font-medium text-white shadow-token transition-opacity duration-300 dark:bg-slate-900',
-                      highlightSelect ? 'opacity-100' : 'opacity-0',
+                      highlightSelect
+                        ? 'opacity-100'
+                        : 'opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100',
                     )}
                   >
                     {copy.scenarioSelectTip}

@@ -4,7 +4,7 @@ A semantic, tokenized component library and interactive sandbox that bridges Fig
 
 👉 I built this site to familiarize myself with the latest front-end frameworks as a Product Designer—not just to experiment, but as a step toward becoming a builder who leverages AI tools(could also be benefitial for everyone else like me). Strong semantics also allow AI to read and reason about the system’s structure, tokens, and intent.
 
-**[Live Demo](https://aprilmt.github.io/design-system-hub/)**
+**[Live Demo](https://aprilmt.github.io/design-system-hub/)** · **[Storybook](https://design-system-hub-storybook.netlify.app)**
 
 <img width="899" height="596" alt="dh" src="https://github.com/user-attachments/assets/1c4a950a-a77f-43c7-a98f-3905dba60506" />
 
@@ -182,6 +182,13 @@ src/
 ```
 
 
+## Storybook
+
+Component stories live next to the UI sources in `src/components/ui/*.stories.tsx`, with Vitest + Playwright interaction tests and a shared preview that loads DesignHub CSS, locale, and toast providers.
+
+- **Online:** [https://design-system-hub-storybook.netlify.app](https://design-system-hub-storybook.netlify.app)
+- **Local:** `npm run storybook` → [http://127.0.0.1:6006/](http://127.0.0.1:6006/)
+
 ## Scripts
 
 | Command | Description |
@@ -189,6 +196,8 @@ src/
 | `npm run dev` | Start dev server |
 | `npm run build` | Production build |
 | `npm run preview` | Preview production build |
+| `npm run storybook` | Start Storybook on port 6006 |
+| `npm run build-storybook` | Static Storybook build → `storybook-static/` |
 
 ## License
 

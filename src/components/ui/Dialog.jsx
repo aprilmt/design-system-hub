@@ -2,7 +2,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
-export function Dialog({ open, onOpenChange, trigger, children }) {
+export function Dialog({ open, onOpenChange, trigger = null, children }) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       {trigger && (
@@ -14,10 +14,10 @@ export function Dialog({ open, onOpenChange, trigger, children }) {
 }
 
 export function DialogContent({
-  title,
-  description,
+  title = null,
+  description = null,
   children,
-  className,
+  className = undefined,
 }) {
   return (
     <DialogPrimitive.Portal>
