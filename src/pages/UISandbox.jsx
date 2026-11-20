@@ -214,6 +214,8 @@ const componentSectionIds = [
   'toast',
 ]
 
+const templateSectionIds = ['dashboard', 'ai']
+
 const dataListDemoItems = [
   { label: 'Name', value: 'Jane Doe' },
   { label: 'Role', value: 'Product Designer' },
@@ -237,9 +239,13 @@ const tableDemoRows = [
 const sidebarItems = [
   { type: 'link', id: 'tokens' },
   { type: 'group', id: 'components', children: componentSectionIds },
+  {
+    type: 'group',
+    id: 'templates',
+    children: templateSectionIds,
+    badges: { ai: 'beta' },
+  },
   { type: 'link', id: 'mobile' },
-  { type: 'link', id: 'dashboard' },
-  { type: 'link', id: 'ai', badge: 'beta' },
   { type: 'link', id: 'a11y' },
 ]
 
@@ -284,16 +290,23 @@ export function UISandbox() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [viewMode, setViewMode] = useState('list')
   const [density, setDensity] = useState('comfortable')
-  const [componentsOpen, setComponentsOpen] = useState(true)
+  const [openGroups, setOpenGroups] = useState({
+    components: true,
+    templates: true,
+  })
   const { toast } = useToast()
 
   const sectionIds = sidebarLinkIds
   const activeSection = useActiveSection(sectionIds)
-  const componentActive = componentSectionIds.includes(activeSection)
 
   useEffect(() => {
-    if (componentActive) setComponentsOpen(true)
-  }, [componentActive])
+    if (componentSectionIds.includes(activeSection)) {
+      setOpenGroups((g) => (g.components ? g : { ...g, components: true }))
+    }
+    if (templateSectionIds.includes(activeSection)) {
+      setOpenGroups((g) => (g.templates ? g : { ...g, templates: true }))
+    }
+  }, [activeSection])
 
   const scrollTo = useCallback((id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -319,15 +332,21 @@ export function UISandbox() {
           >
             {sidebarItems.map((item) => {
               if (item.type === 'group') {
-                const open = componentsOpen
+                const open = openGroups[item.id] ?? true
+                const groupActive = item.children.includes(activeSection)
                 return (
                   <div key={item.id}>
                     <button
                       type="button"
-                      onClick={() => setComponentsOpen((v) => !v)}
+                      onClick={() =>
+                        setOpenGroups((g) => ({
+                          ...g,
+                          [item.id]: !g[item.id],
+                        }))
+                      }
                       aria-expanded={open}
                       className={`flex w-full items-center justify-between gap-1 px-2 py-1.5 text-left text-sm transition-colors ${
-                        componentActive
+                        groupActive
                           ? 'font-medium text-content-primary'
                           : 'text-content-muted hover:text-content-primary'
                       }`}
@@ -348,42 +367,30 @@ export function UISandbox() {
                     >
                       <div className="min-h-0 overflow-hidden">
                         <div className="space-y-0.5 pb-0.5 pl-2">
-                          {item.children.map((id) => (
-                            <button
-                              key={id}
-                              type="button"
-                              onClick={() => scrollTo(id)}
-                              className={`block w-full text-left px-2 py-1.5 text-sm transition-colors ${
-                                activeSection === id
-                                  ? 'font-medium text-content-primary'
-                                  : 'text-content-muted hover:text-content-primary'
-                              }`}
-                            >
-                              {dict.sandbox.sidebar[id]}
-                            </button>
-                          ))}
+                          {item.children.map((id) => {
+                            const showBeta = item.badges?.[id] === 'beta'
+                            return (
+                              <button
+                                key={id}
+                                type="button"
+                                onClick={() => scrollTo(id)}
+                                className={`flex w-full items-center gap-1.5 px-2 py-1.5 text-left text-sm transition-colors ${
+                                  activeSection === id
+                                    ? 'font-medium text-content-primary'
+                                    : 'text-content-muted hover:text-content-primary'
+                                }`}
+                              >
+                                <span>{dict.sandbox.sidebar[id]}</span>
+                                {showBeta ? (
+                                  <BetaBadge label={dict.sandbox.sidebar.beta} />
+                                ) : null}
+                              </button>
+                            )
+                          })}
                         </div>
                       </div>
                     </div>
                   </div>
-                )
-              }
-
-              if (item.badge === 'beta') {
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => scrollTo(item.id)}
-                    className={`flex w-full items-center gap-1.5 px-2 py-1.5 text-left text-sm transition-colors ${
-                      activeSection === item.id
-                        ? 'font-medium text-content-primary'
-                        : 'text-content-muted hover:text-content-primary'
-                    }`}
-                  >
-                    <span>{dict.sandbox.sidebar[item.id]}</span>
-                    <BetaBadge label={dict.sandbox.sidebar.beta} />
-                  </button>
                 )
               }
 
@@ -920,30 +927,6 @@ export function UISandbox() {
             />
           </Section>
 
-          {/* ── Mobile Responsive ── */}
-          <Section
-            id="mobile"
-            title={t('sandbox.mobile.title')}
-            description={t('sandbox.mobile.description')}
-          >
-            <Suspense
-              fallback={
-                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
-                  <Loader2
-                    size={24}
-                    className="animate-spin text-brand-primary"
-                  />
-                </div>
-              }
-            >
-              <MobileResponsiveShowcase />
-            </Suspense>
-            <SectionLiveCode
-              presetKey="mobile"
-              description={t('sandbox.liveCode.mobile')}
-            />
-          </Section>
-
           {/* ── Dashboard ── */}
           <Section
             id="dashboard"
@@ -988,6 +971,30 @@ export function UISandbox() {
             >
               <AIShowcase />
             </Suspense>
+          </Section>
+
+          {/* ── Mobile Responsive ── */}
+          <Section
+            id="mobile"
+            title={t('sandbox.mobile.title')}
+            description={t('sandbox.mobile.description')}
+          >
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-token-lg border border-border-default bg-surface-secondary">
+                  <Loader2
+                    size={24}
+                    className="animate-spin text-brand-primary"
+                  />
+                </div>
+              }
+            >
+              <MobileResponsiveShowcase />
+            </Suspense>
+            <SectionLiveCode
+              presetKey="mobile"
+              description={t('sandbox.liveCode.mobile')}
+            />
           </Section>
 
           {/* ── Accessibility Showcase ── */}

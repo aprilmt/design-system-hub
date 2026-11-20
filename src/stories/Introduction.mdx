@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Introduction" />
+
+# Design System Hub
+
+A semantic, tokenized component library that bridges Figma and code — built with React, Tailwind CSS, and Radix UI primitives.
+
+This Storybook is the component catalog for **DesignHub**: inspect variants, run interaction tests, and verify accessibility against the same tokens used in the live sandbox.
+
+**[Live Demo](https://aprilmt.github.io/design-system-hub/)** · **[Hosted Storybook](https://design-system-hub-storybook.netlify.app)**
+
+---
+
+## Philosophy
+
+Traditional design-to-development handoffs often create **UI drift** (inconsistent spacing, color, and layout) and **uneven accessibility** (focus, keyboard, and labels treated as late fixes).
+
+DesignHub addresses both with a single source of truth across Figma and production code, organized as:
+
+**Utility → Component → Pattern**
+
+| Layer | Role |
+| --- | --- |
+| **Utility** | Semantic tokens (`brand`, `surface`, `content`, `feedback`, radius, shadow) |
+| **Component** | Accessible primitives with clear variants and states |
+| **Pattern** | Composed flows in the sandbox (dialogs, toasts, mobile shells, AI demos) |
+
+## Tokens
+
+Design tokens live in CSS (`:root` / `.dark`) and register as Tailwind utilities via `@theme inline`, so class names mirror Figma variable naming:
+
+- **Brand** — `bg-brand-primary`, `bg-brand-secondary`
+- **Surface** — `bg-surface-primary`, `bg-surface-elevated`
+- **Content** — `text-content-primary`, `text-content-muted`
+- **Feedback** — `text-feedback-error`, `bg-feedback-success-light`
+- **Border & radius** — `border-border-default`, `rounded-token`, `rounded-token-lg`
+
+Light and dark themes swap with class-based dark mode. Theme, keyframes, and tokens all live in CSS — no `tailwind.config.js`.
+
+## Components in this Storybook
+
+Browse the sidebar for interactive stories (each tagged and covered by Vitest play functions where behavior matters):
+
+- **Button** — variants, sizes, loading / `aria-busy`
+- **Input** — labels, invalid state, described-by
+- **Select** — Radix keyboard navigation
+- **Dialog** — focus trap, Esc, portal content
+- **Toast** — semantic variants and trigger flow
+- **Tabs** — underline / pills with indicator motion
+- **Table**, **DataList**, **DateTime**, **EmptyState**
+
+## Local commands
+
+```bash
+npm run storybook          # http://127.0.0.1:6006
+npm run build-storybook    # static build → storybook-static/
+npx vitest --project storybook run
+```
+
+## Stack
+
+React 19 · Vite 6 · Tailwind CSS 4 · Radix UI · Storybook 10 (react-vite) · Vitest + Playwright
